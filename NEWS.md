@@ -1,0 +1,52 @@
+What did you do this week?
+
+•	Kat
+
+- Came up with a list of questions for Sarah
+- Took notes during video call with Sarah
+- Brainstormed vision for project
+
+•	Paige
+
+- Coordinated communication with Sarah, point of contact for the project, and with team members
+- Created questions to ask Sarah during the video chat
+- Brainstormed vision for project
+
+•	Jocelyn
+
+- Created repository 
+- Brainstormed vision for project
+- Created questions to ask Sarah and took note during the meeting
+
+What is it that you're struggling with right now?
+
+•	Kat
+
+- I think the part I’m struggling with most is the logistics of how to do what they’re asking, which is essentially prove the ECC is not doing their job regarding childcare.
+
+•	Paige
+
+- What they want from us, specifically. The project seems extremely open, which is great. However, it doesn’t seem like they know exactly how we fit into their overall goals or mission as an organization.
+
+•	Jocelyn
+
+-	What they want us to do and what we are capable of doing step by step. At a higher level, what we could add on it by doing research and looking for relevant datasets on our own.
+
+What are you planning to do next week?
+
+•	Kat
+
+- Look at the data file and familiarize myself with the variables, maybe start the cleaning process, do some background on the ECC and childcare laws in general
+
+•	Paige
+
+- Look at the data and see if I notice any patterns or anything that could help point our project in a specific direction
+- Get our progress report on the repository 
+-	Have another video chat with Sarah, as a group, after we all have the opportunity to look at the data and further brainstorm what we want this project to look like.
+
+•	Jocelyn
+
+-	Be more clear about what the final product will be like
+-	Look at the data file and figure out if we could build the product Sarah wants out of it. If yes, start cleaning the data and play around with the variables. If not, proposing some ideas.
+-	Have another video chat with Sarah
+
