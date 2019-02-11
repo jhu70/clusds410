@@ -8,9 +8,12 @@ What did you do this week?
 
 •	Paige
 
-- Coordinated communication with Sarah, point of contact for the project, and with team members
-- Created questions to ask Sarah during the video chat
-- Brainstormed vision for project
+- Put progress report on GitHub and did it wrong... but then fixed it :)
+- Looked at data and noted interesting variables as a group
+- Brainstormed with Ben and the group about how to get started 
+- Had group meeting with Sarah where we pitched our general direction
+- Coordinated communication with Sarah via email about setting up next meeting
+- Reached out to Suzanne Palmer about Shiny, and sent follow up email after not hearing back from her.
 
 •	Jocelyn
 
@@ -40,9 +43,10 @@ What are you planning to do next week?
 
 •	Paige
 
-- Look at the data and see if I notice any patterns or anything that could help point our project in a specific direction
-- Get our progress report on the repository 
--	Have another video chat with Sarah, as a group, after we all have the opportunity to look at the data and further brainstorm what we want this project to look like.
+-	DataCamp on Shiny
+- Look into packages 
+- Get Shiny set up as soon as we hear back from Suzanne Palmer
+-
 
 •	Jocelyn
 
