@@ -29,7 +29,7 @@ What is it that you're struggling with right now?
 
 •	Paige
 
-- What they want from us, specifically. The project seems extremely open, which is great. However, it doesn’t seem like they know exactly how we fit into their overall goals or mission as an organization.
+- Struggling to get Suzanne to get us set up with Shiny. Feeling a little stressed out about if we will have enough time to become familiar with it before the next time we talk to Sarah (Thurs, 2/21)
 
 •	Jocelyn
 
@@ -46,7 +46,6 @@ What are you planning to do next week?
 -	DataCamp on Shiny
 - Look into packages 
 - Get Shiny set up as soon as we hear back from Suzanne Palmer
--
 
 •	Jocelyn
 
