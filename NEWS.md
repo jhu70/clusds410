@@ -4,18 +4,18 @@ What did you do this week?
 
 •	Kat
 
-Came up with a list of questions for Sarah 
-Took notes during video call with Sarah Brainstormed vision for project
+- Came up with a list of questions for Sarah 
+- Took notes during video call with Sarah Brainstormed vision for project
 
 •	Paige
 
-Coordinated communication with Sarah, point of contact for the project, and with team members 
-Created questions to ask Sarah during the video chat Brainstormed vision for project
+- Coordinated communication with Sarah, point of contact for the project, and with team members 
+- Created questions to ask Sarah during the video chat Brainstormed vision for project
 
 •	Jocelyn
 
-Created repository Brainstormed vision for project 
-Created questions to ask Sarah and took note during the meeting 
+- Created repository Brainstormed vision for project 
+- Created questions to ask Sarah and took note during the meeting 
 
 What is it that you're struggling with right now?
 
@@ -39,8 +39,10 @@ Look at the data file and familiarize myself with the variables, maybe start the
 
 •	Paige
 
-Look at the data and see if I notice any patterns or anything that could help point our project in a specific direction Get our progress report on the repository Have another video chat with Sarah, as a group, after we all have the opportunity to look at the data and further brainstorm what we want this project to look like. 
+- Look at the data and see if I notice any patterns or anything that could help point our project in a specific direction 
+- Get our progress report on the repository Have another video chat with Sarah, as a group, after we all have the opportunity to look at the data and further brainstorm what we want this project to look like. 
 
 •	Jocelyn
 
-Be more clear about what the final product will be like Look at the data file and figure out if we could build the product Sarah wants out of it. If yes, start cleaning the data and play around with the variables. If not, proposing some ideas. Have another video chat with Sarah
+- Be more clear about what the final product will be like 
+- Look at the data file and figure out if we could build the product Sarah wants out of it. If yes, start cleaning the data and play around with the variables. If not, proposing some ideas. Have another video chat with Sarah
