@@ -1,10 +1,9 @@
 What did you do this week?
 
 •	Kat
-
-- Came up with a list of questions for Sarah
-- Took notes during video call with Sarah
-- Brainstormed vision for project
+- Took a look at the data and made a list of things to clean, variables of interest, etc.
+- Took notes during group meeting with Sarah, asked questions and clarified ideas about our vision
+- Worked on Shiny datacamp course
 
 •	Paige
 
@@ -25,7 +24,7 @@ What is it that you're struggling with right now?
 
 •	Kat
 
-- I think the part I’m struggling with most is the logistics of how to do what they’re asking, which is essentially prove the ECC is not doing their job regarding childcare.
+- I still don't know if we're on the same page as Sarah about the general vision, but I think starting with a dashboard will be good. I'm also worried about getting the dashboard done by 2/21, especially if Sarah is getting us one of the datasets we need by 2/19.
 
 •	Paige
 
@@ -39,7 +38,8 @@ What are you planning to do next week?
 
 •	Kat
 
-- Look at the data file and familiarize myself with the variables, maybe start the cleaning process, do some background on the ECC and childcare laws in general
+- Finish DataCamp on Shiny (and other necessary courses)
+- Start working on dashboard!!
 
 •	Paige
 
