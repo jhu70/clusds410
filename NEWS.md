@@ -51,5 +51,5 @@ What are you planning to do next week?
 •	Jocelyn
 
 -	Finished Shiny and Census DataCamp
-- Have a more clear plan about our weekly tasks to finish and work distribution
+- Have a more clear plan about our weekly tasks and work distribution
 
