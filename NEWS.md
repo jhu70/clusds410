@@ -16,9 +16,9 @@ What did you do this week?
 
 •	Jocelyn
 
-- Created repository 
-- Brainstormed vision for project
-- Created questions to ask Sarah and took note during the meeting
+- Looked into the data and categorize the interested variables 
+- Prepared questions to ask Sarah, including the expected timeline, specific vision, and datasets
+- Worked on Shiny DataCamp
 
 What is it that you're struggling with right now?
 
@@ -32,7 +32,8 @@ What is it that you're struggling with right now?
 
 •	Jocelyn
 
--	What they want us to do and what we are capable of doing step by step. At a higher level, what we could add on it by doing research and looking for relevant datasets on our own.
+- Through communications with Sarah, it seems that we will need to look for certain datasets to the project started as soon as possible.
+I am worried about the quarter deadline.
 
 What are you planning to do next week?
 
@@ -49,7 +50,6 @@ What are you planning to do next week?
 
 •	Jocelyn
 
--	Be more clear about what the final product will be like
--	Look at the data file and figure out if we could build the product Sarah wants out of it. If yes, start cleaning the data and play around with the variables. If not, proposing some ideas.
--	Have another video chat with Sarah
+-	Finished Shiny and Census DataCamp
+- Have a more clear plan about our weekly tasks to finish and work distribution
 
