@@ -21,21 +21,21 @@ What is it that you're struggling with right now?
 
 •	Kat
 
-I think the part I’m struggling with most is the logistics of how to do what they’re asking, which is essentially prove the ECC is not doing their job regarding childcare.
+- I think the part I’m struggling with most is the logistics of how to do what they’re asking, which is essentially prove the ECC is not doing their job regarding childcare.
 
 •	Paige
 
-What they want from us, specifically. The project seems extremely open, which is great. However, it doesn’t seem like they know exactly how we fit into their overall goals or mission as an organization.
+- What they want from us, specifically. The project seems extremely open, which is great. However, it doesn’t seem like they know exactly how we fit into their overall goals or mission as an organization.
 
 •	Jocelyn
 
-What they want us to do and what we are capable of doing step by step. At a higher level, what we could add on it by doing research and looking for relevant datasets on our own. 
+- What they want us to do and what we are capable of doing step by step. At a higher level, what we could add on it by doing research and looking for relevant datasets on our own. 
 
 What are you planning to do next week?
 
 •	Kat
 
-Look at the data file and familiarize myself with the variables, maybe start the cleaning process, do some background on the ECC and childcare laws in general 
+- Look at the data file and familiarize myself with the variables, maybe start the cleaning process, do some background on the ECC and childcare laws in general 
 
 •	Paige
 
