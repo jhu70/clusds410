@@ -24,6 +24,15 @@ What is it that you're struggling with right now?
 
 •	Jocelyn
 
+What are you planning to do next week?
+
+•	Kat
+
+
+•	Paige
+
+
+•	Jocelyn
 
 2019 - 2 - 11
 
