@@ -8,9 +8,13 @@ What did you do this week?
 - did shiny and leaflet data camp courses
 - made the preliminary map with markers per zip code
 - made a timeline and a definitive final product for thursday
+
 •	Paige
 
-
+- Quarter Report Slides and Presentation (1.5 hours)
+- DataCamp: Building Web Applications in R with Shiny (3 hours)
+- DataCamp: Interactive Maps in leaflet for R (4 hours)
+- Brainstormed on variables to clean for product we'll be presenting on Thursday to Sarah (1.5 hours)
 
 •	Jocelyn
 
@@ -22,6 +26,8 @@ What is it that you're struggling with right now?
 - deciding which variables to plot on the map
 
 •	Paige
+- Weekly time management. Working on it though.
+- Trying to just trust that we're not wasting our time creating something Sarah might not like.
 
 
 •	Jocelyn
@@ -33,6 +39,13 @@ What are you planning to do next week?
 - meet with Sarah again!
 
 •	Paige
+
+- Decide on the variables for the leaflet product we're presenting to Sarah (.5 hours)
+- Lay clean variables Jocelyn created onto base map Kat created (2 hours)
+- Meeting with Sarah on Thursday (.5 hours)
+- DataCamp: Building Web Applications in R with Shiny (1 hour)
+- DataCamp: Building Dashboards with shinydashboard (4 hours) 
+- Mess Around with Shiny and Leaflet (2 hours)
 
 
 •	Jocelyn
