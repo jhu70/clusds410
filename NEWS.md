@@ -17,6 +17,9 @@ What did you do this week?
 - Brainstormed on variables to clean for product we'll be presenting on Thursday to Sarah (1.5 hours)
 
 •	Jocelyn
+- Quarter Report Slides and Presentation
+- DataCamp: Interactive Maps in leaflet for R 
+- Data Cleaning (created a function to clean data and create over 12 new variables ready for visualization)
 
 
 What is it that you're struggling with right now?
@@ -29,8 +32,10 @@ What is it that you're struggling with right now?
 - Weekly time management. Working on it though.
 - Trying to just trust that we're not wasting our time creating something Sarah might not like.
 
-
 •	Jocelyn
+- Cleaning specific messy variables 
+- Visualize variables using maps
+
 
 What are you planning to do next week?
 
@@ -49,6 +54,9 @@ What are you planning to do next week?
 
 
 •	Jocelyn
+- Finish cleaning data and look into census data possibly
+- Create a dashboard
+- Help lay clean variables I created onto base map
 
 2019 - 2 - 11
 
