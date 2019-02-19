@@ -5,8 +5,9 @@
 What did you do this week?
 
 •	Kat
-
-
+- did shiny and leaflet data camp courses
+- made the preliminary map with markers per zip code
+- made a timeline and a definitive final product for thursday
 •	Paige
 
 
@@ -17,7 +18,8 @@ What did you do this week?
 What is it that you're struggling with right now?
 
 •	Kat
-
+- still not sure if the product we show Sarah on Thursday is something she's gonna want, and it's been hard to move from the brainstorming to just producing something concrete
+- deciding which variables to plot on the map
 
 •	Paige
 
@@ -27,7 +29,8 @@ What is it that you're struggling with right now?
 What are you planning to do next week?
 
 •	Kat
-
+- finalize a shiny dashboard hopefully!!
+- meet with Sarah again!
 
 •	Paige
 
