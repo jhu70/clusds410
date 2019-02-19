@@ -1,3 +1,30 @@
+
+
+2019 - 2 - 18
+
+What did you do this week?
+
+•	Kat
+
+
+•	Paige
+
+
+
+•	Jocelyn
+
+
+What is it that you're struggling with right now?
+
+•	Kat
+
+
+•	Paige
+
+
+•	Jocelyn
+
+
 2019 - 2 - 11
 
 What did you do this week?
