@@ -1,0 +1,247 @@
+---
+title: "Data Cleaning"
+author: "Jocelyn Hu"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+
+```{r message = FALSE warning = FALSE}
+library(tidyverse)
+library(readxl)
+library(rgdal)
+library(rgeos)
+library(leaflet)
+library(devtools)
+EEC6<- read_excel("~/SDS Capstone/EEC_SubsettedData_Region6.xlsx")
+EEC <- read_excel("~/SDS Capstone/2018EEC.xlsx")
+
+```
+# ```{r}
+# 
+# 
+# names(EEC) <- gsub(" ", "_", names(EEC))
+# names(EEC6) <- gsub(" ", "_", names(EEC6))
+# EECNEW<-merge(EEC, EEC6, by=c("Phone","ContactFirstName","ContactLastName"))
+# 
+# glimpse(EEC6$City)
+# glimpse(EEC$Languages_spoken_by_staff)
+# 
+# ```
+
+
+```{r}
+#part time or full time
+library(splitstackshape)
+ECCNEW2<-cSplit(EECNEW, "AcceptsChildren", "and", fixed = FALSE)
+ECCNEW2$AcceptsChildren_2 <- NULL
+ECCNEW2$AcceptsChildren_3[ECCNEW2$AcceptsChildren_1 == "Part-Time"] <- "Part-Time"
+ECCNEW2$AcceptsChildren_1[ECCNEW2$AcceptsChildren_1 == "Part-Time"] <- NA
+names(ECCNEW2)[names(ECCNEW2) == "AcceptsChildren_1"] <- "FullTime"
+names(ECCNEW2)[names(ECCNEW2) == "AcceptsChildren_3"] <- "PartTime"
+
+names(ECCNEW2)[names(ECCNEW2) == "24_Hours"] <- "AllDay"
+names(ECCNEW2)[names(ECCNEW2) == "Temp/Emergency"] <- "Emergency"
+
+#test successful merge
+print(ECCNEW2$Licensed_Capacity)
+print(ECCNEW2$Capacity)
+```
+
+
+
+
+
+```{r}
+#Group by "City" or "Zipcode"
+#data cleaning function
+
+createdataset<-function(groupvariable){
+require("dplyr")
+
+
+ECCNEW4<-ECCNEW2%>%
+       group_by_(groupvariable,"After_School") %>%
+       tally()
+ECCNEW4$nafterschool<-ECCNEW4$n
+ECCNEW4$n <- NULL
+ECCNEW4<- spread(ECCNEW4,After_School,nafterschool)
+names(ECCNEW4)[4] <- paste("afterschool.unknown")
+names(ECCNEW4)[3] <- paste("afterschool.yes")
+names(ECCNEW4)[2] <- paste("afterschool.no")
+print(ECCNEW4)
+
+ECCNEW5<-ECCNEW2%>%
+      group_by_(groupvariable)%>%
+      summarise(meancapa=mean(Capacity))
+      
+ECCNEW6<-ECCNEW2%>%
+      group_by_(groupvariable,"PartTime") %>%
+      tally()
+names(ECCNEW6)[names(ECCNEW6) == "n"] <- "nPartTime"
+ECCNEW6<- spread(ECCNEW6,PartTime,nPartTime)
+names(ECCNEW6)[3] <- paste("PartorFull")
+
+
+ECCNEW7<-ECCNEW2%>%
+      group_by_(groupvariable,"FullTime") %>%
+      tally()
+names(ECCNEW7)[names(ECCNEW7) == "n"] <- "nFullTime"
+ECCNEW7<- spread(ECCNEW7,FullTime,nFullTime)
+names(ECCNEW7)[3] <- paste("PartorFull2")
+
+
+ECCNEW8<-ECCNEW2%>%
+      group_by_(groupvariable,"Duration.x") %>%
+      tally()
+ECCNEW8$nduration<-ECCNEW8$n
+ECCNEW8$n <- NULL
+ECCNEW8<- spread(ECCNEW8,Duration.x,nduration)
+names(ECCNEW8)[5] <- paste("duration.unknown")
+names(ECCNEW8)[4] <- paste("duration.summer")
+names(ECCNEW8)[3] <- paste("duration.schoolyear")
+names(ECCNEW8)[2] <- paste("duration.fullyear")
+
+
+ECCNEW9<-ECCNEW2%>%
+      group_by_(groupvariable) %>%
+      tally()
+ECCNEW9$ncenters<-ECCNEW9$n
+ECCNEW9$n <- NULL
+
+ECCNEW10<-ECCNEW2%>%
+      group_by_(groupvariable,"AllDay") %>%
+      tally()
+ECCNEW10$nallday<-ECCNEW10$n
+ECCNEW10$n <- NULL
+ECCNEW10<- spread(ECCNEW10,AllDay,nallday)
+names(ECCNEW10)[4] <- paste("allday.unknown")
+names(ECCNEW10)[3] <- paste("allday.yes")
+names(ECCNEW10)[2] <- paste("allday.no")
+
+
+ECCNEW11<-ECCNEW2%>%
+      group_by_(groupvariable,"LANG_ENGL") %>%
+      tally()
+names(ECCNEW11)[names(ECCNEW11) == "n"] <- "nenglish"
+ECCNEW11<- spread(ECCNEW11,LANG_ENGL,nenglish)
+names(ECCNEW11)[2] <- paste("English")
+names(ECCNEW11)[3] <- paste("Engl.unknown")
+
+
+ECCNEW12<-ECCNEW2%>%
+      group_by_(groupvariable,"LANG_SPAN") %>%
+      tally()
+names(ECCNEW12)[names(ECCNEW12) == "n"] <- "nspan"
+ECCNEW12<- spread(ECCNEW12,LANG_SPAN,nspan)
+names(ECCNEW12)[2] <- paste("Spanish")
+names(ECCNEW12)[3] <- paste("Span.unknown")
+
+
+ECCNEW13<-ECCNEW2%>%
+      group_by_(groupvariable,"LANG_FREN") %>%
+      tally()
+names(ECCNEW13)[names(ECCNEW13) == "n"] <- "nfren"
+ECCNEW13<- spread(ECCNEW13,LANG_FREN,nfren)
+names(ECCNEW13)[2] <- paste("French")
+names(ECCNEW13)[3] <- paste("Fren.unknown")
+
+
+ECCNEW14<-ECCNEW2%>%
+      group_by_(groupvariable,"LANG_PORT") %>%
+      tally()
+names(ECCNEW14)[names(ECCNEW14) == "n"] <- "nport"
+ECCNEW14<- spread(ECCNEW14,LANG_PORT,nport)
+names(ECCNEW14)[2] <- paste("Port")
+names(ECCNEW14)[3] <- paste("Port.unknown")
+
+ECCNEW15<-ECCNEW2%>%
+      group_by_(groupvariable,"LANG_CHIN") %>%
+      tally()
+names(ECCNEW15)[names(ECCNEW15) == "n"] <- "nchin"
+ECCNEW15<- spread(ECCNEW15,LANG_CHIN,nchin)
+names(ECCNEW15)[2] <- paste("Chinese")
+names(ECCNEW15)[3] <- paste("Chin.unknown")
+
+ECCNEW16<-ECCNEW2%>%
+      group_by_(groupvariable,"LANG_CANT") %>%
+      tally()
+names(ECCNEW16)[names(ECCNEW16) == "n"] <- "ncant"
+ECCNEW16<- spread(ECCNEW16,LANG_CANT,ncant)
+names(ECCNEW16)[2] <- paste("Cantonese")
+names(ECCNEW16)[3] <- paste("Cant.unknown")
+
+ECCNEW17<-ECCNEW2%>%
+      group_by_(groupvariable,"Drop_IN_Care_Available") %>%
+      tally()
+ECCNEW17$ndropin<-ECCNEW17$n
+ECCNEW17$n <- NULL
+ECCNEW17<- spread(ECCNEW17,Drop_IN_Care_Available,ndropin)
+names(ECCNEW17)[4] <- paste("dropin.unknown")
+names(ECCNEW17)[3] <- paste("dropin.yes")
+names(ECCNEW17)[2] <- paste("dropin.no")
+
+
+ECCNEW18<-ECCNEW2%>%
+      group_by_(groupvariable,"Open_Holiday") %>%
+      tally()
+ECCNEW18$nopenholiday<-ECCNEW18$n
+ECCNEW18$n <- NULL
+ECCNEW18<- spread(ECCNEW18,Open_Holiday,nopenholiday)
+names(ECCNEW18)[4] <- paste("openholiday.unknown")
+names(ECCNEW18)[3] <- paste("openholiday.yes")
+names(ECCNEW18)[2] <- paste("openholiday.no")
+
+ECCNEW19<-ECCNEW2%>%
+      group_by_(groupvariable,"Emergency") %>%
+      tally()
+ECCNEW19$nemergency<-ECCNEW19$n
+ECCNEW19$n <- NULL
+ECCNEW19<- spread(ECCNEW19,Emergency,nemergency)
+names(ECCNEW19)[4] <- paste("emergency.unknown")
+names(ECCNEW19)[3] <- paste("emergency.yes")
+names(ECCNEW19)[2] <- paste("emergency.no")
+
+      
+ECCNEW4<-merge(ECCNEW4,ECCNEW3, all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW5, all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW6, all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW7, all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW8, all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW9,all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW10,all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW11,all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW12,all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW13,all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW14,all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW15,all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW16,all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW17,all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW18,all = TRUE)
+ECCNEW4<-merge(ECCNEW4,ECCNEW19,all = TRUE)
+ECCNEW4$PartorFull<-ECCNEW4$PartorFull+ECCNEW4$PartorFull2
+ECCNEW4$PartorFull2 <- NULL
+return(ECCNEW4)
+}
+
+```
+
+
+```{r}
+datazipcode<-createdataset("Zipcode")
+write.csv(datazipcode, "~/SDS Capstone/datazipcode.csv", quote=FALSE, row.names=FALSE)
+datacity<-createdataset("City")
+write.csv(datacity, "~/SDS Capstone/datacity.csv", quote=FALSE, row.names=FALSE)
+```
+
+
