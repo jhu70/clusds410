@@ -1,8 +1,8 @@
 
 
-2019 - 2 - 18
+# 2019 - 2 - 18
 
-What did you do this week?
+## What did you do this week?
 
 •	Kat
 - did shiny and leaflet data camp courses
@@ -22,7 +22,7 @@ What did you do this week?
 - Data Cleaning (created a function to clean data and create over 12 new variables ready for visualization)
 
 
-What is it that you're struggling with right now?
+## What is it that you're struggling with right now?
 
 •	Kat
 - still not sure if the product we show Sarah on Thursday is something she's gonna want, and it's been hard to move from the brainstorming to just producing something concrete
@@ -37,7 +37,7 @@ What is it that you're struggling with right now?
 - Visualize variables using maps
 
 
-What are you planning to do next week?
+## What are you planning to do next week?
 
 •	Kat
 - finalize a shiny dashboard hopefully!!
@@ -58,9 +58,9 @@ What are you planning to do next week?
 - Create a dashboard
 - Help lay clean variables I created onto base map
 
-2019 - 2 - 11
+# 2019 - 2 - 11
 
-What did you do this week?
+## What did you do this week?
 
 •	Kat
 
@@ -80,7 +80,7 @@ What did you do this week?
 - Prepared questions to ask Sarah, including the expected timeline, specific vision, and datasets 
 - Worked on Shiny DataCamp 
 
-What is it that you're struggling with right now?
+## What is it that you're struggling with right now?
 
 •	Kat
 
@@ -97,7 +97,7 @@ What is it that you're struggling with right now?
 - Through communications with Sarah, it seems that we will need to look for certain datasets to the project started as soon as possible. 
 - I am worried about the quarter deadline. 
 
-What are you planning to do next week?
+## What are you planning to do next week?
 
 •	Kat
 
@@ -116,9 +116,9 @@ What are you planning to do next week?
 - Have a more clear plan about our weekly tasks and work distribution
 
 
-2019 - 02 - 7
+# 2019 - 02 - 7
 
-What did you do this week?
+## What did you do this week?
 
 •	Kat
 
@@ -135,7 +135,7 @@ What did you do this week?
 - Created repository Brainstormed vision for project 
 - Created questions to ask Sarah and took note during the meeting 
 
-What is it that you're struggling with right now?
+## What is it that you're struggling with right now?
 
 •	Kat
 
@@ -149,7 +149,7 @@ What is it that you're struggling with right now?
 
 - What they want us to do and what we are capable of doing step by step. At a higher level, what we could add on it by doing research and looking for relevant datasets on our own. 
 
-What are you planning to do next week?
+## What are you planning to do next week?
 
 •	Kat
 
