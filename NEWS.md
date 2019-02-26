@@ -3,9 +3,9 @@
 ## What did you do this week?
 
 •	Kat
-- 
-- 
-- 
+- Finished the Shiny and leaflet datacamp courses
+- Geocoded the data by zipcode as well as by individual address of childcare provider through google
+- created the base map for the visualizations we showed to Sarah by childcare provider and city
 
 •	Paige
 
@@ -23,8 +23,8 @@
 ## What is it that you're struggling with right now?
 
 •	Kat
-- still not sure if the product we show Sarah on Thursday is something she's gonna want, and it's been hard to move from the brainstorming to just producing something concrete
-- deciding which variables to plot on the map
+- I missed the meeting on Thursday so I'm still working on getting caught up
+- Like Paige, I'm also having a hard time with weekly time management for this project
 
 •	Paige
 - Weekly time management, still. But will continue working on it.
@@ -38,8 +38,7 @@
 ## What are you planning to do next week?
 
 •	Kat
-- finalize a shiny dashboard hopefully!!
-- meet with Sarah again!
+- Work on making our maps into a dashboard and implementing the suggestions Zoe and Sarah had
 
 •	Paige
 
