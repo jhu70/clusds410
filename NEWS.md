@@ -15,9 +15,10 @@
 - DataCamp: Building Web Applications in R with Shiny (1 hour)
 
 •	Jocelyn
-- 
--  
-- 
+- Merged datasets Kat and I created
+- Finished the Shiny and leaflet datacamp courses
+- Continued cleaning the variables using multiple functions and summarised them by zip code and city
+- Took note during meeting with Sarah and Zoe 
 
 
 ## What is it that you're struggling with right now?
@@ -31,8 +32,7 @@
 - Wodnering if we'll be able to find the information on the level we want (neighborhoods)
 
 •	Jocelyn
-- Cleaning specific messy variables 
-- Visualize variables using maps
+- Weekly time management and task distribution among team members
 
 
 ## What are you planning to do next week?
@@ -46,9 +46,9 @@
 - Mess Around with Shiny and Leaflet (2 hours)
 
 •	Jocelyn
-- Finish cleaning data and look into census data possibly
-- Create a dashboard
-- Help lay clean variables I created onto base map
+- Help create maps based on Sarah's expectation
+- Mess around with Shiny 
+- Clean variables if necessary
 
 # 2019 - 2 - 18
 
