@@ -1,4 +1,55 @@
+# 2019 - 2 - 25
 
+## What did you do this week?
+
+•	Kat
+- 
+- 
+- 
+
+•	Paige
+
+- Decide on the variables for the leaflet product we're presenting to Sarah (.5 hours)
+- Lay clean variables Jocelyn created onto base map Kat created (2.5 hours)
+- Meeting with Sarah on Thursday (.5 hours)
+- DataCamp: Building Web Applications in R with Shiny (1 hour)
+
+•	Jocelyn
+- 
+-  
+- 
+
+
+## What is it that you're struggling with right now?
+
+•	Kat
+- still not sure if the product we show Sarah on Thursday is something she's gonna want, and it's been hard to move from the brainstorming to just producing something concrete
+- deciding which variables to plot on the map
+
+•	Paige
+- Weekly time management, still. But will continue working on it.
+- Wodnering if we'll be able to find the information on the level we want (neighborhoods)
+
+•	Jocelyn
+- Cleaning specific messy variables 
+- Visualize variables using maps
+
+
+## What are you planning to do next week?
+
+•	Kat
+- finalize a shiny dashboard hopefully!!
+- meet with Sarah again!
+
+•	Paige
+
+- DataCamp: Building Dashboards with shinydashboard (4 hours) 
+- Mess Around with Shiny and Leaflet (2 hours)
+
+•	Jocelyn
+- Finish cleaning data and look into census data possibly
+- Create a dashboard
+- Help lay clean variables I created onto base map
 
 # 2019 - 2 - 18
 
