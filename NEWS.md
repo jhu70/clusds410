@@ -48,9 +48,7 @@
 - Second Quarterly Report Presentation with group (1 hour)
 - Meeting with Sarah and Zoe (.5 hours)
 - DataCamp: Building Dashboards with shinydashboard (2 hours) 
-*Over Spring Break:
-- *DataCamp: Building Dashboards with shinydashboard (2 hours)
-- *Mess Around with Shiny and Leaflet (2 hours)
+- Over Spring Break {DataCamp: Building Dashboards with shinydashboard (2 hours) and mess Around with Shiny and Leaflet (2 hours))
 
 •	Jocelyn
 - 
