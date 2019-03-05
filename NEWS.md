@@ -16,8 +16,8 @@
 
 •	Jocelyn
 - Cleaned the rates variable using python to generate dummy variables on the service availabilities for infants, toddlers, pre-schoolers, and school age children
-- Experiment with the visualization of the providers' maps (colors, add-ins, elements, etc.)
-- census data analysis datacamp; brainstormed the final products and steps towards it
+- Experimented with the visualization of the providers' maps (colors, add-ins, elements, etc.)
+- Census data analysis datacamp; brainstormed the final products and steps towards it
 
 
 ## What is it that you're struggling with right now?
@@ -54,7 +54,7 @@
 •	Jocelyn
 - Finished datacamps
 - Mess up the demand data and brainstorm how to link it to the supply side of the data
-- Laid the new variables created on the base map Kat created
+- Lay the new variables created on the base map Kat created
 - Experiment with the visualization of the providers' maps (colors, add-ins, elements, etc.)
 
 # 2019 - 2 - 25
