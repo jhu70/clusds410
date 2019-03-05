@@ -15,10 +15,9 @@
 
 
 •	Jocelyn
-- 
-- 
-- 
--  
+- Cleaned the rates variable using python to generate dummy variables on the service availabilities for infants, toddlers, pre-schoolers, and school age children
+- tidycensus and tigris datacamps
+- Laid the new variables created on the base map Kat created
 
 
 ## What is it that you're struggling with right now?
@@ -34,7 +33,8 @@
 - Time management... will most likely be an on-going battle, but it's fine.
 
 •	Jocelyn
-- 
+- Neighborhood level info
+- The balance between illustrating individual provider info versus illuratrating the gap between demand and supply by neighborhood/zipcode
 
 
 ## What are you planning to do next week?
@@ -52,9 +52,9 @@
 - Meeting with Sarah and Zoe (.5 hours) 
 
 •	Jocelyn
-- 
-- 
-- 
+- Finished datacamps
+- Mess up the demand data and brainstorm how to link it to the supply side of the data
+- Experiment with the visualization of the providers' maps (colors, add-ins, elements, etc.)
 
 # 2019 - 2 - 25
 
