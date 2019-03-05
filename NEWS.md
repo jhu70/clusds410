@@ -3,9 +3,9 @@
 ## What did you do this week?
 
 •	Kat
-- 
-- 
-- 
+- Found Boston neighborhood shapefile data and made a base map with it
+- Worked on tigris/tidycensus datacamp
+- Compiled a list of things we have to do 
 
 •	Paige
 
@@ -24,8 +24,8 @@
 ## What is it that you're struggling with right now?
 
 •	Kat
-- 
-- 
+- Still working on putting each address into a neighborhood classification
+- We're having some discussions about what the logistics of the map should look like 
 
 •	Paige
 
@@ -40,7 +40,9 @@
 ## What are you planning to do next week?
 
 •	Kat
-- 
+- Finish assigning address to a neighborhood
+- Finish tigris/tidycensus data camp
+- Start figuring out which demand data we should use and using that information!
 
 •	Paige
 
