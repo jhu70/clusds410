@@ -1,3 +1,62 @@
+# 2019 - 3 - 4
+
+## What did you do this week?
+
+•	Kat
+- 
+- 
+- 
+
+•	Paige
+
+- Brainstormed variables of interest, based on what Sarah and Zoe want (1 hour)
+- Tried to fix the "rates" variable... shout out to Jocelyn (1 hour)
+- DataCamp: Analyzing US Census Data in R {covered: tigris and tidycensus} (4 hours)
+
+
+•	Jocelyn
+- 
+- 
+- 
+-  
+
+
+## What is it that you're struggling with right now?
+
+•	Kat
+- 
+- 
+
+•	Paige
+
+- That we'll be able to find demographic information on the neighborhood level
+- Still don't know how to really treat NA values
+- Time management... will most likely be an on-going battle, but it's fine.
+
+•	Jocelyn
+- 
+
+
+## What are you planning to do next week?
+
+•	Kat
+- 
+
+•	Paige
+
+- Layer on Jocelyn's cleaned variables on Kat's neighborhood base map (2 hours)
+- Second Quarterly Report Presentation with group (1 hour)
+- Meeting with Sarah and Zoe (.5 hours)
+- DataCamp: Building Dashboards with shinydashboard (2 hours) 
+*Over Spring Break:
+- *DataCamp: Building Dashboards with shinydashboard (2 hours)
+- *Mess Around with Shiny and Leaflet (2 hours)
+
+•	Jocelyn
+- 
+- 
+- 
+
 # 2019 - 2 - 25
 
 ## What did you do this week?
