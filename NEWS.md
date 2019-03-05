@@ -11,7 +11,7 @@
 
 - Brainstormed variables of interest, based on what Sarah and Zoe want (1 hour)
 - Tried to fix the "rates" variable... shout out to Jocelyn (1 hour)
-- DataCamp: Analyzing US Census Data in R {covered: tigris and tidycensus} (4 hours)
+- DataCamp: Analyzing US Census Data in R {covered: tigris and tidycensus} (3 hours)
 
 
 •	Jocelyn
@@ -46,10 +46,10 @@
 
 •	Paige
 
+- DataCamp: Analyzing US Census Data in R {covered: tigris and tidycensus} (1 hours)
 - Layer on Jocelyn's cleaned variables on Kat's neighborhood base map (2 hours)
 - Second Quarterly Report Presentation with group (1 hour)
-- Meeting with Sarah and Zoe (.5 hours)
-- DataCamp: Building Dashboards with shinydashboard (2 hours) 
+- Meeting with Sarah and Zoe (.5 hours) 
 
 •	Jocelyn
 - 
