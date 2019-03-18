@@ -1,4 +1,70 @@
+# 2019 - 3 - 18
+
+## What did you do this week?
+
+•	Kat
+
+- 
+- 
+- 
+
+•	Paige
+
+- DataCamp: Analyzing US Census Data in R {covered: tigris and tidycensus} (1 hours)
+- Layer on Jocelyn's cleaned variables on Kat's neighborhood base map (2 hours)
+- Second Quarterly Report Presentation with group (1 hour)
+- Meeting with Sarah and Zoe (.5 hours) 
+
+•	Jocelyn
+
+- 
+- 
+- 
+
+## What is it that you're struggling with right now?
+
+•	Kat
+
+- 
+- 
+
+•	Paige
+
+- Finding demographic information on the neighborhood level
+- How to treat NA values
+- Time management
+
+•	Jocelyn
+
+- 
+- 
+
+## What are you planning to do next week?
+
+•	Kat
+
+- 
+- 
+- 
+
+•	Paige
+
+- Map out as a group a timeline for the rest of the semester (.5 hours)
+- Decide as a group the variables of interest, both what we have and what we need for supply and demand (.5 hours)
+- Find and clean variables of interest (2 hours)
+- DataCamp: Building Web Applications in R with Shiny (1 hour)
+- Meeting with Sarah, go over timeline, variables, and overall end goal (.5 hours)
+
+•	Jocelyn
+
+- 
+- 
+- 
+- 
+
+
 # 2019 - 3 - 4
+
 
 ## What did you do this week?
 
@@ -13,12 +79,10 @@
 - Tried to fix the "rates" variable... shout out to Jocelyn (1 hour)
 - DataCamp: Analyzing US Census Data in R {covered: tigris and tidycensus} (3 hours)
 
-
 •	Jocelyn
 - Cleaned the rates variable using python to generate dummy variables on the service availabilities for infants, toddlers, pre-schoolers, and school age children
 - Experimented with the visualization of the providers' maps (colors, add-ins, elements, etc.)
 - Census data analysis datacamp; brainstormed the final products and steps towards it
-
 
 ## What is it that you're struggling with right now?
 
@@ -35,7 +99,6 @@
 •	Jocelyn
 - Neighborhood level info
 - The balance between illustrating individual provider info versus illuratrating the gap between demand and supply by neighborhood/zipcode
-
 
 ## What are you planning to do next week?
 
@@ -56,6 +119,7 @@
 - Mess up the demand data and brainstorm how to link it to the supply side of the data
 - Lay the new variables created on the base map Kat created
 - Experiment with the visualization of the providers' maps (colors, add-ins, elements, etc.)
+
 
 # 2019 - 2 - 25
 
