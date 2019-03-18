@@ -4,9 +4,10 @@
 
 •	Kat
 
-- 
-- 
-- 
+- Second quarterly report presentation!
+- Meeting with Zoe, took notes
+- Finished the US Census Datacamp
+- Looking into census tracts
 
 •	Paige
 
@@ -25,8 +26,8 @@
 
 •	Kat
 
-- 
-- 
+- We still haven't really looked into the demand side and I'm worried about merging it with the supply
+- I think our maps definitely need to be developed more
 
 •	Paige
 
@@ -43,9 +44,9 @@
 
 •	Kat
 
-- 
-- 
-- 
+- Identify variables of interest as Paige mentioned, and plan what the maps will look like (hand drawing?)
+- Talk about Zoe's email with the demand info and decide which data source we're going to pull everything from
+- Maybe start toying around with putting what we have on Shiny
 
 •	Paige
 
