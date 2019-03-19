@@ -17,10 +17,10 @@
 - Meeting with Sarah and Zoe (.5 hours) 
 
 •	Jocelyn
-
-- 
-- 
-- 
+- Finished census datacamp
+- Created a function to help lay the new variables created on the base map
+- Looked at the note from meeting with Zoe and Sarah
+- Second quarterly report presentation
 
 ## What is it that you're struggling with right now?
 
@@ -35,10 +35,9 @@
 - How to treat NA values
 - Time management
 
-•	Jocelyn
-
-- 
-- 
+•	Jocely
+- The more efficient visualization of maps
+- Link the demand side with the supply side
 
 ## What are you planning to do next week?
 
@@ -57,11 +56,11 @@
 - Meeting with Sarah, go over timeline, variables, and overall end goal (.5 hours)
 
 •	Jocelyn
+- Clean variables of interest
+- Mess up the demand data and brainstorm how to link it to the supply side of the data
+- DataCamp: Building Web Applications in R with Shiny (1 hour)
+- Experiment with the visualization of the providers' maps (colors, add-ins, elements, etc.)
 
-- 
-- 
-- 
-- 
 
 
 # 2019 - 3 - 4
