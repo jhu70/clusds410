@@ -1,0 +1,257 @@
+---
+title: "Age Groups Maps"
+author: "Paige Patrick"
+date: "3/5/2019"
+output: html_document
+---
+
+```{r Boston and Cambridge sf Files}
+# normally packages would be first, but the sf package was causing major problems with the other functions
+# it works best if you run sf seperately and before all other packages
+
+library(sf)
+
+# going ahead and using it for what we need it for, before we load the other packages, again to make things easier
+
+boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+```
+
+```{r Packages}
+library(tidyverse)
+library(leaflet)
+library(USAboundaries)
+library(maps)
+library(leaflet.extras)
+library(fivethirtyeight)
+library(zipcode)
+library(ggmap)
+library(mosaic)
+```
+
+```{r EEC Lon Lat Dataset}
+EEC_lon_lat <- read_csv("EEC_SubsettedData_Region6.csv")
+
+EEC_lon_lat <- EEC_lon_lat %>% 
+  replace(., is.na(.), "Unk")
+
+#glimpse(EEC_lon_lat)
+#View(EEC_lon_lat)
+```
+
+```{r Cleaned Rates Dataset}
+data_rates <- read_csv("data_rates.csv")
+
+#glimpse(data_rates)
+#View(data_rates)
+```
+
+```{r Tallys for Variables}
+# using tally helps us be able to see the different levels for the categorical variables, which is helpful for map building
+# tally lives in the Stat2Data package
+
+tally(~ Infant, data = data_rates)
+tally(~ Toddler, data = data_rates)
+tally(~ Preschool, data = data_rates)
+tally(~ `School Age`, data = data_rates)
+```
+
+```{r Original Basic Base Map}
+original_base_map <- leaflet(data = EEC_lon_lat, 
+                             options = leafletOptions(minZoom = 11))  %>% 
+  addProviderTiles("CartoDB")  %>% 
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5)
+
+#original_base_map
+```
+
+
+```{r Boston Neighborhood Base Map}
+boston_neighborhood_base_map <- leaflet(boston_neighborhood,
+                                        options = leafletOptions(minZoom = 11))  %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(weight = 2, fillOpacity = .1, fillColor = "#000000") %>%
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5)
+
+boston_neighborhood_base_map
+```
+
+```{r Infant Group Map}
+
+# filtering for each level of infant
+
+infant_yes <- data_rates %>%
+  filter(Infant == "Yes")
+
+infant_no <- data_rates %>%
+  filter(Infant == "No")
+
+# color palette for the infant level
+
+infant_pal <- colorFactor(palette = c("green", "red"),
+                            levels = c("Yes", "No"))
+
+# infant age group map
+
+infant_group_map <- boston_neighborhood_base_map %>%  
+  addCircleMarkers(data = infant_yes,
+                   ~lon,
+                   ~lat,
+                   radius = 3,
+                   color = ~infant_pal(Infant),
+                   group = "Yes",
+                   label = ~as.character(Name)) %>%
+    addCircleMarkers(data = infant_no,
+                   ~lon,
+                   ~lat,
+                   radius = 3,
+                   color = ~infant_pal(Infant),
+                   group = "No",
+                   label = ~as.character(Name)) %>%
+  addLayersControl(overlayGroups = c("Yes",
+                                     "No")) %>%
+  addLegend(position = "bottomright",
+            pal = infant_pal,
+            value =c("Yes", "No")) %>%
+  addSearchOSM() %>%
+  addResetMapButton()
+  
+infant_group_map
+```
+
+```{r Toddler Group Map}
+# filtering for each level of toddler
+
+toddler_yes <- data_rates %>%
+  filter(Toddler == "Yes")
+
+toddler_no <- data_rates %>%
+  filter(Toddler == "No")
+
+# color palette for the toddler level
+
+toddler_pal <- colorFactor(palette = c("green", "red"),
+                            levels = c("Yes", "No"))
+
+# toddler age group map
+
+toddler_group_map <- boston_neighborhood_base_map %>%  
+  addCircleMarkers(data = toddler_yes,
+                   ~lon,
+                   ~lat,
+                   radius = 3,
+                   color = ~toddler_pal(Toddler),
+                   group = "Yes",
+                   label = ~as.character(Name)) %>%
+  addCircleMarkers(data = toddler_no,
+                   ~lon,
+                   ~lat,
+                   radius = 3,
+                   color = ~toddler_pal(Toddler),
+                   group = "No",
+                   label = ~as.character(Name)) %>%
+  addLayersControl(overlayGroups = c("Yes",
+                                     "No")) %>%
+  addLegend(position = "bottomright",
+            pal = toddler_pal,
+            value =c("Yes", "No")) %>%
+  addSearchOSM() %>%
+  addResetMapButton()
+  
+toddler_group_map
+
+```
+
+```{r Preschool Group Map}
+# filtering for each level of preschool 
+
+preschool_yes <- data_rates %>%
+  filter(Preschool == "Yes")
+
+preschool_no <- data_rates %>%
+  filter(Preschool == "No")
+
+# color palette for the preschool level
+
+preschool_pal <- colorFactor(palette = c("green", "red"),
+                            levels = c("Yes", "No"))
+
+# preschool age group map
+
+preschool_group_map <- boston_neighborhood_base_map %>%  
+  addCircleMarkers(data = preschool_yes,
+                   ~lon,
+                   ~lat,
+                   radius = 3,
+                   color = ~preschool_pal(Preschool),
+                   group = "Yes",
+                   label = ~as.character(Name)) %>%
+  addCircleMarkers(data = preschool_no,
+                   ~lon,
+                   ~lat,
+                   radius = 3,
+                   color = ~preschool_pal(Preschool),
+                   group = "No",
+                   label = ~as.character(Name)) %>%
+  addLayersControl(overlayGroups = c("Yes",
+                                     "No")) %>%
+  addLegend(position = "bottomright",
+            pal = preschool_pal,
+            value =c("Yes", "No")) %>%
+  addSearchOSM() %>%
+  addResetMapButton()
+  
+preschool_group_map
+
+```
+
+```{r School Age Group Map}
+# filtering for each level of school age
+
+schoolage_yes <- data_rates %>%
+  filter('School Age' == "Yes")
+
+schoolage_no <- data_rates %>%
+  filter('School Age' == "No")
+
+# color palette for the school age level
+
+schoolage_pal <- colorFactor(palette = c("green", "red"),
+                            levels = c("Yes", "No"))
+# school age group map
+
+schoolage_group_map <- boston_neighborhood_base_map %>%
+  addCircleMarkers(data = schoolage_yes,
+                   ~lon,
+                   ~lat,
+                   radius = 3,
+                   color = ~schoolage_pal('School Age'),
+                   group = "Yes",
+                   label = ~as.character(Name)) %>%
+  addCircleMarkers(data = schoolage_no,
+                   ~lon,
+                   ~lat,
+                   radius = 3,
+                   color = ~schoolage_pal('School Age'),
+                   group = "No",
+                   label = ~as.character(Name)) %>%
+  addLayersControl(overlayGroups = c("Yes",
+                                     "No")) %>%
+  addLegend(position = "bottomright",
+            pal = schoolage_pal,
+            value =c("Yes", "No")) %>%
+  addSearchOSM() %>%
+  addResetMapButton()
+
+  
+schoolage_group_map
+```
+
+
+
+
+
+
