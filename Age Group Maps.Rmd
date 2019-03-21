@@ -34,12 +34,19 @@ EEC_lon_lat <- read_csv("EEC_SubsettedData_Region6.csv")
 EEC_lon_lat <- EEC_lon_lat %>% 
   replace(., is.na(.), "Unk")
 
+#Filtering
+EEC_lon_lat <- EEC_lon_lat %>%
+  filter(City %in% boston_neighborhood$Name | City=="Boston")
+
 #glimpse(EEC_lon_lat)
 #View(EEC_lon_lat)
 ```
 
 ```{r Cleaned Rates Dataset}
 data_rates <- read_csv("data_rates.csv")
+
+data_rates <- data_rates %>%
+  filter(City %in% boston_neighborhood$Name | City=="Boston")
 
 #glimpse(data_rates)
 #View(data_rates)
