@@ -1,0 +1,65 @@
+---
+title: "Demand Data"
+author: "Kat Kyuchukova"
+date: "3/23/2019"
+output: html_document
+---
+
+```{r}
+library(tidycensus)
+library(tidyverse)
+```
+
+Setting up API key
+```{r}
+## define census API key and set it with census_api_key function
+
+api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
+census_api_key(api_key)
+
+## check API key
+
+Sys.getenv("CENSUS_API_KEY")
+```
+
+```{r}
+v15 <- load_variables(2016, "acs5", cache = TRUE)
+v15_race <- v15 %>%
+  filter(str_detect(label, fixed("race", 
+                                ignore_case = TRUE)))
+v15_income <- v15 %>%
+  filter(str_detect(label, fixed("income", 
+                                ignore_case = TRUE)))
+
+v15_children<- v15 %>%
+  filter(str_detect(label, fixed("number of children", 
+                                ignore_case = TRUE)))
+
+
+```
+
+Variable names:
+Median income, total: B06011_001
+B23020_001: MEAN USUAL HOURS WORKED IN THE PAST 12 MONTHS FOR WORKERS 16 TO 64 YEARS
+
+B08302_001:B08302_015 -- Time leaving home to go to work
+B08602_001:015 -- Time arriving at work from home
+C24070_001:084 -- INDUSTRY BY CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER
+B23008_001:B23008_027 -- AGE OF OWN CHILDREN UNDER 18 YEARS IN FAMILIES AND SUBFAMILIES BY LIVING ARRANGEMENTS BY EMPLOYMENT STATUS OF PARENTS
+B09002_001:B09002_020 -- OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE AND AGE
+B08303_001:B08303_013 -- travel time to work
+C02003_002:C02003_019-- detailed race, Estimate!!Total!!Population of one race!!White/etc.
+
+```{r}
+test <- get_acs(geography = "tract",
+                     variables = "B08303_001", 
+                     survey = "acs5", 
+                     state= "MA"
+                     )
+```
+
+
+
+
+
+
