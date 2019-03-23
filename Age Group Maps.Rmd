@@ -13,7 +13,7 @@ library(sf)
 
 # going ahead and using it for what we need it for, before we load the other packages, again to make things easier
 
-boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+boston_neighborhood <- read_sf("Users/Downloads/Boston_Neighborhoods/Boston_Neighborhoods.shp")
 ```
 
 ```{r Packages}
