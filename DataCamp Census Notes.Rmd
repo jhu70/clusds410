@@ -1,0 +1,201 @@
+---
+title: 'DataCamp: Analyzing Census Data'
+author: "Paige Patrick"
+date: "3/4/2019"
+output: html_document
+---
+
+## Tidycensus Basics
+
+```{r Packages}
+library(tidycensus)
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r API Key}
+## need an API key to be able to access the Census data from R directly
+## install = TRUE, stores the API key on the person's computer
+
+#census_api_key("8fa9f8cc6afff6f16cfa41d92974f406a35636a6", install = TRUE)
+
+## define census API key and set it with census_api_key function
+
+api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
+census_api_key(api_key)
+
+## check API key
+
+Sys.getenv("CENSUS_API_KEY")
+```
+
+
+```{r Access Decennial Census}
+## geography, specifies the level of aggregation for the census data
+## variables, vector of census variable id codes for which you'd like to request data
+
+decennial_example <- get_decennial(geography = "state",
+                           variables = "P001001")
+
+head(decennial_example)
+```
+
+```{r Access American Community Survey}
+## survey data collected once a year
+## represents estimates of population characteristics, not exact data
+## characterized by margins of errors
+
+acs_example <- get_acs(geography = "state",
+                       variables = "B19013_001")
+
+## output table: estimate column, data estimate 
+## output table: moe column, margin of error around the estimate (confidence level of 90%)
+
+head(acs_example)
+
+## ACS variable structure, example: B19001_002E
+## B, refers to base table, which gives most detail avaiable in ACS. Other prefixes: C (collapsed), DP (data profiles), S (subject tables)
+## 19001, table id
+## 002, specific variable code within the table
+## E, refers to estimate
+
+acs_table_example <- get_acs(geography = "county",
+                             state = "WA",
+                             table = "B19001")
+
+## table, request all variables from a table at once
+## if table is supplied, you don't have to specify any variable ids
+
+acs_table_example
+```
+
+```{r Geography}
+## geography can be represented by legal, statistical, and other entities
+## how to properly format, based on geography: https://walkerke.github.io/tidycensus/articles/basic-usage.html#geography-in-tidycensus
+
+## hhincome, household income
+## medage, median age
+## output ="wide", sets spread of variables, adds moe column for each variable 
+
+geography_example <- get_acs(geography = "county",
+                             variables = c(hhincome ="B19013_001",
+                                           medage = "B01002_001"),
+                             state = "MA",
+                             output = "wide")
+
+head(geography_example)
+```
+
+```{r Finding Census Variable IDs}
+## to find census variable IDs: https://censusreporter.org/
+## built-in variables searching in tidycensus
+
+## load variables function in tidy census helps users download and browse datasets from the census website
+
+## year, year or endyear of the dataset
+## dataset, dataset in question "acs5" = five year acs
+## cache, option to store the variables dataset on their computer to speed up future browsing
+
+acs5_2016 <- load_variables(year = "2016",
+                                    dataset = "acs5",
+                                    cache = TRUE)
+
+head(acs5_2016)
+```
+
+```{r Filtering Variables}
+## name, census id code
+## label, description of variable's characteristics
+## concept, general group to which the variable corresponds
+
+b19001_table <- filter(acs5_2016, 
+                 str_detect(name, "B19001"))
+
+b19001_table
+
+## can search for related variables 
+
+searching_variable <- filter(acs5_2016,
+                             str_detect(label,
+                                        fixed("public transportation",
+                                              ignore_case = TRUE)))
+
+searching_variable
+```
+
+## Wrangling with Tidyverse 
+
+```{r Summary Variables}
+## how to request a summary variable of the total population, which would be useful as a denominator for race and ethinicity variables
+
+race_vars <- c(White = "B03002_003", Black = "B03002_004",
+              Native = "B03002_005", Asian = "B03002_006",
+              HIPI = "B03002_007", Hispanic = "B03002_012")
+
+ma_race <- get_acs(geography = "county",
+               state = "MA",
+               variables = race_vars,
+               summary_var = "B03002_001")
+
+## output table: the total population values for each county are stored in the summary_est column with the summary_moe column giving moe 
+
+ma_race
+
+## allows for group estimates in the estimate column to be compared with the total population in a given geographic area
+## calculating population percentages
+
+ma_race_percent <- ma_race %>%
+  mutate(percent = 100 * (estimate/summary_est)) %>%
+  select(NAME, variable, percent)
+
+ma_race_percent
+
+```
+
+```{r Group Wise Analysis}
+## identifying the largest racial in each county 
+## GEOID, uniquely identifies each county
+
+ma_largest <- ma_race %>%
+  group_by(GEOID) %>%
+  filter(estimate == max(estimate)) %>%
+  select(NAME, variable, estimate)
+
+ma_largest
+
+## summarize results with tally function 
+
+ma_largest %>%
+  group_by(variable) %>%
+  tally()
+
+```
+
+```{r Purrr}
+## purrr is especially useful for iteration, or the repetition of a process for a series of values
+## can be used with ACS to acquire data for multiple years and combine those datasets into a single ouput dataset
+
+ma_cities <- map_df(2012:2016, function(x) {
+  get_acs(geography = "place",
+          variables = c(totalpop = "B01003_001"),
+          state = "MA",
+          survey = "acs1",
+          year = x) %>%
+    mutate(year = x)
+})
+
+ma_cities
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
