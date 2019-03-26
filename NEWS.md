@@ -4,10 +4,11 @@
 
 •	Kat
 
-- 
-- 
-- 
-- 
+- Mapped out a timeline for the rest of the semester
+- Met with Sarah and told her about our timeline and got feedback
+- Decided on demand variables and worked on getting them into the format we need
+- Made some maps with demand variable data
+- Discussed next steps for incorporating supply and demand
 
 •	Paige
 
@@ -27,8 +28,9 @@
 
 •	Kat
 
-- 
-- 
+- The data for the variables we need isn't available at the block level in the decennial, and ACS only has tracts
+- The type of maps we can make with census data seems different from the type of maps we've been making with supply data
+- We're having trouble finding good variables that represent length of work day
 
 •	Paige
 
@@ -44,9 +46,10 @@
 
 •	Kat
 
-- Identify variables of interest as Paige mentioned, and plan what the maps will look like (hand drawing?)
-- Talk about Zoe's email with the demand info and decide which data source we're going to pull everything from
-- Maybe start toying around with putting what we have on Shiny
+- Try to make maps with more of the demand variables (so far have focused on time leaving for work)
+- Try to find a solution to length of work day issue
+- Ask Sarah about census blocks vs tracts vs neighborhoods
+
 
 •	Paige
 
