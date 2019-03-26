@@ -19,11 +19,10 @@
 - Meeting with Sarah, go over timeline, variables, and overall end goal (.5 hours)
 
 •	Jocelyn
-
--
--
--
--
+- Cleaned after hour operations variables
+- Decided on demand variables and looked into how they were organized
+- Finished census data camp
+- Worked on making maps on the cleaned variables
 
 ## What is it that you're struggling with right now?
 
@@ -39,9 +38,8 @@
 - Time management
 
 •	Jocelyn
-
-- 
--
+- Matched maps made for census data with supply data
+- We could not find any variable on the time people arrive home from work to know the exact work hours of people  
 
 ## What are you planning to do next week?
 
@@ -59,8 +57,8 @@
 - Build some maps with the cleaned variables we've created (2 hour)
 
 •	Jocelyn
-- Clean variables of interest
-- Mess up the demand data and brainstorm how to link it to the supply side of the data
+- Clean variables of interest for the demand side 
+- Makde maps for the demand data and brainstorm how to link it to the supply side of the data
 - DataCamp: Building Web Applications in R with Shiny (1 hour)
 - Experiment with the visualization of the providers' maps (colors, add-ins, elements, etc.)
 
