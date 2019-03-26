@@ -8,6 +8,10 @@ output: html_document
 ```{r}
 library(tidycensus)
 library(tidyverse)
+library(tigris)
+library(sf)
+library(mosaic)
+library(mapview)
 ```
 
 Setting up API key
@@ -24,6 +28,7 @@ Sys.getenv("CENSUS_API_KEY")
 
 ```{r}
 v15 <- load_variables(2016, "acs5", cache = TRUE)
+
 v15_race <- v15 %>%
   filter(str_detect(label, fixed("race", 
                                 ignore_case = TRUE)))
@@ -51,11 +56,42 @@ B08303_001:B08303_013 -- travel time to work
 C02003_002:C02003_019-- detailed race, Estimate!!Total!!Population of one race!!White/etc.
 
 ```{r}
-test <- get_acs(geography = "tract",
-                     variables = "B08303_001", 
-                     survey = "acs5", 
-                     state= "MA"
-                     )
+leavinghome_vars <- c("B08302_001", "B08302_002", "B08302_003", "B08302_004", "B08302_005", "B08302_006", "B08302_007", "B08302_008", "B08302_009", "B08302_010", "B08302_011", "B08302_012", "B08302_013", "B08302_014", "B08302_015")
+
+leavinghome_before7am_vars <- c("B08302_002", "B08302_003", "B08302_004", "B08302_005", "B08302_006")
+leavinghome_am_vars <- c("B08302_002", "B08302_003", "B08302_004", "B08302_005", "B08302_006")
+
+leavinghome_before7 <- get_acs(geography = "tract",
+                     variables = leavinghome_before7am_vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+
+ leavinghome_after4 <- get_acs(geography = "tract",
+                     variables = "B08302_015",
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+plot(leavinghome_before7["estimate"])
+
+ggplot(leavinghome_before7, aes(fill=estimate)) + geom_sf()
+ggplot(leavinghome_after4, aes(fill=estimate)) + geom_sf()
+
+m <- mapview(leavinghome_before7, zcol="estimate")
+m@map
+
+m2 <- mapview(leavinghome_after4, zcol="estimate")
+m2@map
+```
+
+Tracts?
+```{r}
+ma_tracts <- tracts(state="MA", county="Suffolk")
+plot(ma_tracts)
 ```
 
 
