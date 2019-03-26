@@ -1,0 +1,183 @@
+---
+title: After hours Maps"
+author: "Jocelyn Hu"
+date: "3/5/2019"
+output: html_document
+---
+
+```{r Boston and Cambridge sf Files}
+# normally packages would be first, but the sf package was causing major problems with the other functions
+# it works best if you run sf seperately and before all other packages
+
+library(sf)
+
+# going ahead and using it for what we need it for, before we load the other packages, again to make things easier
+
+boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+```
+
+```{r Packages}
+library(tidyverse)
+library(leaflet)
+library(USAboundaries)
+library(maps)
+library(leaflet.extras)
+library(fivethirtyeight)
+library(zipcode)
+library(ggmap)
+library(mosaic)
+```
+
+```{r EEC Lon Lat and after hours Dataset}
+EEC <- read_csv("3262019_afterhours_Jhu.csv")
+
+EEC <- EEC %>% 
+  replace(., is.na(.), "Unk")
+
+#Filtering
+EEC <- EEC %>%
+  filter(City %in% boston_neighborhood$Name | City=="Boston")
+
+#glimpse(EEC_lon_lat)
+#View(EEC_lon_lat)
+```
+
+
+```{r Tallys for Variables}
+# using tally helps us be able to see the different levels for the categorical variables, which is helpful for map building
+# tally lives in the Stat2Data package
+
+tally(~ Weekend_off_hours, data =EEC)
+tally(~ Weekdays_off_hours, data = EEC)
+tally(~ Monday_off_hours, data = EEC)
+tally(~ Tuesday_off_hours, data = EEC)
+tally(~ Wednesday_off_hours, data = EEC)
+tally(~ Thursday_off_hours, data = EEC)
+tally(~ Friday_off_hours, data = EEC)
+```
+
+```{r Original Basic Base Map}
+# original_base_map <- leaflet(data = EEC, 
+#                              options = leafletOptions(minZoom = 11))  %>% 
+#   addProviderTiles("CartoDB")  %>% 
+#   setView(lng = -71.057083, 
+#           lat = 42.361145, 
+#           zoom = 11.5)
+# 
+# #original_base_map
+```
+
+
+```{r Boston Neighborhood Base Map}
+boston_neighborhood_base_map <- leaflet(boston_neighborhood,
+                                        options = leafletOptions(minZoom = 11))  %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(weight = 2, fillOpacity = .1, fillColor = "#000000") %>%
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5)
+
+boston_neighborhood_base_map
+```
+
+```{r data wrangling to filter data for each layer Group Map}
+
+# filtering for each level of infant
+# not mapping weekend_yes since there is no obs
+# weekend_yes<- EEC  %>%
+#   filter(Weekend_off_hours == "TRUE")
+
+weekend_no <- EEC %>%
+  filter(Weekend_off_hours == "FALSE")
+
+weekday_yes<- EEC  %>%
+  filter(Weekdays_off_hours == "TRUE")
+
+weekday_no <- EEC %>%
+  filter(Weekdays_off_hours == "FALSE")
+
+monday_yes<- EEC  %>%
+  filter(Monday_off_hours == "TRUE")
+
+monday_no <- EEC %>%
+  filter(Monday_off_hours == "FALSE")
+
+tuesday_yes<- EEC  %>%
+  filter(Tuesday_off_hours == "TRUE")
+
+tuesday_no <- EEC %>%
+  filter(Tuesday_off_hours == "FALSE")
+
+wednesday_yes<- EEC  %>%
+  filter(Wednesday_off_hours == "TRUE")
+
+wednesday_no <- EEC %>%
+  filter(Wednesday_off_hours == "FALSE")
+
+thursday_yes<- EEC  %>%
+  filter(Thursday_off_hours == "TRUE")
+
+thursday_no <- EEC %>%
+  filter(Thursday_off_hours == "FALSE")
+
+friday_yes <- EEC %>%
+  filter(Friday_off_hours == "TRUE")
+
+friday_no <- EEC %>%
+  filter(Friday_off_hours == "FALSE")
+
+```
+
+
+```{r create map function}
+# before school color palette
+
+createmap <- function(var1,data1,data2){
+  
+  color_pal <- colorFactor(palette = c("green", "red"),
+                        levels = c("TRUE", "FALSE"))
+#before school colored map
+ 
+  colored_map <- boston_neighborhood_base_map %>% 
+  addCircleMarkers(data = data1,
+                   ~lon, 
+                   ~lat, 
+                   radius = 2, 
+                   color = formula(paste("~color_pal(", var1, ")")),
+                   group = "TRUE",
+                   label = ~as.character(Name)) %>% 
+  addCircleMarkers(data = data2,
+                   ~lon, 
+                   ~lat, 
+                   radius = 2, 
+                   color = formula(paste("~color_pal(", var1, ")")),
+                   group = "FALSE",
+                   label = ~as.character(Name))  %>% 
+  addLayersControl(overlayGroups = c("TRUE",
+                                     "FALSE")) %>%
+  addLegend(position = "bottomright",
+            pal = color_pal,
+            value =c("TRUE","FALSE")) %>%
+  addSearchOSM() %>%
+  addReverseSearchOSM() %>%
+  addResetMapButton()
+
+# print map
+
+colored_map
+}
+
+```
+
+
+```{r}
+createmap("Weekdays_off_hours", weekday_yes, weekday_no)
+createmap("Monday_off_hours", monday_yes, monday_no)
+createmap("Tuesday_off_hours", tuesday_yes, tuesday_no)
+createmap("Wednesday_off_hours", wednesday_yes, wednesday_no)
+createmap("Thursday_off_hours", thursday_yes, thursday_no)
+createmap("Friday_off_hours",friday_yes, friday_no)
+
+
+```
+
