@@ -1,3 +1,65 @@
+# 2019 - 3 - 25
+
+## What did you do this week?
+
+•	Kat
+
+- 
+- 
+- 
+- 
+
+•	Paige
+
+- Map out as a group a timeline for the rest of the semester (.5 hours)
+- Decide as a group the variables of interest, both what we have and what we need for supply and demand (.5 hours)
+- Find and clean variables of interest (2 hours)
+- Meeting with Sarah, go over timeline, variables, and overall end goal (.5 hours)
+
+•	Jocelyn
+
+-
+-
+-
+-
+
+## What is it that you're struggling with right now?
+
+•	Kat
+
+- 
+- 
+
+•	Paige
+
+- Navigating tidycensus to find and clean demand variables
+- Time management
+
+•	Jocelyn
+
+- 
+-
+
+## What are you planning to do next week?
+
+•	Kat
+
+- Identify variables of interest as Paige mentioned, and plan what the maps will look like (hand drawing?)
+- Talk about Zoe's email with the demand info and decide which data source we're going to pull everything from
+- Maybe start toying around with putting what we have on Shiny
+
+•	Paige
+
+- Find and clean demand variables of interest (2 hours)
+- DataCamp: Building Web Applications in R with Shiny (1 hour)
+- Build some maps with the cleaned variables we've created (2 hour)
+
+•	Jocelyn
+- Clean variables of interest
+- Mess up the demand data and brainstorm how to link it to the supply side of the data
+- DataCamp: Building Web Applications in R with Shiny (1 hour)
+- Experiment with the visualization of the providers' maps (colors, add-ins, elements, etc.)
+
 # 2019 - 3 - 18
 
 ## What did you do this week?
