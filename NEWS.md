@@ -1,3 +1,69 @@
+# 2019 - 3 - 25
+
+## What did you do this week?
+
+•	Kat
+
+- Mapped out a timeline for the rest of the semester
+- Met with Sarah and told her about our timeline and got feedback
+- Decided on demand variables and worked on getting them into the format we need
+- Made some maps with demand variable data
+- Discussed next steps for incorporating supply and demand
+- Finally put things up on Github!!
+
+•	Paige
+
+- Map out as a group a timeline for the rest of the semester (.5 hours)
+- Decide as a group the variables of interest, both what we have and what we need for supply and demand (.5 hours)
+- Find and clean variables of interest (2 hours)
+- Meeting with Sarah, go over timeline, variables, and overall end goal (.5 hours)
+
+•	Jocelyn
+
+-
+-
+-
+-
+
+## What is it that you're struggling with right now?
+
+•	Kat
+
+- The data for the variables we need isn't available at the block level in the decennial, and ACS only has tracts
+- The type of maps we can make with census data seems different from the type of maps we've been making with supply data
+- We're having trouble finding good variables that represent length of work day
+
+•	Paige
+
+- Navigating tidycensus to find and clean demand variables
+- Time management
+
+•	Jocelyn
+
+- 
+-
+
+## What are you planning to do next week?
+
+•	Kat
+
+- Try to make maps with more of the demand variables (so far have focused on time leaving for work)
+- Try to find a solution to length of work day issue
+- Ask Sarah about census blocks vs tracts vs neighborhoods
+
+
+•	Paige
+
+- Find and clean demand variables of interest (2 hours)
+- DataCamp: Building Web Applications in R with Shiny (1 hour)
+- Build some maps with the cleaned variables we've created (2 hour)
+
+•	Jocelyn
+- Clean variables of interest
+- Mess up the demand data and brainstorm how to link it to the supply side of the data
+- DataCamp: Building Web Applications in R with Shiny (1 hour)
+- Experiment with the visualization of the providers' maps (colors, add-ins, elements, etc.)
+
 # 2019 - 3 - 18
 
 ## What did you do this week?
