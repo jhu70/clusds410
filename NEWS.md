@@ -9,6 +9,7 @@
 - Decided on demand variables and worked on getting them into the format we need
 - Made some maps with demand variable data
 - Discussed next steps for incorporating supply and demand
+- Finally put things up on Github!!
 
 •	Paige
 
