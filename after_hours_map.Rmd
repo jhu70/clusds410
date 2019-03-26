@@ -80,7 +80,7 @@ boston_neighborhood_base_map <- leaflet(boston_neighborhood,
 boston_neighborhood_base_map
 ```
 
-```{r data wrangling to filter data for each layer Group Map}
+```{r data wrangling to filter data for each layer Group Map, eval = FALSE}
 
 # filtering for each level of infant
 # not mapping weekend_yes since there is no obs

@@ -5,7 +5,7 @@ date: "3/5/2019"
 output: html_document
 ---
 
-```{r Boston and Cambridge sf Files}
+```{r Boston and Cambridge sf Files, eval = FALSE}
 # normally packages would be first, but the sf package was causing major problems with the other functions
 # it works best if you run sf seperately and before all other packages
 
@@ -13,7 +13,7 @@ library(sf)
 
 # going ahead and using it for what we need it for, before we load the other packages, again to make things easier
 
-boston_neighborhood <- read_sf("Users/Downloads/Boston_Neighborhoods/Boston_Neighborhoods.shp")
+boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
 ```
 
 ```{r Packages}
