@@ -84,8 +84,8 @@ boston_neighborhood_base_map
 
 # filtering for each level of infant
 # not mapping weekend_yes since there is no obs
-# weekend_yes<- EEC  %>%
-#   filter(Weekend_off_hours == "TRUE")
+weekend_yes<- EEC %>%
+  filter(Weekend_off_hours == "TRUE")
 
 weekend_no <- EEC %>%
   filter(Weekend_off_hours == "FALSE")
@@ -137,7 +137,7 @@ createmap <- function(var1,data1,data2){
   color_pal <- colorFactor(palette = c("green", "red"),
                         levels = c("TRUE", "FALSE"))
 #before school colored map
- 
+  if(nrow(data1) > 0) {
   colored_map <- boston_neighborhood_base_map %>% 
   addCircleMarkers(data = data1,
                    ~lon, 
@@ -145,8 +145,10 @@ createmap <- function(var1,data1,data2){
                    radius = 2, 
                    color = formula(paste("~color_pal(", var1, ")")),
                    group = "TRUE",
-                   label = ~as.character(Name)) %>% 
-  addCircleMarkers(data = data2,
+                   label = ~as.character(Name)) }
+  if(nrow(data1) <= 0) {colored_map <- boston_neighborhood_base_map}
+  if(nrow(data2) > 0){
+  colored_map <- colored_map %>% addCircleMarkers(data = data2,
                    ~lon, 
                    ~lat, 
                    radius = 2, 
@@ -160,7 +162,7 @@ createmap <- function(var1,data1,data2){
             value =c("TRUE","FALSE")) %>%
   addSearchOSM() %>%
   addReverseSearchOSM() %>%
-  addResetMapButton()
+  addResetMapButton()}
 
 # print map
 
@@ -171,6 +173,7 @@ colored_map
 
 
 ```{r}
+createmap("Weekend_off_hours", weekend_yes, weekend_no)
 createmap("Weekdays_off_hours", weekday_yes, weekday_no)
 createmap("Monday_off_hours", monday_yes, monday_no)
 createmap("Tuesday_off_hours", tuesday_yes, tuesday_no)
