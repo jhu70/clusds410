@@ -1,3 +1,46 @@
+# 2019 - 4 - 1
+
+## What did you do this week?
+
+•	Kat
+- Looked more into the length of work day census problem/ brainstormed an archetype idea
+- Made more maps of census demand data and looked more in depth at certain variables
+- looked into the mapping polygons part of the leaflet data camp
+
+•	Paige
+
+
+•	Jocelyn
+
+## What is it that you're struggling with right now?
+
+•	Kat
+- I can't get the demand data maps to work with leaflet syntax, only mapview, which might make it hard to combine them
+- Still not sure about what to do about this lack of length of work day variable
+
+
+•	Paige
+
+
+
+•	Jocelyn
+
+
+## What are you planning to do next week?
+
+•	Kat
+
+- Combining demand maps and supply maps
+- Ask Sarah about length of work day census variable!!
+- Start up shiny?!
+
+
+•	Paige
+
+
+•	Jocelyn
+
+
 # 2019 - 3 - 25
 
 ## What did you do this week?
