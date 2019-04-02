@@ -5,7 +5,7 @@ date: "3/5/2019"
 output: html_document
 ---
 
-```{r Boston and Cambridge sf Files}
+```{r Boston and Cambridge sf Files, eval = FALSE}
 # normally packages would be first, but the sf package was causing major problems with the other functions
 # it works best if you run sf seperately and before all other packages
 
