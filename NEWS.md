@@ -13,6 +13,9 @@
 - Notes for team on the DataCamp (2 hours)
 
 •	Jocelyn
+- Made more maps of the providers data and looked more in depth at certain variables
+- Shinydashboards data camps
+- Figured out how to lay the providers map on the map for census demand data
 
 ## What is it that you're struggling with right now?
 
@@ -27,6 +30,8 @@
 
 
 •	Jocelyn
+- Work more on census demand data and connect them back to the supply side
+- The difference between tracts and neighborhoods
 
 
 ## What are you planning to do next week?
@@ -46,7 +51,10 @@
 - Notes on DataCamp (2 hours)
 
 •	Jocelyn
-
+- Start laying the map for providers on the map for the census demand data
+- Create more maps by using unused cleaned variables and see if they could help lay out the story for the main variables
+- Help put up shiny dashboard
+- Work on financial subsidy variable if necessay
 
 # 2019 - 3 - 25
 
