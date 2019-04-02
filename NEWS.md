@@ -1,3 +1,125 @@
+# 2019 - 4 - 1
+
+## What did you do this week?
+
+•	Kat
+- Looked more into the length of work day census problem/ brainstormed an archetype idea
+- Made more maps of census demand data and looked more in depth at certain variables
+- looked into the mapping polygons part of the leaflet data camp
+
+•	Paige
+
+- DataCamp: Building Dashboards with Shinydashboards (4 hours)
+- Notes for team on the DataCamp (2 hours)
+
+•	Jocelyn
+- Made more maps of the providers data and looked more in depth at certain variables
+- Shinydashboards data camps
+- Figured out how to lay the providers map on the map for census demand data
+
+## What is it that you're struggling with right now?
+
+•	Kat
+- I can't get the demand data maps to work with leaflet syntax, only mapview, which might make it hard to combine them
+- Still not sure about what to do about this lack of length of work day variable
+
+
+•	Paige
+- Time Management (more so this week than any other, because of DataFest)
+- Integration with Shiny
+
+
+•	Jocelyn
+- Work more on census demand data and connect them back to the supply side
+- The difference between tracts and neighborhoods
+
+
+## What are you planning to do next week?
+
+•	Kat
+
+- Combining demand maps and supply maps
+- Ask Sarah about length of work day census variable!!
+- Start up shiny?!
+
+
+•	Paige
+
+- Put together some basic shiny dashboard to show Sarah on Thursday (2 hours)
+- Meeting with Sarah on Thursday (.5 hours)
+- DataCamp: Building Web Applications in R with Shiny (4 hours)
+- Notes on DataCamp (2 hours)
+
+•	Jocelyn
+- Start laying the map for providers on the map for the census demand data
+- Create more maps by using unused cleaned variables and see if they could help lay out the story for the main variables
+- Help put up shiny dashboard
+- Work on financial subsidy variable if necessay
+
+# 2019 - 3 - 25
+
+## What did you do this week?
+
+•	Kat
+
+- Mapped out a timeline for the rest of the semester
+- Met with Sarah and told her about our timeline and got feedback
+- Decided on demand variables and worked on getting them into the format we need
+- Made some maps with demand variable data
+- Discussed next steps for incorporating supply and demand
+- Finally put things up on Github!!
+
+•	Paige
+
+- Map out as a group a timeline for the rest of the semester (.5 hours)
+- Decide as a group the variables of interest, both what we have and what we need for supply and demand (.5 hours)
+- Find and clean variables of interest (2 hours)
+- Meeting with Sarah, go over timeline, variables, and overall end goal (.5 hours)
+
+•	Jocelyn
+- Cleaned after hour operations variables
+- Decided on demand variables and looked into how they were organized
+- Finished census data camp
+- Worked on making maps on the cleaned variables
+
+## What is it that you're struggling with right now?
+
+•	Kat
+
+- The data for the variables we need isn't available at the block level in the decennial, and ACS only has tracts
+- The type of maps we can make with census data seems different from the type of maps we've been making with supply data
+- We're having trouble finding good variables that represent length of work day
+
+•	Paige
+
+- Navigating tidycensus to find and clean demand variables
+- Time management
+
+•	Jocelyn
+- Matched maps made for census data with supply data
+- We could not find any variable on the time people arrive home from work to know the exact work hours of people  
+
+## What are you planning to do next week?
+
+•	Kat
+
+- Try to make maps with more of the demand variables (so far have focused on time leaving for work)
+- Try to find a solution to length of work day issue
+- Ask Sarah about census blocks vs tracts vs neighborhoods
+
+
+•	Paige
+
+- Find and clean demand variables of interest (2 hours)
+- DataCamp: Building Web Applications in R with Shiny (1 hour)
+- Build some maps with the cleaned variables we've created (2 hour)
+
+•	Jocelyn
+- Clean variables of interest for the demand side 
+- Makde maps for the demand data and brainstorm how to link it to the supply side of the data
+- DataCamp: Building Web Applications in R with Shiny (1 hour)
+- Experiment with the visualization of the providers' maps (colors, add-ins, elements, etc.)
+
 # 2019 - 3 - 18
 
 ## What did you do this week?

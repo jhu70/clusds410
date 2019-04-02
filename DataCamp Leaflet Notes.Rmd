@@ -1,0 +1,395 @@
+---
+title: "Leaflet DataCamp Notes"
+author: "Paige Patrick"
+date: "2/16/2019"
+output: html_document
+---
+
+##Chapter 1
+
+```{r Load package}
+# leaflet allows us to build interactive maps
+
+library(leaflet)
+
+# ggmap allows us to do geocoding in R
+
+library(ggmap)
+
+# tibble allows to build mini dataframes, basically
+
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+```{r Add base maps using addTiles}
+leaflet() %>%
+  addTiles()
+```
+
+```{r Different tiles included in leaflet}
+# can use different tiles that are automatically included in leaflet, which can be used with addProviderTiles
+
+names(providers)
+```
+
+```{r Add base map using addProviderTiles}
+leaflet() %>%
+  addProviderTiles("OpenStreetMap")
+```
+
+```{r Getting coordinates based on address}
+geocode("6964 N Sheridan Road, Chicago, IL 60626",
+        output = c("lat", "latlong", "more", "all"),
+        source = c("dsk"))
+```
+
+```{r Mapping boston}
+# can use the setView function to map a particular area; the best thing to do is find the center longitude and latitude cooridnates of the area you are interested in mapping
+
+leaflet() %>%
+  addTiles() %>%
+  setView(lng = -71.057083,
+          lat = 42.361145,
+          zoom = 11)
+```
+
+```{r Restricting zoom}
+# can control how much someone zooms in and out
+# thinking that not all the extra ProviderTiles work, if we are looking at a more zoomed in area, like Boston
+
+leaflet(options =
+          leafletOptions(dragging = FALSE,
+                         minZoom = 10,
+                         maxZoom = 18)) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  setView(lng = -71.057083,
+          lat = 42.361145,
+          zoom = 11)
+
+# more information: leaflet reference html and rstudio github for leaflet 
+```
+
+```{r Plotting single marker}
+# if ploting multiple markers, leaflet will set the bounds automatically so that you can see all the markers at once
+
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(lng = -71.057083,
+          lat = 42.361145)
+```
+
+
+```{r Plotting multiple markers}
+# can plot multiple points using a dataframe or a tibble to pass coordinates to the addMarkers function
+
+# when piping a data frame into the leaflet function, R will search for columns named lat/latitude and lng/longitude
+
+dc_hq <-
+  tibble(
+    hq = c("DataCamp - NYC", "DataCamp - Belguim"),
+    lon = c(-73.98575, 4.717863),
+    lat = c(40.74856, 50.881363)
+  )
+
+dc_hq %>%
+  leaflet() %>%
+    addTiles() %>%
+    addMarkers(lng = dc_hq$lon, lat = dc_hq$lat)
+
+```
+
+```{r Pop ups for markers}
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(lng = dc_hq$lon, lat = dc_hq$lat, popup = dc_hq$hq)
+```
+
+```{r Pop ups for markers}
+# replacing the addMarkers function with the addPopups function allows you to display the popup without the user clicking on the marker; not a great feature if there are a lot of locations you're trying to map
+
+leaflet() %>%
+  addTiles() %>%
+  addPopups(lng = dc_hq$lon, lat = dc_hq$lat, popup = dc_hq$hq)
+```
+
+```{r Storing leaflet maps as objects}
+# allows us to save a basemap and tweak it as we go
+
+base_map <- 
+  leaflet() %>%
+    addTiles() %>%
+    setView(lng = dc_hq$lon[1],
+            lat = dc_hq$lat[1],
+            zoom = 12)
+
+base_map %>%
+  addMarkers(lng = dc_hq$lon,
+             lat = dc_hq$lat,
+             popup = dc_hq$hq)
+```
+
+##Chapter 2
+
+```{r Restoring base map}
+# restore view based on data displayed in map
+
+base_map %>%
+  clearBounds()
+```
+
+```{r Adding circle markers}
+base_map %>%
+  addCircleMarkers(data = dataset)
+```
+
+```{r More to do with circle markers}
+# might have to remove existing markers first, before adding circle markers
+
+base_map %>%
+  clearMarkers() %>%
+  addCircleMarkers(data = dataset, 
+                   radius = 2,
+                   color = "red",
+                   popup = ~name)
+```
+
+```{r Correct syntax for add Markers}
+# example taken from DataCamp; important to note: dataset$variable
+
+base_map %>%
+  addMarkers(lng = ca$lng, lat = ca$lat)
+```
+
+```{r Adding labels}
+# it's better to pipe the data into the leaflet function, so we don't have to keep specifying the name of the dataset
+
+dataset %>%
+  leaflet() %>%
+    addProviderTiles("CartoDB") %>%
+    addCircleMarkers(lng = ~lng, 
+                     lat = ~lat,
+                     popup = ~name,
+                     color = "#FF0000")
+```
+
+```{r Adding popups with multiple info}
+# paste0 converts arguments into characters and joins them together into a single string, without seperating the arguments, that is used in the popup
+
+dataset %>%
+  leaflet() %>%
+    addCircleMarkers(popup = ~paste0(variable1, "-", variable2))
+
+# can also create line breaks to have each element in the popup to appear on a separate line, "<br/>"
+# we can wrap variables to put them in italics, "<i>" then "</i>"; in this case variable1 would be would be in italics
+# can also wrap variables to pur them in bold, "<b>" then "</b>"
+
+dataset %>%
+  leaflet() %>%
+    addCircleMarkers(popup = -paste0("<i>",
+                                     variable1,
+                                     "</i>",
+                                     "<br/>", 
+                                     variable2))
+
+```
+
+```{r Adding labels}
+# labels allows us to hover over the points instead of having to click on it
+
+dataset %>%
+  leaflet() %>%
+    addProviderTiles("CartoDB") %>%
+    addCircleMarkers(labels = ~name, 
+                     radius = 2)
+```
+
+```{r Using color on categorical variables}
+# can use the colorFactor function to build a color palette that allows us to color the levels of a categorical variable (cv)
+
+cat_pal <- colorFactor(palette = c("red", "green", "blue"),
+                        levels = c("cv_level1", "cv_level2", "cv_level3"))
+
+# then pass this palette to the color argument of addCircleMarkers
+
+map_name <- dataset %>%
+  leaflet() %>%
+    addProviderTiles("CartoDB") %>%
+    addCircleMarkers(radius = 2,
+                     color = ~cat_pal(categorical_variable_name),
+                     label = ~name)
+
+# then we add a legend using the addLegend function
+
+map_name %>%
+  addLegend(position = "bottomright",
+            pal = cat_pal,
+            value =c("cv_level1", "cv_level2", "cv_level3"))
+
+```
+
+```{r Using color on numeric variables}
+# can use the colorNumeric function to build a color palette that allows us to color a continuous, numerical variable
+# domain should match the range of the numeric variable's values, in this case 1-50 is the range
+# setting reverse to true will flip the gradiant, so smaller values are represented by a darker color
+
+num_pal <- colorNumeric(palette = "Blues", domain = c(1:50), reverse = TRUE)
+
+# then we pass this palette to the color argument of addCircleMarkers and add a legend
+# opacity changes how opaque the legend appears
+# value matches the range from the domain
+
+map_name <-
+  dataset %>%
+  leaflet() %>%
+    addProviderTiles("CartoDB") %>%
+    addCircleMarkers(radius = 4,
+                     color = ~num_pal(numeric_variable_name), 
+                     label = ~name) %>%
+    addLegend(title = "Title Name",
+              opacity = 0.5,
+              pal = num_pal,
+              values = c(1:50),
+              position = "topright")
+```
+
+```{r Picking color palette using RColorBrewer}
+# don't forget about RColorBrewer
+
+library(RColorBrewer)
+display.brewer.all()
+
+# http://colorbrewer2.org to test the palettes before using
+```
+
+# Chapter 3
+
+```{r Leaflet extras package}
+#leaflet.extras package
+
+library(leaflet.extras)
+
+# focusing on three: making a map searchable, enabling geocoding via mouse clicks, and adding a button that will allow us to easily restore the default map view
+```
+
+```{r Making a map searchable}
+# we can add a magnifying glass icon to our map using the addSearchOSM function
+# clicking the icon will reveal a search box that we can use to search all of the locations included on the map
+# clicking on an entry in the search box dropdown menu automatically zooms us in on the location 
+
+leaflet() %>%
+  addTiles() %>%
+  addSearchOSM()
+```
+
+```{r Enabling geocoding via mouse clicks}
+# so after creating the search box, we can use the addReverseSearchOSM function
+# clicking on a location from a search box will now drop a pin and the lat and lng of that location will be visable
+
+leaflet() %>%
+  addTiles() %>%
+  addSearchOSM() %>%
+  addReverseSearchOSM()
+```
+
+```{r Restoring to default map view}
+# we can use the addResetMapButton function will create a reset icon below the magnifying glass that can be used to return to the default view of the map 
+leaflet() %>%
+  addTiles() %>%
+  addSearchOSM() %>%
+  addReverseSearchOSM() %>%
+  addResetMapButton()
+```
+
+```{r Overlay groups}
+# add menu to map that allows users to toggle which level is displayed 
+# can plot each categorical variable level as a seperate layer
+# need to create a different dataset for each layer, so that each of the different datasets is filtered to only contain the information for a given categorical variable level
+
+filtered_cv_level1 <-
+  old_dataset %>%
+  filter(categorical_variable == "cv_level1")
+
+# we will use the group argument in the addCircleMarkers function which will correspond to a given categorical variable level
+# add all addCircleMarkers, representing all categorical variable levels for a given categorical variable
+# must add addLayersControl function, in order for the layers to work properly
+
+map %>%
+  addCircleMarkers(data = filtered_cv_level1,
+                   color = ~pal(categorical_variable),
+                   group = "cv_level1") %>%
+   addCircleMarkers(data = filtered_cv_level2,
+                   color = ~cat_pal(categorical_variable),
+                   group = "cv_level2") %>%
+   addCircleMarkers(data = filtered_cv_level3,
+                   color = ~pal(categorical_variable_name),
+                   group = "cv_level3") %>%
+  addLayersControl(overlayGroups = c("cv_level1",
+                                     "cv_level2",
+                                     "cv_level3"))
+
+```
+
+```{r Base Groups}
+# can add basemap groups to allow users to toggle between different maps
+# unlike overlay groups, only one base groups maybe selected at a time
+# to add multiple base groups, we need to call addProviderTiles one time for each base map we want to make available to users
+
+leaflet() %>%
+  addTiles(group = "OSM") %>%
+  addProviderTiles("CartoDB", group = "Carto") %>%
+  addProviderTiles("Esri", group = "Esri") %>%
+  addLayersControl(baseGroups = c("OSM", "Carto", "Esri"),
+                   position = "topleft")
+
+```
+
+```{r Target groups search option}
+# make sure you're using the dataset that has the filtered information
+
+dataset <-
+  old_dataset %>%
+  filter(categorical_variable1 == "cv1_level1",
+         categorical_variable2 == "cv2_level1")
+
+# pipe the filtered dataset into leaflet through addCircleMarkers
+# most important aspect is the addSearchFeatures function, which allows us to search for locations on the map in the targeted group called cv1_level1
+# there will be a magnifying glass icon and when we type into it, it will filter the data elements in the cv1_level1 group
+
+dataset %>%
+  leaflet() %>%
+  addProviderTiles("Esri") %>%
+  addCircleMarkers(radius = 2,
+                   label = ~htmlEscape(name),
+                   color = ~cat_pal(categorical_variable)
+                   group = "cv1_level1") %>%
+  addSearchFeatures(targetGroups = 'cv1_level1',
+                    options = searchFeaturesOptions(zoom = 10))
+```
+
+```{r Clustering locations}
+# use the markerClusterOptions option in the clusterOption argument to cluster locations together on the map
+# hovering over a cluster, it's boundaries will appear
+# clicking on a cluster will zoom to that area and locations will spread out automatically
+# can be many layers to the clustering
+
+dataset %>%
+  leaflet() %>%
+    addTiles() %>%
+    addCircleMarkers(radius = 2,
+                     color = ~cat_pal(categorical_variable),
+                     clusterOption = markerClusterOptions())
+```
+
+Chapter 4
+
+This chapter was on mapping polygons, and I didn't think it'd be useful to take notes on it.
+
+
+
+
+
+
+
