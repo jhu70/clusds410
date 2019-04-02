@@ -12,6 +12,8 @@ library(tigris)
 library(sf)
 library(mosaic)
 library(mapview)
+library(leaflet)
+library(leaflet.extras)
 ```
 
 Setting up API key
@@ -44,7 +46,7 @@ v15_children<- v15 %>%
 ```
 
 Variable names:
-Median income, total: B06011_001
+B19013_001: median household income
 B23020_001: MEAN USUAL HOURS WORKED IN THE PAST 12 MONTHS FOR WORKERS 16 TO 64 YEARS
 
 B08302_001:B08302_015 -- Time leaving home to go to work
@@ -55,6 +57,7 @@ B09002_001:B09002_020 -- OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE AND AGE
 B08303_001:B08303_013 -- travel time to work
 C02003_002:C02003_019-- detailed race, Estimate!!Total!!Population of one race!!White/etc.
 
+##Example: Time Leaving home
 ```{r}
 leavinghome_vars <- c("B08302_001", "B08302_002", "B08302_003", "B08302_004", "B08302_005", "B08302_006", "B08302_007", "B08302_008", "B08302_009", "B08302_010", "B08302_011", "B08302_012", "B08302_013", "B08302_014", "B08302_015")
 
@@ -86,7 +89,72 @@ m@map
 
 m2 <- mapview(leavinghome_after4, zcol="estimate")
 m2@map
+
 ```
+
+
+
+##Median income
+```{r}
+med_income <- get_acs(geography = "tract",
+                     variables = "B19013_001",
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+mapviewGetOption("basemaps")
+mapviewOptions(basemaps = c("CartoDB.Positron","OpenStreetMap"),
+               raster.palette = grey.colors,
+               vector.palette = colorRampPalette(c("snow", "cornflowerblue", "grey10")),
+               layers.control.pos = "topright")
+
+income_map <- mapview(med_income, zcol="estimate")
+income_map@map
+
+```
+
+Travel time to work
+
+```{r}
+B08303_001:B08303_013
+
+travel_time_vars <- c("B08303_001", "B08303_002", "B08303_003", "B08303_004", "B08303_005", "B08303_006", "B08303_007", "B08303_008", "B08303_009", "B08303_010", "B08303_011", "B08303_012", "B08303_013")
+
+travel_time <- get_acs(geography = "tract",
+                     variables = travel_time_vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+travel_time_long <- travel_time %>%
+  spread(variable, estimate)
+
+travel_time_long[is.na(travel_time_long)] <- 0
+
+travel_time_long <- travel_time_long %>%
+  group_by(GEOID, NAME) %>%
+  summarise(under_30 = sum(B08303_001 + B08303_002 + B08303_003 + B08303_004 + B08303_005 + B08303_006 + B08303_007),
+            thirty_to_sixty = sum(B08303_008 +B08303_009 + B08303_010 + B08303_011),
+            sixty_to_ninety = sum(B08303_012),
+            over_ninety = sum(B08303_013)) %>%
+  gather(key = "travel_mins", value= "number_of_people", -GEOID, -NAME, -geometry) %>%
+  arrange(NAME)
+
+mapviewGetOption("basemaps")
+mapviewOptions(basemaps = c("CartoDB.Positron","OpenStreetMap"),
+               raster.palette = grey.colors,
+               vector.palette = colorRampPalette(c("snow", "cornflowerblue", "grey10")),
+               layers.control.pos = "topright")
+
+travel_time_map <- mapview(travel_time_long, zcol="number_of_people")
+travel_time@map
+```
+
+
+
+
 
 Tracts?
 ```{r}
