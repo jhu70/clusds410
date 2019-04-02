@@ -9,6 +9,8 @@
 
 •	Paige
 
+- DataCamp: Building Dashboards with Shinydashboards (4 hours)
+- Notes for team on the DataCamp (2 hours)
 
 •	Jocelyn
 
@@ -20,7 +22,8 @@
 
 
 •	Paige
-
+- Time Management (more so this week than any other, because of DataFest)
+- Integration with Shiny
 
 
 •	Jocelyn
@@ -37,6 +40,10 @@
 
 •	Paige
 
+- Put together some basic shiny dashboard to show Sarah on Thursday (2 hours)
+- Meeting with Sarah on Thursday (.5 hours)
+- DataCamp: Building Web Applications in R with Shiny (4 hours)
+- Notes on DataCamp (2 hours)
 
 •	Jocelyn
 
