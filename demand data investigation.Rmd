@@ -5,13 +5,13 @@ date: "3/23/2019"
 output: html_document
 ---
 
-```{r}
+```{r Packages}
 library(tidycensus)
 library(tidyverse)
+library(ggplot2)
 ```
 
-Setting up API key
-```{r}
+```{r API Key}
 ## define census API key and set it with census_api_key function
 
 api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
@@ -22,19 +22,44 @@ census_api_key(api_key)
 Sys.getenv("CENSUS_API_KEY")
 ```
 
-```{r}
-v15 <- load_variables(2016, "acs5", cache = TRUE)
-v15_race <- v15 %>%
-  filter(str_detect(label, fixed("race", 
-                                ignore_case = TRUE)))
-v15_income <- v15 %>%
-  filter(str_detect(label, fixed("income", 
-                                ignore_case = TRUE)))
+```{r Search Variables}
 
-v15_children<- v15 %>%
-  filter(str_detect(label, fixed("number of children", 
-                                ignore_case = TRUE)))
+# Load variable for 2016 from the acs dataset (acs data is from 2013-2017)
 
+acs_2016 <- load_variables(2016, "acs5", cache = TRUE)
+
+# Searching for any variables in the dataset created above related to race
+
+acs_2016_race <- acs_2016 %>%
+  filter(str_detect(label,
+                    fixed("race", 
+                          ignore_case = TRUE)))
+
+# Searching for any variables in the dataset created above related to income
+
+acs_2016_income <- acs_2016 %>%
+  filter(str_detect(label, 
+                    fixed("income", 
+                          ignore_case = TRUE)))
+
+# Searching for any variables in the dataset created above related to number of children
+
+acs_2016_children <- v15 %>%
+  filter(str_detect(label, 
+                    fixed("number of children", 
+                          ignore_case = TRUE)))
+
+# Searching for any variables in the dataset created above related to commute
+
+acs_2016_commute <- v15 %>%
+  filter(str_detect(label, 
+                    fixed("transportation", 
+                          ignore_case = TRUE)))
+
+#acs_2016_race
+#acs_2016_income
+#acs_2016_children
+acs_2016_commute
 
 ```
 
@@ -56,9 +81,33 @@ test <- get_acs(geography = "tract",
                      survey = "acs5", 
                      state= "MA"
                      )
+
+head(test)
+```
+```{r}
+b08303_table <- filter(acs5, 
+                 str_detect(name, "B08303"))
+
+b0803_table
+
+## can search for related variables 
+
+b0803_searching_variable <- filter(acs5_2016,
+                             str_detect(label,
+                                        fixed("commute",
+                                              ignore_case = TRUE)))
+
+b0803_searching_variable
 ```
 
+```{r}
+race_vars <- c()
 
+ma_race <- get_acs(geography = "county",
+               state = "MA",
+               variables = race_vars,
+               summary_var = "B03002_001")
+```
 
 
 
