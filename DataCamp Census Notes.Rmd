@@ -187,11 +187,6 @@ ma_cities <- map_df(2012:2016, function(x) {
 ma_cities
 ```
 
-```{r}
-
-```
-
-
 
 
 

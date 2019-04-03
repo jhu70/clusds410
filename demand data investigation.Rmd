@@ -112,12 +112,14 @@ mapviewOptions(basemaps = c("CartoDB.Positron","OpenStreetMap"),
 income_map <- mapview(med_income, zcol="estimate")
 income_map@map
 
+  
+
 ```
 
 Travel time to work
 
 ```{r}
-B08303_001:B08303_013
+#B08303_001:B08303_013
 
 travel_time_vars <- c("B08303_001", "B08303_002", "B08303_003", "B08303_004", "B08303_005", "B08303_006", "B08303_007", "B08303_008", "B08303_009", "B08303_010", "B08303_011", "B08303_012", "B08303_013")
 
@@ -148,22 +150,62 @@ mapviewOptions(basemaps = c("CartoDB.Positron","OpenStreetMap"),
                vector.palette = colorRampPalette(c("snow", "cornflowerblue", "grey10")),
                layers.control.pos = "topright")
 
-travel_time_map <- mapview(travel_time_long, zcol="number_of_people")
-travel_time@map
+travel_time_map <- mapview(travel_time_long, zcol="travel_mins")
+travel_time_map@map
 ```
 
 
-
-
-
-Tracts?
+###MAPPING PARENTAL DEMAND
 ```{r}
-ma_tracts <- tracts(state="MA", county="Suffolk")
-plot(ma_tracts)
+#Map children under 11 by census tract in Boston who are at least 200 FPL (2.00 or higher)
+childrenunder11vars <- c("B17024_011", "B17024_012", "B17024_013", "B17024_014", "B17024_024", "B17024_025", "B17024_026", "B17024_027")
+
+children_under_11 <- get_acs(geography = "tract",
+                     variables = childrenunder11vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+children_under_11_grouped <- children_under_11 %>%
+  group_by(GEOID, NAME) %>%
+  summarise(num_children = sum(estimate))
+
+#Multiply this by the percentage of children under 6 with all parents in the labor force, 1 for single-parent household, 2 for two-parent household in each census tract in Boston.
+
+laborforcevars <- c("B23008_002","B23008_004", "B23008_010", "B23008_013")
+
+laborforce_under6  <- get_acs(geography = "tract",
+                     variables = laborforcevars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+laborforce_under6 <- laborforce_under6 %>%
+  group_by(GEOID, NAME) %>%
+  summarise(laborforcechildren = sum(estimate))
+
+under6total <- get_acs(geography = "tract",
+                     variables = "B23008_002",
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+childrenunder6 <- st_join(laborforce_under6, under6total, by="NAME")
+
+childrenunder6 <- inner_join(laborforce_under6 %>% as.data.frame(), under6total %>% as.data.frame(), by = "NAME")
+childrenunder6 <- childrenunder6 %>% 
+  st_sf(sf_column_name = 'geometry.x')
+
+childrenunder6 <- childrenunder6 %>%
+  mutate(percent_children_laborforce = laborforcechildren/estimate)
+
+#Joining children data with other datasets
+
+
 ```
-
-
-
 
 
 
