@@ -13,7 +13,7 @@ library(sf)
 
 # going ahead and using it for what we need it for, before we load the other packages, again to make things easier
 
-boston_neighborhood <- read_sf("Users/Downloads/Boston_Neighborhoods/Boston_Neighborhoods.shp")
+boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
 ```
 
 ```{r Packages}
@@ -29,41 +29,32 @@ library(mosaic)
 ```
 
 ```{r EEC Lon Lat Dataset}
-EEC_lon_lat <- read_csv("EEC_SubsettedData_Region6.csv")
-
-EEC_lon_lat <- EEC_lon_lat %>% 
-  replace(., is.na(.), "Unk")
+EEC_rates <- read_csv("ProvidersData_earlyed_462019.csv")
+# 
+# EEC_lon_lat <- EEC_lon_lat %>% 
+#   replace(., is.na(.), "Unk")
 
 #Filtering
-EEC_lon_lat <- EEC_lon_lat %>%
+EEC_rates <- EEC_rates %>%
   filter(City %in% boston_neighborhood$Name | City=="Boston")
-
-#glimpse(EEC_lon_lat)
+names(EEC_rates) <- gsub(" ", "_", names(EEC_rates))
+glimpse(EEC_rates)
 #View(EEC_lon_lat)
 ```
 
-```{r Cleaned Rates Dataset}
-data_rates <- read_csv("data_rates.csv")
-
-data_rates <- data_rates %>%
-  filter(City %in% boston_neighborhood$Name | City=="Boston")
-
-#glimpse(data_rates)
-#View(data_rates)
-```
 
 ```{r Tallys for Variables}
 # using tally helps us be able to see the different levels for the categorical variables, which is helpful for map building
 # tally lives in the Stat2Data package
 
-tally(~ Infant, data = data_rates)
-tally(~ Toddler, data = data_rates)
-tally(~ Preschool, data = data_rates)
-tally(~ `School Age`, data = data_rates)
+tally(~ Infant, data = EEC_rates)
+tally(~ Toddler, data = EEC_rates)
+tally(~ Preschool, data = EEC_rates)
+tally(~ `School Age`, data = EEC_rates)
 ```
 
 ```{r Original Basic Base Map}
-original_base_map <- leaflet(data = EEC_lon_lat, 
+original_base_map <- leaflet(data = EEC_rates, 
                              options = leafletOptions(minZoom = 11))  %>% 
   addProviderTiles("CartoDB")  %>% 
   setView(lng = -71.057083, 
@@ -90,10 +81,10 @@ boston_neighborhood_base_map
 
 # filtering for each level of infant
 
-infant_yes <- data_rates %>%
+infant_yes <- EEC_rates %>%
   filter(Infant == "Yes")
 
-infant_no <- data_rates %>%
+infant_no <- EEC_rates %>%
   filter(Infant == "No")
 
 # color palette for the infant level
@@ -132,10 +123,10 @@ infant_group_map
 ```{r Toddler Group Map}
 # filtering for each level of toddler
 
-toddler_yes <- data_rates %>%
+toddler_yes <- EEC_rates %>%
   filter(Toddler == "Yes")
 
-toddler_no <- data_rates %>%
+toddler_no <- EEC_rates %>%
   filter(Toddler == "No")
 
 # color palette for the toddler level
@@ -175,10 +166,10 @@ toddler_group_map
 ```{r Preschool Group Map}
 # filtering for each level of preschool 
 
-preschool_yes <- data_rates %>%
+preschool_yes <- EEC_rates %>%
   filter(Preschool == "Yes")
 
-preschool_no <- data_rates %>%
+preschool_no <- EEC_rates %>%
   filter(Preschool == "No")
 
 # color palette for the preschool level
@@ -218,11 +209,11 @@ preschool_group_map
 ```{r School Age Group Map}
 # filtering for each level of school age
 
-schoolage_yes <- data_rates %>%
-  filter('School Age' == "Yes")
+schoolage_yes <- EEC_rates %>%
+  filter(School_Age == "Yes")
 
-schoolage_no <- data_rates %>%
-  filter('School Age' == "No")
+schoolage_no <- EEC_rates %>%
+  filter(School_Age == "No")
 
 # color palette for the school age level
 
@@ -235,14 +226,14 @@ schoolage_group_map <- boston_neighborhood_base_map %>%
                    ~lon,
                    ~lat,
                    radius = 3,
-                   color = ~schoolage_pal('School Age'),
+                   color = ~schoolage_pal(School_Age),
                    group = "Yes",
                    label = ~as.character(Name)) %>%
   addCircleMarkers(data = schoolage_no,
                    ~lon,
                    ~lat,
                    radius = 3,
-                   color = ~schoolage_pal('School Age'),
+                   color = ~schoolage_pal(School_Age),
                    group = "No",
                    label = ~as.character(Name)) %>%
   addLayersControl(overlayGroups = c("Yes",
@@ -253,8 +244,11 @@ schoolage_group_map <- boston_neighborhood_base_map %>%
   addSearchOSM() %>%
   addResetMapButton()
 
-  
+
+
 schoolage_group_map
+
+
 ```
 
 Testing for github commit
