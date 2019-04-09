@@ -38,7 +38,7 @@ EEC_rates <- read_csv("ProvidersData_earlyed_462019.csv")
 EEC_rates <- EEC_rates %>%
   filter(City %in% boston_neighborhood$Name | City=="Boston")
 names(EEC_rates) <- gsub(" ", "_", names(EEC_rates))
-glimpse(EEC_rates)
+#glimpse(EEC_rates)
 #View(EEC_lon_lat)
 ```
 
@@ -64,9 +64,8 @@ masterdataframe <- cbind(classification, EEC_rates)
 # c2 <- over(bos.map, dat)
 
 
-
+write.csv(masterdataframe,"masterdataframe_492019.csv")
 ```
-
 
 
 ```{r Tallys for Variables}
