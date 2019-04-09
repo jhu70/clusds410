@@ -14,7 +14,7 @@
 •	Jocelyn
 - Retrieved previous data classified as NA as the office now regards 'NA' as 'Yes' for early ed service availability
 - Used Rates and MinAge variables to estimate the number of slots available for children under 6
-- WOrking on finding out which region on the shape file each provider is located at 
+- Working on finding out which region on the shape file each provider is located at 
 
 
 ## What is it that you're struggling with right now?
