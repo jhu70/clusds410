@@ -13,8 +13,6 @@ library(sf)
 # going ahead and using it for what we need it for, before we load the other packages, again to make things easier
 
 boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
-
-
 ma_tract <- read_sf("ma_tract/tl_2018_25_tract.shp")
 ```
 
@@ -31,17 +29,16 @@ library(mosaic)
 ```
 
 ```{r EEC Lon Lat Dataset}
-EEC_rates <- read_csv("ProvidersData_earlyed_462019.csv")
+EECMaster49 <- read_csv("ProvidersData_earlyed_462019.csv")
 # 
 # EEC_lon_lat <- EEC_lon_lat %>% 
 #   replace(., is.na(.), "Unk")
 
 #Filtering
-EEC_rates <- EEC_rates %>%
+EECMaster49 <- EECMaster49 %>%
   filter(City %in% boston_neighborhood$Name | City=="Boston")
-names(EEC_rates) <- gsub(" ", "_", names(EEC_rates))
-#glimpse(EEC_rates)
-#View(EEC_lon_lat)
+names(EECMaster49) <- gsub(" ", "_", names(EECMaster49))
+#glimpse(EECMaster49)
 ```
 
 #Neighborhood
@@ -55,14 +52,14 @@ library(rgdal)
 bos.map <- readOGR("Boston_Neighborhoods/Boston_Neighborhoods.shp", layer="Boston_Neighborhoods")
 
 # Better to set longitudes as the first column and latitudes as the second
-dat <- EEC_rates
+dat <- EECMaster49
 # Assignment modified according
 coordinates(dat) <- ~ lon + lat
 # Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
 proj4string(dat) <- proj4string(bos.map)
 
 classification<-over(dat, bos.map)
-masterdataframe <- cbind(classification, EEC_rates)
+masterdataframe <- cbind(classification, EECMaster49)
 
 # c2 <- over(bos.map, dat)
 
@@ -97,14 +94,14 @@ library(rgdal)
 bos.map <- readOGR("ma_tract/tl_2018_25_tract.shp", layer="tl_2018_25_tract")
 
 # Better to set longitudes as the first column and latitudes as the second
-dat <- EEC_rates
+dat <- EECMaster49
 # Assignment modified according
 coordinates(dat) <- ~ lon + lat
 # Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
 proj4string(dat) <- proj4string(bos.map)
 
 classification<-over(dat, bos.map)
-masterdataframe_tract <- cbind(classification, EEC_rates)
+masterdataframe_tract <- cbind(classification, EECMaster49)
 
 # c2 <- over(bos.map, dat)
 
