@@ -3,7 +3,9 @@
 ## What did you do this week?
 
 •	Kat
-
+- Met with Zoe last Thursday and worked out a plan for supply data as well as methodology for mapping parental demand 
+- Created census maps with LEAFLET syntax to add to dashboard, changed color scales and added better legends
+- planned boston trip/next couple weeks
 
 •	Paige
 
@@ -20,7 +22,8 @@
 ## What is it that you're struggling with right now?
 
 •	Kat
-
+- overlaying different census variables with legends
+- how we're going to quantify length of day (but zoe is gonna talk to sarah about this hopefully so we can discuss on thursday)
 
 •	Paige
 
@@ -34,7 +37,10 @@
 ## What are you planning to do next week?
 
 •	Kat
-
+- quarter report!
+- putting together dashboard in coordination with paige!
+- meeting with sarah and zoe this thursday
+- getting clearer details from zoe and sarah about census methodology as well as how exactly they want us to merge and visualize supply/demand
 
 •	Paige
 
