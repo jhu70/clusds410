@@ -1,0 +1,116 @@
+---
+title: "providers_in_polygons"
+output: html_document
+author: Jocelyn Jingjing Hu
+---
+
+```{r Boston and Cambridge sf Files}
+# normally packages would be first, but the sf package was causing major problems with the other functions
+# it works best if you run sf seperately and before all other packages
+
+library(sf)
+
+# going ahead and using it for what we need it for, before we load the other packages, again to make things easier
+
+boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+
+
+ma_tract <- read_sf("ma_tract/tl_2018_25_tract.shp")
+```
+
+```{r Packages}
+library(tidyverse)
+library(leaflet)
+library(USAboundaries)
+library(maps)
+library(leaflet.extras)
+library(fivethirtyeight)
+library(zipcode)
+library(ggmap)
+library(mosaic)
+```
+
+```{r EEC Lon Lat Dataset}
+EEC_rates <- read_csv("ProvidersData_earlyed_462019.csv")
+# 
+# EEC_lon_lat <- EEC_lon_lat %>% 
+#   replace(., is.na(.), "Unk")
+
+#Filtering
+EEC_rates <- EEC_rates %>%
+  filter(City %in% boston_neighborhood$Name | City=="Boston")
+names(EEC_rates) <- gsub(" ", "_", names(EEC_rates))
+#glimpse(EEC_rates)
+#View(EEC_lon_lat)
+```
+
+#Neighborhood
+
+
+```{r providers on polygons}
+library(rgeos)
+library(sp)
+library(rgdal)
+
+bos.map <- readOGR("Boston_Neighborhoods/Boston_Neighborhoods.shp", layer="Boston_Neighborhoods")
+
+# Better to set longitudes as the first column and latitudes as the second
+dat <- EEC_rates
+# Assignment modified according
+coordinates(dat) <- ~ lon + lat
+# Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
+proj4string(dat) <- proj4string(bos.map)
+
+classification<-over(dat, bos.map)
+masterdataframe <- cbind(classification, EEC_rates)
+
+# c2 <- over(bos.map, dat)
+
+
+write.csv(masterdataframe,"masterdataframe_492019_neighborhood.csv")
+```
+^[This is my [source](https://gis.stackexchange.com/questions/133625/checking-if-points-fall-within-polygon-shapefile)] 
+
+
+#MA TRACT
+
+```{r MA tract Base Map}
+ma_tract <- ma_tract %>%
+  st_transform(crs = "+init=epsg:4326")
+
+ma_tract_base_map <- leaflet(ma_tract,
+                                        options = leafletOptions(minZoom = 11))  %>%
+  addProviderTiles("CartoDB.Positron")  %>%
+  addPolygons(weight = 2, fillOpacity = .1, fillColor = "#000000") %>%
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5)
+
+ma_tract_base_map
+```
+
+```{r}
+library(rgeos)
+library(sp)
+library(rgdal)
+
+bos.map <- readOGR("ma_tract/tl_2018_25_tract.shp", layer="tl_2018_25_tract")
+
+# Better to set longitudes as the first column and latitudes as the second
+dat <- EEC_rates
+# Assignment modified according
+coordinates(dat) <- ~ lon + lat
+# Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
+proj4string(dat) <- proj4string(bos.map)
+
+classification<-over(dat, bos.map)
+masterdataframe_tract <- cbind(classification, EEC_rates)
+
+# c2 <- over(bos.map, dat)
+
+
+write.csv(masterdataframe_tract,"masterdataframe_492019_tract.csv")
+
+```
+shapefile download from: https://www.census.gov/cgi-bin/geo/shapefiles/index.php?year=2018&layergroup=Census+Tracts
+spot check by looking at: https://www2.census.gov/geo/maps/dc10map/tract/st25_ma/c25025_suffolk/DC10CT_C25025_001.pdf
