@@ -8,8 +8,8 @@ output: html_document
 ## Tidycensus Basics
 
 ```{r Packages}
-library(tidyverse)
 library(tidycensus)
+library(tidyverse)
 library(ggplot2)
 ```
 
@@ -186,8 +186,6 @@ ma_cities <- map_df(2012:2016, function(x) {
 
 ma_cities
 ```
-
-
 
 
 
