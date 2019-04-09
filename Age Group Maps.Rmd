@@ -5,7 +5,7 @@ date: "3/5/2019"
 output: html_document
 ---
 
-```{r Boston and Cambridge sf Files, eval = FALSE}
+```{r Boston and Cambridge sf Files}
 # normally packages would be first, but the sf package was causing major problems with the other functions
 # it works best if you run sf seperately and before all other packages
 
@@ -257,6 +257,7 @@ schoolage_group_map <- boston_neighborhood_base_map %>%
 schoolage_group_map
 ```
 
+Testing for github commit
 
 
 

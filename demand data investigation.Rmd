@@ -5,9 +5,10 @@ date: "3/23/2019"
 output: html_document
 ---
 
-```{r}
+```{r Packages}
 library(tidycensus)
 library(tidyverse)
+library(ggplot2)
 library(tigris)
 library(sf)
 library(mosaic)
@@ -16,8 +17,15 @@ library(leaflet)
 library(leaflet.extras)
 ```
 
-Setting up API key
 ```{r}
+#Read in boston neighborhood data
+boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+```
+
+
+
+
+```{r API Key}
 ## define census API key and set it with census_api_key function
 
 api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
@@ -28,7 +36,10 @@ census_api_key(api_key)
 Sys.getenv("CENSUS_API_KEY")
 ```
 
+
+
 ```{r}
+#Loading ACS 2016 variables
 v15 <- load_variables(2016, "acs5", cache = TRUE)
 
 v15_race <- v15 %>%
@@ -38,10 +49,17 @@ v15_income <- v15 %>%
   filter(str_detect(label, fixed("income", 
                                 ignore_case = TRUE)))
 
-v15_children<- v15 %>%
-  filter(str_detect(label, fixed("number of children", 
-                                ignore_case = TRUE)))
+# Searching for any variables in the dataset created above related to commute
 
+acs_2016_commute <- v15 %>%
+  filter(str_detect(label, 
+                    fixed("transportation", 
+                          ignore_case = TRUE)))
+
+#acs_2016_race
+#acs_2016_income
+#acs_2016_children
+#acs_2016_commute
 
 ```
 
@@ -113,10 +131,9 @@ income_map <- mapview(med_income, zcol="estimate")
 income_map@map
 
   
-
 ```
 
-Travel time to work
+
 
 ```{r}
 #B08303_001:B08303_013
@@ -173,7 +190,7 @@ children_under_11_grouped <- children_under_11 %>%
 
 #Multiply this by the percentage of children under 6 with all parents in the labor force, 1 for single-parent household, 2 for two-parent household in each census tract in Boston.
 
-laborforcevars <- c("B23008_002","B23008_004", "B23008_010", "B23008_013")
+laborforcevars <- c("B23008_004", "B23008_010", "B23008_013")
 
 laborforce_under6  <- get_acs(geography = "tract",
                      variables = laborforcevars,
@@ -193,19 +210,133 @@ under6total <- get_acs(geography = "tract",
                      county="Suffolk",
                 geometry=TRUE)
 
-childrenunder6 <- st_join(laborforce_under6, under6total, by="NAME")
+percentage_under_6 <- inner_join(laborforce_under6 %>% as.data.frame(), under6total %>% as.data.frame(), by = "GEOID")
 
-childrenunder6 <- inner_join(laborforce_under6 %>% as.data.frame(), under6total %>% as.data.frame(), by = "NAME")
-childrenunder6 <- childrenunder6 %>% 
+percentage_under_6 <- percentage_under_6 %>%
   st_sf(sf_column_name = 'geometry.x')
 
-childrenunder6 <- childrenunder6 %>%
-  mutate(percent_children_laborforce = laborforcechildren/estimate)
+percentage_under_6 <- percentage_under_6 %>%
+  mutate(percent_working = laborforcechildren/estimate*100)
 
-#Joining children data with other datasets
+under6_map <- mapview(percentage_under_6, zcol="percent_working")
+under6_map@map
 
+bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
 
+pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
+percent6pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
+incomepal <- colorBin("YlOrRd", domain = med_income$estimate)
+
+percentage_under_6 <- percentage_under_6 %>%
+  st_transform(crs = "+init=epsg:4326")
+
+med_income <- med_income %>%
+  st_transform(crs = "+init=epsg:4326")
+
+boston_neighborhood_base_map <- leaflet(boston_neighborhood,
+                                        options = leafletOptions(minZoom = 11))  %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(weight = 2, fillOpacity = .1, fillColor = "#000000") %>%
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5)
+
+boston_neighborhood_base_map
+boston_neighborhood_base_map %>%
+  addPolygons(data=percentage_under_6, fillColor = ~pal(percent_working),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7)
+
+leaflet(percentage_under_6) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal(percent_working),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>%
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11) %>%
+  addLegend("topleft", 
+              pal = pal, 
+              values = ~percent_working,
+              title = "Percentage of children under 6 with all parents in labor force",
+              opacity = 1)
+
+#Median Income
+leaflet(med_income) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~incomepal(estimate),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>%
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.25) %>%
+  addLegend("topleft", 
+              pal = incomepal, 
+              values = ~estimate,
+              title = "Median Income",
+              opacity = 1)
+
+#trying to group maps on
+leaflet() %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>%
+  addPolygons(data=percentage_under_6, fillColor = ~percent6pal(percent_working),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7,
+  group="Percentage Under 6") %>%
+  addPolygons(data=med_income, fillColor = ~incomepal(estimate),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7,
+  group="Median Income") %>%
+  setView(lng = -71.057083,
+          lat = 42.361145,
+          zoom = 11) %>%
+  # addLegend("topleft",
+  #             pal = percent6pal,
+  #             values = ~percent_working,
+  #             title = "Percentage of children under 6 with all parents in labor force",
+  #             opacity = 1,
+  #          group="Percentage Under 6") %>%
+  # addLegend("topleft",
+  #             pal = incomepal,
+  #             values = ~estimate,
+  #             title = "Median Income by Census Tract",
+  #             opacity = 1,
+  #           group="Median Income") %>%
+  addLayersControl(baseGroups = c("Percentage Under 6", "Median Income"), options = layersControlOptions(collapsed = F))
+  
 ```
+
+
+
+```{r}
+race_vars <- c()
+
+ma_race <- get_acs(geography = "county",
+               state = "MA",
+               variables = race_vars,
+               summary_var = "B03002_001")
+```
+
+
+
 
 
 
