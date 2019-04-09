@@ -3,58 +3,44 @@
 ## What did you do this week?
 
 •	Kat
-- Looked more into the length of work day census problem/ brainstormed an archetype idea
-- Made more maps of census demand data and looked more in depth at certain variables
-- looked into the mapping polygons part of the leaflet data camp
+
 
 •	Paige
 
-- DataCamp: Building Dashboards with Shinydashboards (4 hours)
-- Notes for team on the DataCamp (2 hours)
+- Working on building the shiny dashboard and becoming more familiar with working with shiny (4 hours)
+- Meeting with Sarah on Thursday (.75 hours)
+- Confirmed presentation meeting in Boston! (.25 hours)
 
 •	Jocelyn
-- Made more maps of the providers data and looked more in depth at certain variables
-- Shinydashboards data camps
-- Figured out how to lay the providers map on the map for census demand data
+
 
 ## What is it that you're struggling with right now?
 
 •	Kat
-- I can't get the demand data maps to work with leaflet syntax, only mapview, which might make it hard to combine them
-- Still not sure about what to do about this lack of length of work day variable
 
 
 •	Paige
-- Time Management (more so this week than any other, because of DataFest)
-- Integration with Shiny
 
+- Time management, but less worried than before!
+- Finding additional resources for shiny 
 
 •	Jocelyn
-- Work more on census demand data and connect them back to the supply side
-- The difference between tracts and neighborhoods
 
 
 ## What are you planning to do next week?
 
 •	Kat
 
-- Combining demand maps and supply maps
-- Ask Sarah about length of work day census variable!!
-- Start up shiny?!
-
 
 •	Paige
 
-- Put together some basic shiny dashboard to show Sarah on Thursday (2 hours)
-- Meeting with Sarah on Thursday (.5 hours)
-- DataCamp: Building Web Applications in R with Shiny (4 hours)
-- Notes on DataCamp (2 hours)
+- Create and prepare for presentation for Thursday (1 hour)
+- Put together the shiny dashboard page for the Capacity variable (2 hours) 
+- Start laying the ground work for the shiny dashboard page for the Hours variable (1 hour)
+- Assist with any cleaning or leaflet troubleshooting (1 hour)
 
 •	Jocelyn
-- Start laying the map for providers on the map for the census demand data
-- Create more maps by using unused cleaned variables and see if they could help lay out the story for the main variables
-- Help put up shiny dashboard
-- Work on financial subsidy variable if necessay
+
 
 # 2019 - 3 - 25
 
