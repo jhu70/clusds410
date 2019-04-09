@@ -43,6 +43,36 @@ glimpse(EEC_rates)
 ```
 
 
+
+```{r providers on polygon}
+library(rgeos)
+library(sp)
+library(rgdal)
+
+bos.map <- readOGR("Boston_Neighborhoods/Boston_Neighborhoods.shp", layer="Boston_Neighborhoods")
+
+
+# Don't use df as name, it is an R function
+# Better to set longitudes as the first column and latitudes as the second
+dat <- EEC_rates
+# Assignment modified according
+coordinates(dat) <- ~ lon + lat
+# Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
+proj4string(dat) <- proj4string(bos.map)
+
+classification<-over(dat, bos.map)
+masterdataframe <- cbind(classification, EEC_rates)
+
+# c2 <- over(bos.map, dat)
+#           names
+#122 Safeco Field
+
+
+
+```
+
+
+
 ```{r Tallys for Variables}
 # using tally helps us be able to see the different levels for the categorical variables, which is helpful for map building
 # tally lives in the Stat2Data package
@@ -119,6 +149,9 @@ infant_group_map <- boston_neighborhood_base_map %>%
   
 infant_group_map
 ```
+
+
+
 
 ```{r Toddler Group Map}
 # filtering for each level of toddler
