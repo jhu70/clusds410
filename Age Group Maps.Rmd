@@ -1,6 +1,6 @@
 ---
 title: "Age Groups Maps"
-author: "Paige Patrick"
+author: "Paige Patrick, Jocelyn Jingjing hu"
 date: "3/5/2019"
 output: html_document
 ---
@@ -40,31 +40,6 @@ EEC_rates <- EEC_rates %>%
 names(EEC_rates) <- gsub(" ", "_", names(EEC_rates))
 #glimpse(EEC_rates)
 #View(EEC_lon_lat)
-```
-
-
-
-```{r providers on polygons}
-library(rgeos)
-library(sp)
-library(rgdal)
-
-bos.map <- readOGR("Boston_Neighborhoods/Boston_Neighborhoods.shp", layer="Boston_Neighborhoods")
-
-# Better to set longitudes as the first column and latitudes as the second
-dat <- EEC_rates
-# Assignment modified according
-coordinates(dat) <- ~ lon + lat
-# Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
-proj4string(dat) <- proj4string(bos.map)
-
-classification<-over(dat, bos.map)
-masterdataframe <- cbind(classification, EEC_rates)
-
-# c2 <- over(bos.map, dat)
-
-
-write.csv(masterdataframe,"masterdataframe_492019.csv")
 ```
 
 
