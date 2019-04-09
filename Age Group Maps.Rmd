@@ -44,15 +44,13 @@ glimpse(EEC_rates)
 
 
 
-```{r providers on polygon}
+```{r providers on polygons}
 library(rgeos)
 library(sp)
 library(rgdal)
 
 bos.map <- readOGR("Boston_Neighborhoods/Boston_Neighborhoods.shp", layer="Boston_Neighborhoods")
 
-
-# Don't use df as name, it is an R function
 # Better to set longitudes as the first column and latitudes as the second
 dat <- EEC_rates
 # Assignment modified according
@@ -64,8 +62,6 @@ classification<-over(dat, bos.map)
 masterdataframe <- cbind(classification, EEC_rates)
 
 # c2 <- over(bos.map, dat)
-#           names
-#122 Safeco Field
 
 
 
