@@ -72,12 +72,38 @@ percentage_under_6 <- percentage_under_6 %>%
   mutate(percent_working = laborforcechildren/estimate*100)
 ```
 
+supply data variables
+```{r}
+EECNEW5<-read.csv("masterdataframe_492019_tract.csv")
+
+#early ed filter grouped by tract, summarized for capacity
+EECNEW5_earlyed_tract <- EECNEW5 %>%
+  filter(early_ed==TRUE) %>%
+  group_by(GEOID, NAMELSAD) %>%
+  summarise(sum_capacity = sum(Capacity))
+
+#just a general early ed filter for later
+EEC_earlyed <- EECNEW5 %>%
+  filter(early_ed==TRUE, After_School=="Yes")
+
+EECNEW5_earlyed_tract$GEOID <- as.character(EECNEW5_earlyed_tract$GEOID)
+
+EEC_geometry <- inner_join(EECNEW5_earlyed_tract %>% as.data.frame(), percentage_under_6 %>% as.data.frame(), by = "GEOID")
+
+EEC_geometry <- EEC_geometry %>%
+  select(GEOID, NAME.x,sum_capacity, geometry.x) %>%
+  st_sf(sf_column_name = 'geometry.x')
+
+```
+
 
 Make the map
 ```{r}
 #making palettes
 pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 percent6pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
+infant_pal <- colorFactor(palette = c("white"),
+                            levels = c("Yes"))
 
 #transform sf type to work with leaflet
 percentage_under_6 <- percentage_under_6 %>%
@@ -95,45 +121,36 @@ leaflet(percentage_under_6) %>%
   addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
   setView(lng = -71.057083, 
           lat = 42.361145, 
-          zoom = 11) %>%
+          zoom = 11.5) %>%
   addLegend("topleft", 
               pal = pal, 
               values = ~percent_working,
               title = "Percentage of children",
-              opacity = 1)
+              opacity = 1) %>%
+  addCircleMarkers(data = EEC_earlyed,
+                   ~lon,
+                   ~lat,
+                   radius = 3,
+                   opacity = .8,
+                   color = ~infant_pal(After_School),
+                   group = "Show providers with after school care for early ed",
+                   label = ~as.character(Name))%>%
+  addLayersControl(overlayGroups = c("Show providers with after school care for early ed"))
 
 ```
 
-
-#Mapping on supply data
-```{r}
-ECCNEW5<-read.csv("masterdataframe_492019_tract.csv")
-
-ECCNEW5_earlyed_tract <- ECCNEW5 %>%
-  filter(early_ed==TRUE) %>%
-  group_by(GEOID, NAMELSAD) %>%
-  summarise(sum_capacity = sum(Capacity))
-
-ECCNEW5_earlyed_tract$GEOID <- as.character(ECCNEW5_earlyed_tract$GEOID)
-
-ECC_geometry <- inner_join(ECCNEW5_earlyed_tract %>% as.data.frame(), percentage_under_6 %>% as.data.frame(), by = "GEOID")
-
-ECC_geometry <- ECC_geometry %>%
-  select(GEOID, NAME.x,sum_capacity, geometry.x) %>%
-  st_sf(sf_column_name = 'geometry.x')
-```
 
 
 ```{r}
 #making palettes
-pal2 <- colorBin("YlOrRd", domain = ECC_geometry$sum_capacity)
+pal2 <- colorBin("YlOrRd", domain = EEC_geometry$sum_capacity)
 
 #transform sf type to work with leaflet
-ECC_geometry <- ECC_geometry %>%
+EEC_geometry <- EEC_geometry %>%
   st_transform(crs = "+init=epsg:4326")
 
 #make map
-leaflet(ECC_geometry) %>%
+leaflet(EEC_geometry) %>%
   addProviderTiles("CartoDB")  %>%
   addPolygons(fillColor = ~pal2(sum_capacity),
   weight = 2,
