@@ -47,7 +47,7 @@ laborforce_under6  <- get_acs(geography = "tract",
                      county="Suffolk",
                 geometry=TRUE)
 
-#get a sum of children with all parents in teh labor forcein the labor force
+#get a sum of children with all parents in the labor force
 laborforce_under6 <- laborforce_under6 %>%
   group_by(GEOID, NAME) %>%
   summarise(laborforcechildren = sum(estimate))
@@ -99,11 +99,57 @@ leaflet(percentage_under_6) %>%
   addLegend("topleft", 
               pal = pal, 
               values = ~percent_working,
-              title = "Percentage of children under 6 with all parents in labor force",
+              title = "Percentage of children",
               opacity = 1)
 
 ```
 
 
+#Mapping on supply data
+```{r}
+ECCNEW5<-read.csv("masterdataframe_492019_tract.csv")
+
+ECCNEW5_earlyed_tract <- ECCNEW5 %>%
+  filter(early_ed==TRUE) %>%
+  group_by(GEOID, NAMELSAD) %>%
+  summarise(sum_capacity = sum(Capacity))
+
+ECCNEW5_earlyed_tract$GEOID <- as.character(ECCNEW5_earlyed_tract$GEOID)
+
+ECC_geometry <- inner_join(ECCNEW5_earlyed_tract %>% as.data.frame(), percentage_under_6 %>% as.data.frame(), by = "GEOID")
+
+ECC_geometry <- ECC_geometry %>%
+  select(GEOID, NAME.x,sum_capacity, geometry.x) %>%
+  st_sf(sf_column_name = 'geometry.x')
+```
+
+
+```{r}
+#making palettes
+pal2 <- colorBin("YlOrRd", domain = ECC_geometry$sum_capacity)
+
+#transform sf type to work with leaflet
+ECC_geometry <- ECC_geometry %>%
+  st_transform(crs = "+init=epsg:4326")
+
+#make map
+leaflet(ECC_geometry) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal2(sum_capacity),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11) %>%
+  addLegend("topleft", 
+              pal = pal2, 
+              values = ~sum_capacity,
+              title = "Capacity",
+              opacity = 1)
+```
 
 
