@@ -1,6 +1,6 @@
 ---
 title: "Age Groups Maps"
-author: "Paige Patrick"
+author: "Paige Patrick, Jocelyn Jingjing hu"
 date: "3/5/2019"
 output: html_document
 ---
@@ -38,7 +38,7 @@ EEC_rates <- read_csv("ProvidersData_earlyed_462019.csv")
 EEC_rates <- EEC_rates %>%
   filter(City %in% boston_neighborhood$Name | City=="Boston")
 names(EEC_rates) <- gsub(" ", "_", names(EEC_rates))
-glimpse(EEC_rates)
+#glimpse(EEC_rates)
 #View(EEC_lon_lat)
 ```
 
@@ -131,6 +131,9 @@ infant_group_map <- boston_neighborhood_base_map %>%
   
 infant_group_map
 ```
+
+
+
 
 ```{r Toddler Group Map}
 # filtering for each level of toddler
