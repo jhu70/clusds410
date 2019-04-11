@@ -1,6 +1,6 @@
 ---
-title: "Capacity Demand Map"
-author: "Kat Kyuchukova"
+title: "Capacity Demand and Supply Map"
+author: "Kat Kyuchukova and Jocelyn Hu"
 date: "4/9/2019"
 output: html_document
 ---
@@ -84,7 +84,7 @@ EECNEW5_earlyed_tract <- EECNEW5 %>%
 
 #just a general early ed filter for later
 EEC_earlyed <- EECNEW5 %>%
-  filter(early_ed==TRUE, After_School=="Yes")
+  filter(early_ed==TRUE, Weekdays_off_hours=="True")
 
 EECNEW5_earlyed_tract$GEOID <- as.character(EECNEW5_earlyed_tract$GEOID)
 
@@ -103,7 +103,7 @@ Make the map
 pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 percent6pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 infant_pal <- colorFactor(palette = c("white"),
-                            levels = c("Yes"))
+                            levels = c("True"))
 
 #transform sf type to work with leaflet
 percentage_under_6 <- percentage_under_6 %>%
@@ -132,7 +132,7 @@ leaflet(percentage_under_6) %>%
                    ~lat,
                    radius = 3,
                    opacity = .8,
-                   color = ~infant_pal(After_School),
+                   color = ~infant_pal(Weekdays_off_hours),
                    group = "Show providers with after school care for early ed",
                    label = ~as.character(Name))%>%
   addLayersControl(overlayGroups = c("Show providers with after school care for early ed"))

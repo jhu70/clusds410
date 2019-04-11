@@ -15,16 +15,17 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 
+codes to merge boston dataset and complete EEC datasets for a complete set of variables
 
 ```{r message = FALSE warning = FALSE}
-library(tidyverse)
-library(readxl)
-library(rgdal)
-library(rgeos)
-library(leaflet)
-library(devtools)
-EEC6<- read_excel("~/SDS Capstone/EEC_SubsettedData_Region6.xlsx")
-EEC <- read_excel("~/SDS Capstone/2018EEC.xlsx")
+# library(tidyverse)
+# library(readxl)
+# library(rgdal)
+# library(rgeos)
+# library(leaflet)
+# library(devtools)
+# EEC6<- read_excel("~/SDS Capstone/EEC_SubsettedData_Region6.xlsx")
+# EEC <- read_excel("~/SDS Capstone/2018EEC.xlsx")
 
 ```
 # ```{r}
@@ -43,19 +44,16 @@ EEC <- read_excel("~/SDS Capstone/2018EEC.xlsx")
 ```{r}
 #part time or full time
 library(splitstackshape)
+
+EECNEW<-read.csv("masterdataframe_492019_tract.csv")
 ECCNEW2<-cSplit(EECNEW, "AcceptsChildren", "and", fixed = FALSE)
 ECCNEW2$AcceptsChildren_2 <- NULL
 ECCNEW2$AcceptsChildren_3[ECCNEW2$AcceptsChildren_1 == "Part-Time"] <- "Part-Time"
 ECCNEW2$AcceptsChildren_1[ECCNEW2$AcceptsChildren_1 == "Part-Time"] <- NA
 names(ECCNEW2)[names(ECCNEW2) == "AcceptsChildren_1"] <- "FullTime"
 names(ECCNEW2)[names(ECCNEW2) == "AcceptsChildren_3"] <- "PartTime"
-
-names(ECCNEW2)[names(ECCNEW2) == "24_Hours"] <- "AllDay"
 names(ECCNEW2)[names(ECCNEW2) == "Temp/Emergency"] <- "Emergency"
 
-#test successful merge
-print(ECCNEW2$Licensed_Capacity)
-print(ECCNEW2$Capacity)
 ```
 
 
@@ -63,7 +61,7 @@ print(ECCNEW2$Capacity)
 
 
 ```{r}
-#Group by "City" or "Zipcode"
+#Group by "City" or "Zipcode" or "Tract"
 #data cleaning function
 
 createdataset<-function(groupvariable){
@@ -118,17 +116,6 @@ ECCNEW9<-ECCNEW2%>%
       tally()
 ECCNEW9$ncenters<-ECCNEW9$n
 ECCNEW9$n <- NULL
-
-ECCNEW10<-ECCNEW2%>%
-      group_by_(groupvariable,"AllDay") %>%
-      tally()
-ECCNEW10$nallday<-ECCNEW10$n
-ECCNEW10$n <- NULL
-ECCNEW10<- spread(ECCNEW10,AllDay,nallday)
-names(ECCNEW10)[4] <- paste("allday.unknown")
-names(ECCNEW10)[3] <- paste("allday.yes")
-names(ECCNEW10)[2] <- paste("allday.no")
-
 
 ECCNEW11<-ECCNEW2%>%
       group_by_(groupvariable,"LANG_ENGL") %>%
@@ -203,23 +190,20 @@ names(ECCNEW18)[3] <- paste("openholiday.yes")
 names(ECCNEW18)[2] <- paste("openholiday.no")
 
 ECCNEW19<-ECCNEW2%>%
-      group_by_(groupvariable,"Emergency") %>%
+      group_by_(groupvariable,"EMERGENCY") %>%
       tally()
 ECCNEW19$nemergency<-ECCNEW19$n
 ECCNEW19$n <- NULL
-ECCNEW19<- spread(ECCNEW19,Emergency,nemergency)
+ECCNEW19<- spread(ECCNEW19,EMERGENCY,nemergency)
 names(ECCNEW19)[4] <- paste("emergency.unknown")
 names(ECCNEW19)[3] <- paste("emergency.yes")
 names(ECCNEW19)[2] <- paste("emergency.no")
 
-      
-ECCNEW4<-merge(ECCNEW4,ECCNEW3, all = TRUE)
 ECCNEW4<-merge(ECCNEW4,ECCNEW5, all = TRUE)
 ECCNEW4<-merge(ECCNEW4,ECCNEW6, all = TRUE)
 ECCNEW4<-merge(ECCNEW4,ECCNEW7, all = TRUE)
 ECCNEW4<-merge(ECCNEW4,ECCNEW8, all = TRUE)
 ECCNEW4<-merge(ECCNEW4,ECCNEW9,all = TRUE)
-ECCNEW4<-merge(ECCNEW4,ECCNEW10,all = TRUE)
 ECCNEW4<-merge(ECCNEW4,ECCNEW11,all = TRUE)
 ECCNEW4<-merge(ECCNEW4,ECCNEW12,all = TRUE)
 ECCNEW4<-merge(ECCNEW4,ECCNEW13,all = TRUE)
@@ -239,9 +223,13 @@ return(ECCNEW4)
 
 ```{r}
 datazipcode<-createdataset("Zipcode")
-write.csv(datazipcode, "~/SDS Capstone/datazipcode.csv", quote=FALSE, row.names=FALSE)
+write.csv(datazipcode, "datazipcode.csv", quote=FALSE, row.names=FALSE)
 datacity<-createdataset("City")
-write.csv(datacity, "~/SDS Capstone/datacity.csv", quote=FALSE, row.names=FALSE)
+write.csv(datacity, "datacity.csv", quote=FALSE, row.names=FALSE)
+
+#using Namelsad same as GEOID
+datatract<-createdataset("NAMELSAD")
+write.csv(datatract, "datatract.csv", quote=FALSE, row.names=FALSE)
 ```
 
 
