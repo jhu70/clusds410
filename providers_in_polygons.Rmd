@@ -5,6 +5,7 @@ author: "Jocelyn Jingjing Hu""
 ---
 
 This rmd helps you find out which polygon each providers fall into so that we could look at data by region and combine the demand maps and the supply maps
+
 ```{r Boston and Cambridge sf Files}
 # normally packages would be first, but the sf package was causing major problems with the other functions
 # it works best if you run sf seperately and before all other packages
