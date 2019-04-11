@@ -201,13 +201,11 @@ body1 <- dashboardBody(
                               force per tract, by taking the sum of children with all parents in the labor force over 
                               the estimated _______.",
                          style = "font-family: 'times'; font-si16pt"),
-                       br()
-                       tag$h4("Capacity for Early Education Providers"),
+                       br(),
+                       tags$h4("Capacity for Early Education Providers"),
                        em("This supply variable was created using the EEC dataset given to us by Community Labor United."),
                        br(),
-                       br(),
-                       p(),
-                       strong()
+                       br()
                      ),
                      box(
                        title = "Hours",
@@ -285,11 +283,10 @@ server <- function(input, output) {
                    ~lat,
                    radius = 3,
                    opacity = .8,
-                   color = ~infant_pal(After_School),
+                   color = ~infant_pal(Weekdays_off_hours),
                    group = "Show providers with after school care for early ed",
                    label = ~as.character(Name))%>%
-  addLayersControl(overlayGroups = c("Show providers with after school care for
-                                     early ed"))
+  addLayersControl(overlayGroups = c("Show providers with after school care for early ed"))
     })
   output$capacity_supply_map <- renderLeaflet({
     leaflet(ECC_geometry) %>%
