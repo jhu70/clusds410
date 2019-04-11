@@ -74,19 +74,19 @@ percentage_under_6 <- percentage_under_6 %>%
 
 supply data variables
 ```{r}
-EECNEW5<-read.csv("masterdataframe_492019_tract.csv")
+EECNEW5<-read.csv("masterdataframe_tract.csv")
 
 #early ed filter grouped by tract, summarized for capacity
 EECNEW5_earlyed_tract <- EECNEW5 %>%
   filter(early_ed==TRUE) %>%
-  group_by(GEOID, NAMELSAD) %>%
+  group_by(GEOID_tract, NAMELSAD_tract) %>%
   summarise(sum_capacity = sum(Capacity))
 
 #just a general early ed filter for later
 EEC_earlyed <- EECNEW5 %>%
-  filter(early_ed==TRUE, Weekdays_off_hours=="True")
+  filter(early_ed==TRUE, Weekdays_off_hours=="TRUE")
 
-EECNEW5_earlyed_tract$GEOID <- as.character(EECNEW5_earlyed_tract$GEOID)
+EECNEW5_earlyed_tract$GEOID <- as.character(EECNEW5_earlyed_tract$GEOID_tract)
 
 EEC_geometry <- inner_join(EECNEW5_earlyed_tract %>% as.data.frame(), percentage_under_6 %>% as.data.frame(), by = "GEOID")
 
@@ -103,7 +103,7 @@ Make the map
 pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 percent6pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 infant_pal <- colorFactor(palette = c("white"),
-                            levels = c("True"))
+                            levels = c("TRUE"))
 
 #transform sf type to work with leaflet
 percentage_under_6 <- percentage_under_6 %>%

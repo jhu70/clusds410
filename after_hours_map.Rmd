@@ -29,7 +29,7 @@ library(mosaic)
 ```
 
 ```{r EEC Lon Lat and after hours Dataset}
-EEC <- read_csv("masterdataframe_492019_tract.csv")
+EEC <- read_csv("3262019_afterhours_Jhu.csv")
 
 EEC <- EEC %>% 
   replace(., is.na(.), "Unk")
@@ -80,13 +80,13 @@ boston_neighborhood_base_map <- leaflet(boston_neighborhood,
 boston_neighborhood_base_map
 ```
 
-```{r data wrangling to filter data for each layer Group Map}
+```{r}
 
-# filtering for each level of infant
-# not mapping weekend_yes since there is no obs
+# # not mapping weekend_yes since there is no obs
 
 weekend_no <- EEC %>%
   filter(Weekend_off_hours == "FALSE")
+
 
 weekend_yes<- EEC %>%
   filter(Weekend_off_hours == "TRUE")
@@ -183,11 +183,4 @@ createmap("Friday_off_hours",friday_yes, friday_no)
 
 
 ```
-```{r}
-
-createmap("Weekdays_off_hours", weekday_yes, weekday_no)
-```
-
-
-
 

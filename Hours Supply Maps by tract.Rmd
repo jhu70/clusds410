@@ -20,6 +20,19 @@ library(leaflet.extras)
 boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
 ```
 
+
+```{r API Key}
+## define census API key and set it with census_api_key function
+
+api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
+census_api_key(api_key)
+
+## check API key
+
+Sys.getenv("CENSUS_API_KEY")
+```
+
+
 Getting the census demand variables
 ```{r}
 #percentage of children under 6 with all parents in the labor force, 1 for single-parent household, 2 for two-parent household in each census tract in Boston.
@@ -62,33 +75,34 @@ percentage_under_6 <- percentage_under_6 %>%
 
 supply data variables
 ```{r}
-EECNEW5<-read.csv("masterdataframe_492019_tract.csv")
+EECNEW5<-read.csv("masterdataframe_tract.csv")
 EECNEW5_others_tract <- read.csv("datatract.csv")
 ```
 
 ```{r}
-#early ed filter grouped by tract, summarized for capacity
+#early ed and weekdays off hours filter grouped by tract, summarized for capacity
 EECNEW5_hours_tract <- EECNEW5 %>%
-  group_by(GEOID,NAMELSAD,Weekdays_off_hours) %>%
-  mutate(nproviders_weekdaysoff = count("Weekdays_off_hours"))%>%
-  group_by(GEOID,NAMELSAD) %>%
-  summarise(sum_weekdaysoff = sum((nproviders_weekdaysoff)))
+  filter(early_ed==TRUE & Weekdays_off_hours == TRUE) %>%
+  group_by(GEOID_tract, NAMELSAD_tract) %>%
+  summarise(sumcapacity_weekdaysoff = sum(Capacity))
 
-EECNEW5_hours_tract$GEOID <- as.character(EECNEW5_hours_tract$GEOID)
+
+EECNEW5_hours_tract$GEOID <- as.character(EECNEW5_hours_tract$GEOID_tract)
 
 EEC_geometry <- inner_join(EECNEW5_hours_tract %>% as.data.frame(), percentage_under_6 %>% as.data.frame(), by = "GEOID")
 
 EEC_geometry <- EEC_geometry %>%
-  select(GEOID, NAME.x,sum_weekdaysoff, geometry.x) %>%
+  select(GEOID, NAME.x,sumcapacity_weekdaysoff, geometry.x) %>%
   st_sf(sf_column_name = 'geometry.x')
 
 ```
 
 
+Number of slots available during off hours for early ed in each tract
 
 ```{r}
 #making palettes
-pal2 <- colorBin("YlOrRd", domain = EEC_geometry$sum_weekdaysoff)
+pal2 <- colorBin("YlOrRd", domain = EEC_geometry$sumcapacity_weekdaysoff)
 
 #transform sf type to work with leaflet
 EEC_geometry <- EEC_geometry %>%
@@ -97,7 +111,7 @@ EEC_geometry <- EEC_geometry %>%
 #make map
 leaflet(EEC_geometry) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal2(sum_weekdaysoff),
+  addPolygons(fillColor = ~pal2(sumcapacity_weekdaysoff),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -109,7 +123,7 @@ leaflet(EEC_geometry) %>%
           zoom = 11) %>%
   addLegend("topleft", 
               pal = pal2, 
-              values = ~sum_weekdaysoff,
+              values = ~sumcapacity_weekdaysoff,
               title = "Weekdays_offhours",
               opacity = 1)
 ```

@@ -2,7 +2,7 @@ import csv
 
 fieldnames = []
 
-with open('masterdataframe_492019_tract.csv') as file:
+with open('ProvidersData_earlyed_462019.csv') as file:
 
   reader = csv.DictReader(file)
 
@@ -110,7 +110,7 @@ with open('masterdataframe_492019_tract.csv') as file:
     else: row['Weekdays_off_hours'] = 'False'
     
   fieldnames = list(rows[1].keys()) 
-with open('3262019_afterhours_Jhu.csv', 'w') as writefile:
+with open('ProvidersData_earlyed_4112019.csv', 'w') as writefile:
   writer = csv.DictWriter(writefile, fieldnames=fieldnames,lineterminator='\n')
   writer.writeheader()
   for row in rows:

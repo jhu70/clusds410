@@ -232,4 +232,11 @@ datatract<-createdataset("NAMELSAD")
 write.csv(datatract, "datatract.csv", quote=FALSE, row.names=FALSE)
 ```
 
+```{r}
+tractneighborho<-read.csv("masterdataframe_tract_neighborhood.csv")%>%
+  select(GEOID_tract,TRACTCE_tract,geometry_tract,Name_neighborho,Neighborho_neighborho,geometry_neighborho)
+glimpse(tractneighborho)
+
+```
+
 
