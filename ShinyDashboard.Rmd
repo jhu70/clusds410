@@ -109,13 +109,13 @@ body1 <- dashboardBody(
     ## CAPACITY
     
     tabItem(tabName = "capacity",
-            box(
-              title = "What does this map show?",
-              status = "warning",
-              background = "blue",
-              "Info about area", br(), "Info about group of interest"),
+            tags$h1("Percent of children under 6 with all parents in the labor
+                    force"),
             tags$br(),
-            leafletOutput("capacity_demand_plot")
+            leafletOutput("capacity_demand_map"),
+            tags$br(),
+            tags$h1("Capacity for Early Education Providers"),
+            leafletOutput("capacity_supply_map")
             ),
     
     ## HOURS
@@ -183,30 +183,36 @@ body1 <- dashboardBody(
                        collapsible = TRUE,
                        collapsed = FALSE,
                        status = "info",
-                       tags$h1("My header"),
-                       p("p creates a paragraph of text."),
-                       p("A new p() command starts a new paragraph. Supply a style
-                         attribute to change the format of the entire paragraph.",
+                       tags$h4("Percent of Children Under 6 with all parents in
+                               the labor force"),
+                       em("This demand variable was created using information provided by 
+                         the 2016 American Community Survice data, which we accessed through tidycensus in R."),
+                       br(),
+                       br(),
+                       p("Wtihin the ACS data, there were three distinct variables that recorded number of parents
+                         in the labor force with children under 6 for each census tract in the Boston area. 
+                         One of the variables (B23008_004) gave us the parents in the labor force that came from a 
+                         2-parent household, while the other two variables (B23008_010, B23008_013) gave us the parents
+                         in the labor force that came from a 1-parent household. Using this information, we were to get
+                         the total sum of all children with all parents in the labor force. Using the ACS data, we then 
+                         extracted the total number of children under 6 per tract (B23008_002).",
                          style = "font-family: 'times'; font-si16pt"),
-                       strong("strong() makes bold text."),
-                       em("em() creates italicized (i.e, emphasized) text."),
+                       strong("We were able to find the percent of children under 6 with all parents in the labor 
+                              force per tract, by taking the sum of children with all parents in the labor force over 
+                              the estimated _______.",
+                         style = "font-family: 'times'; font-si16pt"),
                        br(),
-                       code("code displays your text similar to computer code"),
-                       div("div creates segments of text with a similar style. This
-                            division of text is all blue because I passed the argument
-                           'style = color:blue' to div", style = "color:blue"),
+                       tags$h4("Capacity for Early Education Providers"),
+                       em("This supply variable was created using the EEC dataset given to us by Community Labor United."),
                        br(),
-                       p("span does the same thing as div, but it works with",
-                         span("groups of words", 
-                              style = "color:blue"),
-                         "that appear inside a paragraph.")
+                       br()
                      ),
                      box(
                        title = "Hours",
                        width = NULL,
                        solidHeader = TRUE,
                        collapsible = TRUE,
-                       collapsed = FALSE,
+                       collapsed = TRUE,
                        status = "info",
                        p("p creates a paragraph of text."),
                        p("A new p() command starts a new paragraph. Supply a style
@@ -254,26 +260,55 @@ ui <- dashboardPage(skin = "purple",
 ## SERVER
 
 server <- function(input, output) {
-  output$capacity_demand_plot <- renderLeaflet({
+  output$capacity_demand_map <- renderLeaflet({
     leaflet(percentage_under_6) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal(percent_working),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5) %>%
+  addLegend("topleft", 
+              pal = pal, 
+              values = ~percent_working,
+              title = "Percentage of children",
+              opacity = 1) %>%
+  addCircleMarkers(data = EEC_earlyed,
+                   ~lon,
+                   ~lat,
+                   radius = 3,
+                   opacity = .8,
+                   color = ~infant_pal(Weekdays_off_hours),
+                   group = "Show providers with after school care for early ed",
+                   label = ~as.character(Name))%>%
+  addLayersControl(overlayGroups = c("Show providers with after school care for early ed"))
+    })
+  output$capacity_supply_map <- renderLeaflet({
+    leaflet(ECC_geometry) %>%
       addProviderTiles("CartoDB")  %>%
-      addPolygons(fillColor = ~pal(percent_working),
+      addPolygons(fillColor = ~pal2(sum_capacity),
                   weight = 2,
                   opacity = .8,
                   color = "white",
                   dashArray = "3",
                   fillOpacity = 0.7) %>%
-      addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0,
-                  stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+      addPolygons(data=boston_neighborhood, weight = 2, opacity = 1,
+                  fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>%
+      #adding neighborhood data
       setView(lng = -71.057083, 
               lat = 42.361145, 
-              zoom = 11) %>%
+              zoom = 11.5) %>%
       addLegend("topleft", 
-                pal = pal, 
-                values = ~percent_working,
-                title = "Percentage of children under 6 with all parents in labor force",
+                pal = pal2, 
+                values = ~sum_capacity,
+                title = "Capacity",
                 opacity = 1)
-    })
+  }) 
 }
 
 # server <- function(input, output, session) {
