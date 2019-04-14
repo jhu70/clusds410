@@ -1,0 +1,173 @@
+---
+title: "Hours Maps FINAL"
+author: "Kat Kyuchukova"
+date: "4/14/2019"
+output: html_document
+---
+
+#packages
+```{r Packages}
+library(tidycensus)
+library(tidyverse)
+library(ggplot2)
+library(tigris)
+library(sf)
+library(mosaic)
+library(mapview)
+library(leaflet)
+library(leaflet.extras)
+```
+
+#data/APIS
+```{r}
+#Read in boston neighborhood data
+boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
+census_api_key(api_key)
+```
+
+
+
+#Variables
+```{r}
+# Early mornings if they leave for work anytime between 12am-6:29am
+# Evenings if they leave for work anytime between 11am-3:59pm
+# Late Evening/Overnight if they leave for work anytime between 4pm-11:59pm
+
+earlymorning_vars <- c("B08302_002", "B08302_003", "B08302_004", "B08302_005")
+evening_vars <- c("B08302_013", "B08302_014")
+overnight_vars <- c("B08302_015")
+
+earlymorning <- get_acs(geography = "tract",
+                     variables = earlymorning_vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+earlymorning <- earlymorning %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sum_earlymorning = sum(estimate))
+
+ evening <- get_acs(geography = "tract",
+                     variables = evening_vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+ 
+evening <- evening %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sum_evening = sum(estimate))
+ 
+overnight <- get_acs(geography = "tract",
+                     variables = overnight_vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+
+overnight <- overnight %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sum_overnight = sum(estimate))
+
+total <- get_acs(geography = "tract",
+                     variables = "B08302_001",
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk")
+
+total <- total %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sumtotal=sum(estimate))
+
+hours_demand1 <- inner_join(earlymorning %>% as.data.frame(), evening %>% as.data.frame(), by = "GEOID")
+hours_demand2 <- inner_join(hours_demand1 %>% as.data.frame(), overnight %>% as.data.frame(), by="GEOID")
+hours_demand <- inner_join(hours_demand2, total, by="GEOID")
+
+hours_demand <- hours_demand %>%
+  select(GEOID, NAME.x,sum_earlymorning, sum_evening, sum_overnight, sumtotal, geometry) %>%
+  st_sf(sf_column_name = 'geometry') %>%
+  mutate(percent_early = (sum_earlymorning/sumtotal)*100,
+         percent_evening = (sum_evening/sumtotal)*100,
+         percent_overnight = (sum_overnight/sumtotal)*100)
+```
+
+#Maps!!
+```{r}
+#transform sf type to work with leaflet
+hours_demand <- hours_demand %>%
+  st_transform(crs = "+init=epsg:4326")
+```
+
+#Early morning
+```{r}
+pal <- colorBin("YlOrRd", domain = hours_demand$percent_early)
+leaflet(hours_demand) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal(percent_early),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5) %>%
+  addLegend("topleft", 
+              pal = pal, 
+              values = ~percent_early,
+              opacity = 1)
+```
+
+
+#Evening
+```{r}
+pal <- colorBin("YlOrRd", domain = hours_demand$percent_evening)
+leaflet(hours_demand) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal(percent_evening),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5) %>%
+  addLegend("topleft", 
+              pal = pal, 
+              values = ~percent_evening,
+              opacity = 1)
+```
+
+
+#Overnight
+```{r}
+pal <- colorBin("YlOrRd", domain = hours_demand$percent_overnight)
+leaflet(hours_demand) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal(percent_overnight),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5) %>%
+  addLegend("topleft", 
+              pal = pal, 
+              values = ~percent_overnight,
+              opacity = 1)
+```
+
+
+
+
+
+

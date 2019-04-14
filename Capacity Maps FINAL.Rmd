@@ -149,12 +149,6 @@ EEC_census <- EEC_census %>%
 
 Make the map: two by tract (supply and demand), one by neighborhood for difference 
 ```{r}
-#making palettes
-pal <- colorBin("YlOrRd", domain = neighborho_demand_tract$laborforce)
-percent6pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
-infant_pal <- colorFactor(palette = c("white"),
-                            levels = c("TRUE"))
-
 #transform sf type to work with leaflet
 neighborho_demand <- neighborho_demand %>%
   st_transform(crs = "+init=epsg:4326")
@@ -167,7 +161,9 @@ neighborho_capacity <- neighborho_capacity %>%
 
 neighborho_capacity_tract <- neighborho_capacity_tract %>%
   st_transform(crs = "+init=epsg:4326")
+```
 
+```{r}
 ##DEMAND BY TRACT
 pal <- colorBin("YlOrRd", domain = neighborho_demand_tract$laborforce)
 leaflet(neighborho_demand_tract) %>%
@@ -186,7 +182,9 @@ leaflet(neighborho_demand_tract) %>%
               pal = pal, 
               values = ~laborforce,
               opacity = 1)
+```
 
+```{r}
 ##CAPACITY BY TRACT
 pal <- colorBin("YlOrRd", domain = neighborho_capacity_tract$slots)
 leaflet(neighborho_capacity_tract) %>%
@@ -205,7 +203,9 @@ leaflet(neighborho_capacity_tract) %>%
               pal = pal, 
               values = ~slots,
               opacity = 1)
+```
 
+```{r}
 #DIFFERENCE BY NEIGHBORHOOD
 pal <- colorFactor("YlOrRd", domain = EEC_census$more_slots)
 leaflet(EEC_census) %>%
@@ -246,34 +246,6 @@ leaflet(EEC_census) %>%
 ```
 
 
-
-```{r}
-#making palettes
-pal2 <- colorBin("YlOrRd", domain = EEC_geometry$sum_capacity)
-
-#transform sf type to work with leaflet
-EEC_geometry <- EEC_geometry %>%
-  st_transform(crs = "+init=epsg:4326")
-
-#make map
-leaflet(EEC_geometry) %>%
-  addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal2(sum_capacity),
-  weight = 2,
-  opacity = .8,
-  color = "white",
-  dashArray = "3",
-  fillOpacity = 0.7) %>%
-  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
-  setView(lng = -71.057083, 
-          lat = 42.361145, 
-          zoom = 11) %>%
-  addLegend("topleft", 
-              pal = pal2, 
-              values = ~sum_capacity,
-              title = "Capacity",
-              opacity = 1)
-```
 
 
 
