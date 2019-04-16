@@ -17,7 +17,7 @@
 ## What are you planning to do next week?
 
 •	Jocelyn
-- Polishe the maps and help put them on Shiny strategically 
+- Improve the visualizations of the maps and help put them on Shiny strategically 
 - Final paper
 - Presentation slide
 
