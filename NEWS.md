@@ -1,5 +1,10 @@
 # 2019 - 4 - 8
 ## What did you do this week?
+•	Kat
+- Third quarterly report!
+- Met with Zoë and pretty much finalized what our maps are going to be
+- Created 4 capacity maps for supply and demand and 3 hours maps based on guidance from our client
+- Troubleshooted some ratio problems with Paige
 
 • Jocelyn
 - Created map for hours showing the number of slots provided by providers operating off hours available for early Ed
@@ -9,12 +14,20 @@
 - Third quarterly presentation
 
 ## What is it that you're struggling with right now?
+•	Kat
+- Still deciding how best to quantify the difference in children who need childcare and slots available
+- Deciding if we should overlay maps: if so, how to get the legends to transfer over
+- Still not sure how the final paper should be formatted
 
 •	Jocelyn 
 - Organize the maps on shiny in a way that they tell a story
 - Visual elements of maps
 
 ## What are you planning to do next week?
+•	Kat
+- Draft of final paper !!!
+- Show our client the maps we have, make any edits they have
+- Look into clicking on neighborhood and seeing just one tract: leaflet? shiny?
 
 •	Jocelyn
 - Improve the visualizations of the maps and help put them on Shiny strategically 
