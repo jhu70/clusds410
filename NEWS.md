@@ -1,4 +1,26 @@
 # 2019 - 4 - 8
+## What did you do this week?
+
+•Jocelyn
+- Created map for hours showing the number of slots provided by providers operating off hours available for early Ed
+- Figured out which region on the shape file each provider is located at using the over function 
+- Grouped various variables by tract
+- Figured our which neighborhood each tract is located at and put the results in data frame 
+- Third quarterly presentation
+
+## What is it that you're struggling with right now?
+
+•	Jocelyn 
+- Organize the maps on shiny in a way that they tell a story
+- Visual elements of maps
+
+## What are you planning to do next week?
+
+- Polishe the maps and help put them on Shiny strategically 
+- Final paper
+- Presentation slide
+
+# 2019 - 4 - 8
 
 ## What did you do this week?
 
