@@ -6,6 +6,13 @@
 - Created 4 capacity maps for supply and demand and 3 hours maps based on guidance from our client
 - Troubleshooted some ratio problems with Paige
 
+•	Paige
+
+- Created third quarterly report presentation (1 hour)
+- Meeting with Zoë to solidify expectations for the final product (1 hour)
+- Worked on the ratio variables (2 hours)
+- Troubleshooting ratio variable and going over hours maps with Kat (2 hour)
+
 • Jocelyn
 - Created map for hours showing the number of slots provided by providers operating off hours available for early Ed
 - Figured out which region on the shape file each provider is located at using the over function 
@@ -19,6 +26,11 @@
 - Deciding if we should overlay maps: if so, how to get the legends to transfer over
 - Still not sure how the final paper should be formatted
 
+•	Paige
+- Time management
+- Finding additional resources for shiny 
+- This paper we need to do
+
 •	Jocelyn 
 - Organize the maps on shiny in a way that they tell a story
 - Visual elements of maps
@@ -28,6 +40,13 @@
 - Draft of final paper !!!
 - Show our client the maps we have, make any edits they have
 - Look into clicking on neighborhood and seeing just one tract: leaflet? shiny?
+
+•	Paige
+
+- This final paper. (4 hours)
+- Meeting with Sarah to get feedback (1 hour)
+- Put together the shiny dashboard page for the Capacity variable (2 hours) 
+- Start laying the ground work for the shiny dashboard page for the Hours variable (1 hour)
 
 •	Jocelyn
 - Improve the visualizations of the maps and help put them on Shiny strategically 
