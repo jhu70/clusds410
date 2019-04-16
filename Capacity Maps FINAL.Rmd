@@ -141,7 +141,7 @@ EEC_census <- EEC_census %>%
   select(Name_neighborho, slots, laborforce, geometry_neighborho.x) %>%
   st_sf(sf_column_name = 'geometry_neighborho.x') %>%
   mutate(differenceslots = slots-laborforce,
-         ratioslots= slots/laborforce,
+         ratioslots= laborforce/slots,
          more_slots = ifelse(differenceslots>0, "yes", "no"))
 ```
 
