@@ -1,7 +1,7 @@
 # 2019 - 4 - 8
 ## What did you do this week?
 
-•Jocelyn
+• Jocelyn
 - Created map for hours showing the number of slots provided by providers operating off hours available for early Ed
 - Figured out which region on the shape file each provider is located at using the over function 
 - Grouped various variables by tract
@@ -16,6 +16,7 @@
 
 ## What are you planning to do next week?
 
+•	Jocelyn
 - Polishe the maps and help put them on Shiny strategically 
 - Final paper
 - Presentation slide
