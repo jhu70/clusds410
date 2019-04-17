@@ -17,97 +17,97 @@ with open('ProvidersData_earlyed_462019.csv') as file:
     monday_open = row['Monday_Start_time'].strip()
     monday_close = row['Monday_End_time'].strip()
     if monday_open == 'NA':
-      row['Monday_off_hours'] = 'False'
+      row['Monday_off_hours'] = 'FALSE'
       #从倒数二到后面所有
     elif monday_open[-2:] == 'PM':
-      row['Monday_off_hours'] = 'False'
-    elif int(monday_open.split(':')[0]) < 9 and int(monday_close.split(':')[0]) > 6:
-      row['Monday_off_hours'] = 'True'
+      row['Monday_off_hours'] = 'FALSE'
+    elif int(monday_open.split(':')[0]) < 8 and int(monday_open.split(':')[1]) < 3 and int(monday_close.split(':')[0]) > 6 and int(monday_close.split(':')[1]) > 2:
+      row['Monday_off_hours'] = 'TRUE'
     else:
-      row['Monday_off_hours'] = 'False'
+      row['Monday_off_hours'] = 'FALSE'
     #mondaysrattime 下的每一个row的string
       
   
     tuesday_open = row['Tuesday_Start_time'].strip()
     tuesday_close = row['Tuesday_End_time'].strip()
     if tuesday_open == 'NA':
-      row['Tuesday_off_hours'] = 'False'
+      row['Tuesday_off_hours'] = 'FALSE'
       #从倒数二到后面所有
     elif tuesday_open[-2:] == 'PM':
-      row['Tuesday_off_hours'] = 'False'
-    elif int(tuesday_open.split(':')[0]) < 9 and int(tuesday_close.split(':')[0]) > 6:
-      row['Tuesday_off_hours'] = 'True'
+      row['Tuesday_off_hours'] = 'FALSE'
+    elif int(tuesday_open.split(':')[0]) < 8 and int(tuesday_open.split(':')[1]) < 3 and int(tuesday_close.split(':')[0]) > 6 and int(tuesday_close.split(':')[1]) > 2:
+      row['Tuesday_off_hours'] = 'TRUE'
     else:
-      row['Tuesday_off_hours'] = 'False'
+      row['Tuesday_off_hours'] = 'FALSE'
   
     wed_open = row['Wednesday_Start_time'].strip()
     wed_close = row['Wednesday_End_time'].strip()
     if wed_open == 'NA':
-      row['Wednesday_off_hours'] = 'False'
+      row['Wednesday_off_hours'] = 'FALSE'
       #从倒数二到后面所有
     elif wed_open[-2:] == 'PM':
-      row['Wednesday_off_hours'] = 'False'
-    elif int(wed_open.split(':')[0]) < 9 and int(wed_close.split(':')[0]) > 6:
-      row['Wednesday_off_hours'] = 'True'
+      row['Wednesday_off_hours'] = 'FALSE'
+    elif int(wed_open.split(':')[0]) < 8 and int(wed_open.split(':')[1]) < 3 and int(wed_close.split(':')[0]) > 6 and int(wed_close.split(':')[1]) > 2:
+      row['Wednesday_off_hours'] = 'TRUE'
     else:
-      row['Wednesday_off_hours'] = 'False'
+      row['Wednesday_off_hours'] = 'TRUE'
   
     thurs_open = row['Thursday_Start_time'].strip()
     thurs_close = row['Thursday_End_time'].strip()
     if thurs_open == 'NA':
-      row['Thursday_off_hours'] = 'False'
+      row['Thursday_off_hours'] = 'FALSE'
       #从倒数二到后面所有
     elif thurs_open[-2:] == 'PM':
-      row['Thursday_off_hours'] = 'False'
-    elif int(thurs_open.split(':')[0]) < 9 and int(thurs_close.split(':')[0]) > 6:
-      row['Thursday_off_hours'] = 'True'
+      row['Thursday_off_hours'] = 'FALSE'
+    elif int(thurs_open.split(':')[0]) < 8 and int(thurs_open.split(':')[1]) < 3 and int(thurs_close.split(':')[0]) > 6 and int(thurs_close.split(':')[1]) > 2:
+      row['Thursday_off_hours'] = 'TRUE'
     else:
-      row['Thursday_off_hours'] = 'False'
+      row['Thursday_off_hours'] = 'FALSE'
   for row in rows:
     fri_open = row['Friday_Start_time'].strip()
     fri_close = row['Friday_End_time'].strip()
     if fri_open == 'NA':
-      row['Friday_off_hours'] = 'False'
+      row['Friday_off_hours'] = 'FALSE'
       #从倒数二到后面所有
     elif fri_open[-2:] == 'PM':
-      row['Friday_off_hours'] = 'False'
-    elif int(fri_open.split(':')[0]) < 9 and int(fri_close.split(':')[0]) > 6:
-      row['Friday_off_hours'] = 'True'
+      row['Friday_off_hours'] = 'FALSE'
+    elif int(fri_open.split(':')[0]) < 8 and int(fri_open.split(':')[1]) < 3 and int(fri_close.split(':')[0]) > 6 and int(fri_close.split(':')[1]) > 2:
+      row['Friday_off_hours'] = 'TRUE'
     else:
-      row['Friday_off_hours'] = 'False'
+      row['Friday_off_hours'] = 'FALSE'
   
     sat_open = row['Saturday_Start_time'].strip()
     sat_close = row['Saturday_End_time'].strip()
     if sat_open == 'NA':
-      row['Saturday_off_hours'] = 'False'
+      row['Saturday_off_hours'] = 'FALSE'
       #从倒数二到后面所有
     elif sat_open[-2:] == 'PM':
-      row['Saturday_off_hours'] = 'False'
-    elif int(sat_open.split(':')[0]) < 9 and int(sat_close.split(':')[0]) > 6:
-      row['Saturday_off_hours'] = 'True'
+      row['Saturday_off_hours'] = 'FALSE'
+    elif int(sat_open.split(':')[0]) < 8 and int(sat_open.split(':')[1]) < 3 and int(sat_close.split(':')[0]) > 6 and int(sat_close.split(':')[1]) > 2:
+      row['Saturday_off_hours'] = 'TRUE'
     else:
-      row['Saturday_off_hours'] = 'False'
+      row['Saturday_off_hours'] = 'FALSE'
   
     sun_open = row['Sunday_Start_time'].strip()
     sun_close = row['Sunday_End_time'].strip()
     if sun_open == 'NA':
-      row['Sunday_off_hours'] = 'False'
+      row['Sunday_off_hours'] = 'FALSE'
       #从倒数二到后面所有
     elif sun_open[-2:] == 'PM':
-      row['Sunday_off_hours'] = 'False'
-    elif int(sun_open.split(':')[0]) < 9 and int(sun_close.split(':')[0]) > 6:
-      row['Sunday_off_hours'] = 'True'
+      row['Sunday_off_hours'] = 'FALSE'
+    elif int(sun_open.split(':')[0]) < 8 and int(sun_open.split(':')[1]) < 3 and int(sun_close.split(':')[0]) > 5 and int(sun_close.split(':')[1]) > 2:
+      row['Sunday_off_hours'] = 'TRUE'
     else:
-      row['Sunday_off_hours'] = 'False'
+      row['Sunday_off_hours'] = 'FALSE'
 
   for row in rows:
-    if row['Sunday_off_hours'] == 'True' and row['Saturday_off_hours'] == 'True':
-      row['Weekend_off_hours'] = 'True'
-    else: row['Weekend_off_hours'] = 'False'
+    if row['Sunday_off_hours'] == 'TRUE' and row['Saturday_off_hours'] == 'TRUE':
+      row['Weekend_off_hours'] = 'TRUE'
+    else: row['Weekend_off_hours'] = 'FALSE'
     
-    if row['Monday_off_hours'] == 'True' and row['Tuesday_off_hours'] == 'True'and row['Wednesday_off_hours'] == 'True' and row['Thursday_off_hours'] == 'True'and row['Friday_off_hours'] == 'True':
-      row['Weekdays_off_hours'] = 'True'
-    else: row['Weekdays_off_hours'] = 'False'
+    if row['Monday_off_hours'] == 'TRUE' and row['Tuesday_off_hours'] == 'TRUE'and row['Wednesday_off_hours'] == 'TRUE' and row['Thursday_off_hours'] == 'TRUE'and row['Friday_off_hours'] == 'TRUE':
+      row['Weekdays_off_hours'] = 'TRUE'
+    else: row['Weekdays_off_hours'] = 'FALSE'
     
   fieldnames = list(rows[1].keys()) 
 with open('ProvidersData_earlyed_4112019.csv', 'w') as writefile:
