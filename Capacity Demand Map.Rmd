@@ -19,6 +19,7 @@ library(leaflet.extras)
 ```{r Boston Neighborhood Shapefiles}
 #boston neighborhood data!
 boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+ma_tract <- read_sf("ma_tract/tl_2018_25_tract.shp")
 ```
 
 
@@ -83,9 +84,9 @@ EECNEW5_earlyed_tract <- EECNEW5 %>%
 
 #just a general early ed filter for later
 EEC_earlyed <- EECNEW5 %>%
-  filter(early_ed==TRUE, Weekdays_off_hours=="True")
+  filter(early_ed==TRUE, Weekdays_off_hours==TRUE)
 
-EECNEW5_earlyed_tract$GEOID <- as.character(EECNEW5_earlyed_tract$GEOID)
+EECNEW5_earlyed_tract$GEOID <- as.character(EECNEW5_earlyed_tract$GEOID_tract)
 
 EEC_geometry <- inner_join(EECNEW5_earlyed_tract %>% as.data.frame(), percentage_under_6 %>% as.data.frame(), by = "GEOID")
 
@@ -93,7 +94,6 @@ EEC_geometry <- EEC_geometry %>%
   select(GEOID, NAME.x,sum_capacity, geometry.x) %>%
   st_sf(sf_column_name = 'geometry.x')
 
-View(EECNEW5_earlyed_tract)
 ```
 
 
@@ -117,7 +117,7 @@ EEC_desert <- EEC_desert %>%
                                 ifelse(atLeast50children == "1" &
                                          ChildToCapacityRatio > 3.00, "TRUE", "FALSE"))) %>%
   select(GEOID, 
-         NAMELSAD,
+         NAMELSAD_tract,
          NAME, 
          sum_capacity, 
          laborforcechildren,
@@ -132,23 +132,21 @@ EEC_desert <- EEC_desert %>%
 ## the attempt to create this variable is below
 
 EECNEW5_desert <- EECNEW5 %>%
-  group_by(GEOID) %>%
+  group_by(GEOID_tract) %>%
   mutate(EarlyEdProviderDesert = ifelse(early_ed == "TRUE", "FALSE", "TRUE")) %>%
-  select(GEOID, NAME, NAMELSAD, early_ed, totalcapacity_early_ed, EarlyEdProviderDesert)
+  select(GEOID_tract, NAME_tract, NAMELSAD_tract, early_ed, totalcapacity_early_ed, EarlyEdProviderDesert)
 
 View(EEC_desert)
 ```
 
-```{r}
-glimpse(EEC_desert)
-```
+
 
 ```{r Children Under 6 Percentage Map with Providers}
 #making palettes
 pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 percent6pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 infant_pal <- colorFactor(palette = c("white"),
-                            levels = c("True"))
+                            levels = c(TRUE))
 
 #transform sf type to work with leaflet
 percentage_under_6 <- percentage_under_6 %>%
