@@ -103,7 +103,7 @@ hours_demand <- hours_demand %>%
 
 #Early morning
 ```{r}
-pal <- colorBin("YlOrRd", domain = hours_demand$percent_early)
+pal <- colorBin("Reds", domain = hours_demand$percent_early)
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
   addPolygons(fillColor = ~pal(percent_early),
@@ -125,7 +125,7 @@ leaflet(hours_demand) %>%
 
 #Evening
 ```{r}
-pal <- colorBin("YlOrRd", domain = hours_demand$percent_evening)
+pal <- colorBin("Reds", domain = hours_demand$percent_evening)
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
   addPolygons(fillColor = ~pal(percent_evening),
@@ -147,7 +147,7 @@ leaflet(hours_demand) %>%
 
 #Overnight
 ```{r}
-pal <- colorBin("YlOrRd", domain = hours_demand$percent_overnight)
+pal <- colorBin("Reds", domain = hours_demand$percent_overnight)
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
   addPolygons(fillColor = ~pal(percent_overnight),

@@ -208,7 +208,7 @@ leaflet(neighborho_capacity_tract) %>%
 ```
 
 ```{r}
-pal <- colorBin("YlOrRd", domain = EEC_census$ratioslots)
+pal <- colorBin("Reds", domain = EEC_census$ratioslots)
 leaflet(EEC_census) %>%
   addProviderTiles("CartoDB")  %>%
   addPolygons(fillColor = ~pal(ratioslots),
