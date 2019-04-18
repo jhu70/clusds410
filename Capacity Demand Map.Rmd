@@ -19,6 +19,7 @@ library(leaflet.extras)
 ```{r Boston Neighborhood Shapefiles}
 #boston neighborhood data!
 boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+ma_tract <- read_sf("ma_tract/tl_2018_25_tract.shp")
 ```
 
 
@@ -93,7 +94,6 @@ EEC_geometry <- EEC_geometry %>%
   select(GEOID, NAME.x,sum_capacity, geometry.x) %>%
   st_sf(sf_column_name = 'geometry.x')
 
-View(EECNEW5_earlyed_tract)
 ```
 
 
@@ -139,9 +139,7 @@ EECNEW5_desert <- EECNEW5 %>%
 View(EEC_desert)
 ```
 
-```{r}
-glimpse(EEC_desert)
-```
+
 
 ```{r Children Under 6 Percentage Map with Providers}
 #making palettes
