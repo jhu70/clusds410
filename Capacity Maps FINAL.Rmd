@@ -5,6 +5,8 @@ date: "4/13/2019"
 output: html_document
 ---
 
+##RUN PROVIDERS_IN_POLYGONS.RMD before this!!!!
+
 #packages
 ```{r Packages}
 library(tidycensus)
@@ -206,25 +208,6 @@ leaflet(neighborho_capacity_tract) %>%
 ```
 
 ```{r}
-#DIFFERENCE BY NEIGHBORHOOD
-pal <- colorFactor("YlOrRd", domain = EEC_census$more_slots)
-leaflet(EEC_census) %>%
-  addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal(more_slots),
-  weight = 2,
-  opacity = .8,
-  color = "white",
-  dashArray = "3",
-  fillOpacity = 0.7) %>%
-  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
-  setView(lng = -71.057083, 
-          lat = 42.361145, 
-          zoom = 11.5) %>%
-  addLegend("topleft", 
-              pal = pal, 
-              values = ~more_slots,
-              opacity = 1)
-
 pal <- colorBin("YlOrRd", domain = EEC_census$ratioslots)
 leaflet(EEC_census) %>%
   addProviderTiles("CartoDB")  %>%
