@@ -73,12 +73,12 @@ percentage_under_6 <- percentage_under_6 %>%
 
 
 ```{r Supply Data Variables}
-EECNEW5<-read.csv("masterdataframe_492019_tract.csv")
+EECNEW5<-read.csv("masterdataframe_tract.csv")
 
 #early ed filter grouped by tract, summarized for capacity
 EECNEW5_earlyed_tract <- EECNEW5 %>%
   filter(early_ed==TRUE) %>%
-  group_by(GEOID, NAMELSAD) %>%
+  group_by(GEOID_tract, NAMELSAD_tract) %>%
   summarise(sum_capacity = sum(Capacity))
 
 #just a general early ed filter for later
