@@ -48,8 +48,8 @@ tract_neighborho_off<-as.data.frame(tract_neighborho_off)
 ```
 
 ```{r}
-stargazer(tract_neighborho[c("Capacity","Capacity_by_neighborho","Capacity_by_tract")], type = "html", title="Table1: Descriptive table(early ed only)", digits=0, out="des_capacity.html",summary.stat = c("mean", "sd","min","max"))
+stargazer(tract_neighborho[c("Capacity","Capacity_by_neighborho","Capacity_by_tract")], type = "html", title="Descriptive table(early ed only)", digits=0, out="des_capacity.html",summary.stat = c("mean", "sd","min","max"), covariate.labels = c("Capacity", "Capacity by neighborhood", "Capacity by tract"))
 
-stargazer(tract_neighborho_off[c("Capacity_off","Capacity_neighborho_off","Capacity_tract_off")], type = "html", title="Table2: Descriptive table(weekdays off hour services for early ed)", digits=0, out="des_capacity_off.html",summary.stat = c("mean", "sd","min","max"))
+stargazer(tract_neighborho_off[c("Capacity_off","Capacity_neighborho_off","Capacity_tract_off")], type = "html", title="Descriptive table(weekdays off hour services for early ed)", digits=0, out="des_capacity_off.html",summary.stat = c("mean", "sd","min","max"),covariate.labels = c("Capacity of off hour services", "Capacity of off hour services by neighborhood", "Capacity of off hour services by tract"))
 ```
 
