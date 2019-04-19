@@ -22,16 +22,18 @@ csl: plos.csl
 ---
 
 
-## Introduction
-#Community Labor United
-Community Labor United (CLU) is a non-profit organization, operating in the Greater Boston Area, that works with other community-based establishments and labor unions across Massachusetts to cultivate strategic campaigns that protect and promote the interests of low and middle-income working class families (citation: massclu.org). Their overall goal is to promote policies that advocate for accessible jobs, healthcare, childcare, housing and environmental justice for working class households (citation: massclu.org). Through their Our Care That Works coalition that launched publicly this year, Community Labor United aims to bring together various local cooperative groups to confront the child care crisis in Massachusetts. More specific to this research, CLU was interested in examining the inconsistencies in childcare within the Greater Boston Area, caused by the negligence of the Department of Early Education and Care (EEC). This investigative exploration into childcare provision gaps within the Greater Boston Area will allow Community Labor United to communicate to the EEC the demand for the standardization of childcare within Massachusetts.
+#Introduction
+##Community Labor United
+Community Labor United (CLU) is a non-profit organization, operating in the Greater Boston Area, that works with other community-based establishments and labor unions across Massachusetts to cultivate strategic campaigns that protect and promote the interests of low and middle-income working class families []. Their overall goal is to promote policies that advocate for accessible jobs, healthcare, childcare, housing and environmental justice for working class households []. Through their Our Care That Works coalition that launched publicly this year, Community Labor United aims to bring together various local cooperative groups to confront the child care crisis in Massachusetts. More specific to this research, CLU was interested in examining the inconsistencies in childcare within the Greater Boston Area, caused by the negligence of the Department of Early Education and Care (EEC). This investigative exploration into childcare provision gaps within the Greater Boston Area will allow Community Labor United to communicate to the EEC the demand for the standardization of childcare within Massachusetts.
 
-##Background
-The Department of Early Education and Care’s mission is to maintain the growth and development of all children, by providing quality childcare programs and resources for families within their communities (citation: mass.gov/org/eec...). However, the research lead by Community Labor United and their affiliated organizations shows that the EEC has been unable to effectively execute their commitment for low and middle-income working class families.  
+##EEC Literature Review
+The Department of Early Education and Care’s mission is to maintain the growth and development of all children, by providing quality childcare programs and resources for families within their communities []. However, the research lead by Community Labor United and their affiliated organizations shows that the EEC has been unable to effectively execute their commitment for low and middle-income working class families.  
+We will be adding more limitations after we receive some literature from Sarah about the EEC and childcare! (Sorry, friend)
 
 ##Research Question
 As stated before, the general goal for this research was to examine the inconsistencies in the EEC by highlighting childcare provision gaps in the Greater Boston Area. More specifically, this project focused on illustrating a disparity in operating hours and capacity for childcare providers on the neighborhood level and census tract level. Because Community Labor United is concentrated on understanding how the low and middle-income households are impacted by the current childcare system, our project focused on emphasizing the childcare demands needed for working class families. Additionally, CLU was interested in concentrating on early education provision care, which encompasses childcare for children ages five and under. For hours, we looked at how the non-typical work week is affected by the early education provision that is currently supplied, since people with low and middle-incomes work at times that operate outside the typical 9:00am - 5:00pm job. We wanted to understand if there were a sufficient number of childcare facilities that could offer early education provision outside Monday - Friday, 7:30am - 6:00pm, for people in the Greater Boston Area. Similarly for capacity, we wanted to highlight the lack of available slots for early education provision for working households with children age five and under. This is because working-class families typically have all parents in the household in the workforce, so it is crucial that the childcare capacity supply matches the demand.  
 Individually, the child provision gaps in hours and capacity shows how the Department of Early Education and Care has neglected low and middle-income families in specific ways. However, we also think it’s important to understand how the interaction between lack of available childcare hours and lack of early education provision spots impact these households overall. To best convey that interaction, we compiled our visualizations and supporting information on an easily accessible platform. This allows for the user to quickly navigate the various maps for hours and capacity, and also share these findings with all appropriate parties. It is our hope that Community Labor United will be able to use the visualizations we’ve created to motivate the Department of Early Education to make reforms to the current childcare system to be more accommodating for all families in Massachusetts, regardless of occupation or availability.  
+
 
 #Method
 In order to quantify the gap in supply and demand for childcare in Boston, we decided to focus on the capacity of the existing childcare providers in comparison to the number of children who need childcare, as well as the hours that providers are able to provide childcare in comparison to the hours when childcare is most needed by those who work outside standard hours. These areas were chosen because both for their urgency in affecting access to and need for childcare, as well as for the lack of existing research that exists on the gaps between the childcare that exists and the childcare that is needed.
@@ -42,7 +44,7 @@ The data from our main analyses consisted of two data sources, one addressing th
 
 There is no existing dataset that tells us about childcare demand specifically, so to answer this question we used census data, specifically the *American Community Survey* (ACS), and filtered for certain variables of interest. The following methodology will discuss specific variables in detail, but data was derived from the 2016 American Community Survey and was filtered for Suffolk County, Massachusetts. 
 
-We wanted to convey the gap in childcare by a geography that would be big enough to generalize findings, but small enough that we could be specific and not overlook any areas that might have findings of interest. Through consultation with CLU, we decided on convey our results by the neighborhood level. To do this, we accessed Boston neighborhood shapefile data from *cite*, and assigned each EEC childcare provider to a certain neighborhood. Since the census data of interest was only accessible by tract, we developed a file that matched each census tract to a neighborhood, and included both tract geometry and neighborhood geometry to allow for easy mapping. More about this process is discussed in the challenges section.
+We wanted to convey the gap in childcare by a geography that would be big enough to generalize findings, but small enough that we could be specific and not overlook any areas that might have findings of interest. Through consultation with CLU, we decided on convey our results by the neighborhood level. To do this, we accessed Boston neighborhood shapefile data [@bostonshapefile] and assigned each EEC childcare provider to a certain neighborhood. Since the census data of interest was only accessible by tract, we developed a file that matched each census tract to a neighborhood, and included both tract geometry and neighborhood geometry to allow for easy mapping. More about this process is discussed in the challenges section.
 
 #Capacity
 
@@ -114,33 +116,46 @@ Figure 7 shows the number of slots available for early by providers that open be
 #Challenges and Limitations
 
 ##Challenges
-
 There are two main challenges that we deal with for this project. First is data cleaning for the EEC dataset. The EEC dataset has a messy data format and a lot of columns that contain information on several different variables. To extract information that we need to create the capacity and hours variables, we utilize various functions and packages from R and Python to clean, merge, and spread variables from the original dataset, such as minimum age, rates, open and close time of providers. 
 
 Second is the geographical classification. One of the narratives of this project is to look at the supply and demand by the tract and neighborhood levels, the information of which are not provided in the original datasets we are given. We deal with this issue by geocoding the providers’ locations, deciding which polygon each provider falls within using the over function from the rgeos package.
  
 ##Limitations
- 
-First the census data leads to a deviation from real life situations. The census data assumes people work for the same amount of hours everyday while 
--general lack of ability to merge census data and EEC: comparing different variables for the same construct
--Lack of data in EEC about important variables like rates and subsidY
--Specific info on each providers, e.g., capacity of each provider by age groups
+First some of the variables from census datasets are based on assumptions different from real life situations. Specifically, people’s departure time for work is created based on the assumption that people work for the same amount of hours everyday while the parents we are most interested in are those that have irregular working hours.
 
+Second, our general lack of ability to match census data variables with variables EEC provide to compare different variables for the same construct. Although we successfully create the desert ratio by using the capacity and children population from the EEC and census datasets, there are many other variables the project could look into, such as income level of citizens vs. subsidy of providers.   
+
+Third, there is a lack of data in the EEC dataset about important variables, such as the capacity of each providers by age groups and subsidy amount in dollars. The absence of these variables prevents us from looking more deeply into the supply for childcare services. 
 There are many variables that we clean but do not look into due to the limited amount of time we have, such as subsidy, availability of drop-in and emergency services. 
 
-#Discussion
+#Discussion and Conclusion
 
 To examine the inconsistencies in the EEC by highlighting childcare provision gaps in the Greater Boston Area, we utilize EEC datasets and census datasets to create maps that illustrate a disparity in operating hours and capacity for childcare providers on the neighborhood level and census tract level. In a word, East Boston and West Boston neighborhoods, including Allston, Boston, South Boston, Brighton, Charlestown, Dorchester, East Boston, Hyde Park, Jamaica Plain, Mattapan, Roslindale, Roxbury, and West Roxbury, are the regions where the gaps apparently exist. 
-According to the visualizations of the “capacity” variable, providers in East Boston and West Boston, where there is a large number of children under 6, do not offer enough number of slots to feed the need of families in these areas. Similarly, the maps on the “hours” variable indicate that there is a lack of childcare off hour services for working families living in East Boston, West Boston, South Boston, and the waterfront areas of Allston, Brighton, and Jamaica Plain are most in need of off hour childcare services. According to __, most of these neighborhoods are also regions where income levels are lower than the average income level of the Boston area. The limited financial capability of citizens of these areas might force them to work during irregular hours and to send their children to the childcare providers. On the other hand, the providers in these regions could not provide enough slots for children under 6 as they could not earn as much money from these low-income families as they could from families in the central areas. To resolve the gap, the policy intervention and support from EEC could be urgent.  
-In a word, our graphical analysis successfully illustrates the existence of the gap between supply and demand for early ed childcare services in the Boston area. 
+According to the visualizations of the “capacity” variable, providers in East Boston and West Boston, where there is a large number of children under 6, do not offer enough number of slots to feed the need of families in these areas. Similarly, the maps on the “hours” variable indicate that there is a lack of childcare off hour services for working families living in East Boston, West Boston, South Boston, and the waterfront areas of Allston, Brighton, and Jamaica Plain are most in need of off hour childcare services. According to the median income level map of Boston, most of these neighborhoods are also regions where income levels are lower than the average income level of the Boston area [@bostonmap]. The limited financial capability of citizens of these areas might force them to work during irregular hours and to send their children to the childcare providers. On the other hand, the providers in these regions could not provide enough slots for children under 6 as they could not earn as much money from these low-income families as they could from families in the central areas. To resolve the gap, the policy intervention and support from EEC could be urgent.  
+In a word, our graphical analysis successfully illustrates the existence of the gap between supply and demand for early ed childcare services in the Boston area. For researchers who are interested in digging more deeply into this topic in the future, we suggest several directions they could explore into. First, people could match more variables on the demand for childcare services with variables on the supply for childcare services to illustrate the existence of gaps. Second, people could try to obtain a more comprehensive dataset from EEC to have a closer look at the supply of childcare services for different age groups. Third, people could conduct a childcare survey by themselves to have first-hand information directly from the providers and families in need of childcare services in Boston. Fourth, people could encharge the studied area to the whole mass 
 
-#Conclusion
-
-#Appendix
-```{r}
-
-```
 
 
 
 # References {#references .unnumbered}
+
+
+#Appendix
+
+![Demand: Number of Children Under 6 with Parents in the Labor Force](fig1.png){width=500}
+
+
+![Demand: Number of Children Under 6 with Parents in the Labor Force](fig1.png){width=500}
+
+![Number of slots available for early ed by tracts](Fig 2, slots.png){width=500}
+
+![Gap between supply and demand of capacities](Fig 3, ratioslots.png){width=500}
+
+![Demand: Percentage maps by tracts on people departure time for work in the morning](fig4.png){width=500}
+
+![Demand: Percentage maps by tracts on people departure time for home in the evening](fig5.png)
+
+![Demand: Percentage maps by tracts of people whose departure time for home is overnight](fig6.png)
+
+![Supply: Number of slots in certain tracts by providers who operate off hour during weekdays for early ed.](fig7.png)
+
