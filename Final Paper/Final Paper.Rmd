@@ -1,33 +1,38 @@
 ---
-title: Title of submission to PLOS journal
+title: The Graphical Analysis on the Gap between Supply and Demandfor Early Ed Childcare Services
 author:
-  - name: Alice Anonymous
-    email: alice@example.com
-    affiliation: Some Institute of Technology
-    corresponding: alice@example.com
-  - name: Bob Security
+  - name: Jocelyn Hu
+    email: jhu70@smith.edu
+    affiliation: Smith College
+  - name: Kat 
     email: bob@example.com
-    affiliation: Another University
+    affiliation: Smith COllege
+  - name: Paige 
+    email: bob@example.com
+    affiliation: Smith COllege
 address:
-  - code: Some Institute of Technology
-    address: Department, Street, City, State, Zip
-  - code: Another University
-    address: Department, Street, City, State, Zip
+  - code: Smith College
+    address: SDS, 1 Chapin WAY, Northampton, MA 01063
+  - code: Smith College
+    address: SDS, 1 Chapin WAY, Northampton, MA 01063
+  - code: Smith College
+    address: SDS, 1 Chapin WAY, Northampton, MA 01063
 abstract: |
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget porta erat. Morbi consectetur est vel gravida pretium. Suspendisse ut dui eu ante cursus gravida non sed sem. Nullam sapien tellus, commodo id velit id, eleifend volutpat quam. Phasellus mauris velit, dapibus finibus elementum vel, pulvinar non tellus. Nunc pellentesque pretium diam, quis maximus dolor faucibus id. Nunc convallis sodales ante, ut ullamcorper est egestas vitae. Nam sit amet enim ultrices, ultrices elit pulvinar, volutpat risus.
 
 bibliography: mybibfile.bib
 output: rticles::plos_article
 csl: plos.csl
+nocite: '@*'
 ---
 
 
 #Introduction
 ##Community Labor United
-Community Labor United (CLU) is a non-profit organization, operating in the Greater Boston Area, that works with other community-based establishments and labor unions across Massachusetts to cultivate strategic campaigns that protect and promote the interests of low and middle-income working class families []. Their overall goal is to promote policies that advocate for accessible jobs, healthcare, childcare, housing and environmental justice for working class households []. Through their Our Care That Works coalition that launched publicly this year, Community Labor United aims to bring together various local cooperative groups to confront the child care crisis in Massachusetts. More specific to this research, CLU was interested in examining the inconsistencies in childcare within the Greater Boston Area, caused by the negligence of the Department of Early Education and Care (EEC). This investigative exploration into childcare provision gaps within the Greater Boston Area will allow Community Labor United to communicate to the EEC the demand for the standardization of childcare within Massachusetts.
+Community Labor United (CLU) is a non-profit organization, operating in the Greater Boston Area, that works with other community-based establishments and labor unions across Massachusetts to cultivate strategic campaigns that protect and promote the interests of low and middle-income working class families [@CLU]. Their overall goal is to promote policies that advocate for accessible jobs, healthcare, childcare, housing and environmental justice for working class households [@CLU]. Through their Our Care That Works coalition that launched publicly this year, Community Labor United aims to bring together various local cooperative groups to confront the child care crisis in Massachusetts. More specific to this research, CLU was interested in examining the inconsistencies in childcare within the Greater Boston Area, caused by the negligence of the Department of Early Education and Care (EEC). This investigative exploration into childcare provision gaps within the Greater Boston Area will allow Community Labor United to communicate to the EEC the demand for the standardization of childcare within Massachusetts.
 
 ##EEC Literature Review
-The Department of Early Education and Care’s mission is to maintain the growth and development of all children, by providing quality childcare programs and resources for families within their communities []. However, the research lead by Community Labor United and their affiliated organizations shows that the EEC has been unable to effectively execute their commitment for low and middle-income working class families.  
+The Department of Early Education and Care’s mission is to maintain the growth and development of all children, by providing quality childcare programs and resources for families within their communities [@EEC]. However, the research lead by Community Labor United and their affiliated organizations shows that the EEC has been unable to effectively execute their commitment for low and middle-income working class families.  
 We will be adding more limitations after we receive some literature from Sarah about the EEC and childcare! (Sorry, friend)
 
 ##Research Question
@@ -109,7 +114,6 @@ Figure 5 shows the percentage of parents in tracts who leave for home in the lat
 
 Figure 6 shows the percentage of parents in tracts who depart for home from the workplace overnight. On average, people who live in South Boston and West Boston areas (north and south areas on the map) leave later for home than people who live in other regions. These are also the regions where larger percentage of people leave early and where there are relatively larger number of children under 6 in need of childcare services. The tracts where the largest percentages of people leave for jobs early are located at are waterfront areas of South Boston and Dorchester.
 
- 
 Figure 7 shows the number of slots available for early by providers that open before 7:30am and close after 6pm during weekdays. It indicates that there is a significant lack of capacities in regions where families have a difficult commute time. In general, people from working families living in East Boston, West Boston, South Boston, and the waterfront areas of Allston, Brighton, and Jamaica Plain are most in need of off hour childcare services. However, we could see that there are only a few slots offered by childcare providers that operate off hour available for children in West Boston and South Boston, and none for children in South Boston and the waterfront areas of Allston, Brighton, and Jamaica Plain. Accordingly, more off hour slots should be provided in these regions.
  
 
@@ -137,25 +141,32 @@ In a word, our graphical analysis successfully illustrates the existence of the 
 
 
 
-# References {#references .unnumbered}
-
-
 #Appendix
 
-![Demand: Number of Children Under 6 with Parents in the Labor Force](fig1.png){width=500}
+
+![Demand: Number of Children Under 6 with Parents in the Labor Force](fig1.png){width=300}
+
+![Number of slots available for early ed by tracts](Fig 2, slots.png){width=300}
 
 
-![Demand: Number of Children Under 6 with Parents in the Labor Force](fig1.png){width=500}
+![Gap between supply and demand of capacities](Fig 3, ratioslots.png){width=300}
 
-![Number of slots available for early ed by tracts](Fig 2, slots.png){width=500}
 
-![Gap between supply and demand of capacities](Fig 3, ratioslots.png){width=500}
+![Demand: Percentage maps by tracts on people departure time for work in the morning](fig4.png){width=300}
 
-![Demand: Percentage maps by tracts on people departure time for work in the morning](fig4.png){width=500}
 
-![Demand: Percentage maps by tracts on people departure time for home in the evening](fig5.png)
+![Demand: Percentage maps by tracts on people departure time for home in the evening](fig5.png){width=300}
 
-![Demand: Percentage maps by tracts of people whose departure time for home is overnight](fig6.png)
+![Demand: Percentage maps by tracts of people whose departure time for home is overnight](fig6.png){width=300}
 
-![Supply: Number of slots in certain tracts by providers who operate off hour during weekdays for early ed.](fig7.png)
+![Supply: Number of slots in certain tracts by providers who operate off hour during weekdays for early ed](fig7.png){width=300}
+
+![Table1](table1.png){width=300}
+
+![Table2](table2.png){width=300}
+
+
+# References {#references.unumbered}
+app
+
 
