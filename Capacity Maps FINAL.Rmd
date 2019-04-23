@@ -103,7 +103,11 @@ EECNEW5<-read.csv("masterdataframe_tract.csv")
 
 #early ed filter grouped by tract, summarized for capacity
 EECNEW5_earlyed_tract <- EECNEW5 %>%
-  filter(early_ed=="True") %>%
+<<<<<<< HEAD
+  #make sure that you have TRUE or "True" depending on how it is saved in the dataset
+=======
+>>>>>>> 7acf9e8f30ab6ed2d6a31aa60f68549d2252c5f3
+  filter(early_ed==TRUE) %>%
   group_by(GEOID_tract, NAMELSAD_tract) %>%
   summarise(sum_capacity = sum(Capacity))
 
@@ -231,4 +235,27 @@ leaflet(EEC_census) %>%
 
 
 
+#Bar chart of desert ratio
+
+```{r}
+glimpse(EEC_census)
+```
+```{r}
+EEC_census_bar<- 
+ EEC_census[order(EEC_census$ratioslots, decreasing = TRUE),]
+#Alternative: df<-arrange(df,desc(c))
+head(EEC_census_bar)
+```
+
+```{r}
+library(ggplot2)
+ggplot(EEC_census_bar,aes(x =reorder(Name_neighborho,-ratioslots), y = ratioslots, fill = Name_neighborho)) +
+  geom_bar(colour="black", stat="identity") + ggtitle( "Neighbohood ranking by desert ratio")+ xlab("Neighborhoods")+  ylab("Desert Ratio (Population under 6/Capacity for early ed")
+```
+
+```{r}
+EEC_census_bar5<-top_n(EEC_census_bar, 5, ratioslots)
+ggplot(EEC_census_bar5,aes(x =reorder(Name_neighborho,-ratioslots), y = ratioslots, fill = Name_neighborho)) +
+  geom_bar(colour="black", stat="identity") + ggtitle( "Top 5 Neighbohood ranking with the highest desert ratio")+ xlab("Neighborhoods")+  ylab("Desert Ratio (Population under 6/Capacity for early ed")
+```
 
