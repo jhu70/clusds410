@@ -119,7 +119,8 @@ leaflet(hours_demand) %>%
   addLegend("topleft", 
               pal = pal, 
               values = ~percent_early,
-              opacity = 1)
+              opacity = 1,
+              title = "Percentage of people that leave to work in the early morning")
 ```
 
 
@@ -141,7 +142,8 @@ leaflet(hours_demand) %>%
   addLegend("topleft", 
               pal = pal, 
               values = ~percent_evening,
-              opacity = 1)
+              opacity = 1,
+            title = "Percentage of people that leave to work in the evening")
 ```
 
 
@@ -163,7 +165,8 @@ leaflet(hours_demand) %>%
   addLegend("topleft", 
               pal = pal, 
               values = ~percent_overnight,
-              opacity = 1)
+              opacity = 1,
+              title = "Percentage of people that leave to work overnight")
 ```
 
 

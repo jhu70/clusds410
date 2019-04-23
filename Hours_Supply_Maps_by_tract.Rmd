@@ -158,7 +158,7 @@ map_yes <- leaflet(EEC_geometry) %>%
   addLegend("topleft", 
               pal = pal2, 
               values = ~sumcapacity_weekdaysoff,
-              title = "Weekdays_offhours",
+              title = "Capcacity of weekdays off hour providers by tract",
               opacity = 1)%>%
   addCircleMarkers(data = EEC_earlyed,
                    ~lon,
