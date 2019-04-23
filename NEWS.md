@@ -2,8 +2,8 @@
 ## What did you do this week?
 
 •	Kat
-
--
+- The final paper draft !! This was most of it.
+- Also finished the maps according to Zoe's edits last week and then got feedback from Sarah and created another map based on that.
 
 •	Paige
 
@@ -18,8 +18,8 @@
 ## What is it that you're struggling with right now?
 
 •	Kat
+- We struggled a lot with rticles and getting our citations to work and getting the formatting to work. Still need a lot of work there
 
--
 
 •	Paige
 
@@ -33,8 +33,9 @@
 
 ## What are you planning to do next week?
 •	Kat
-
--
+- Ethical statement
+- Finalizing maps
+- Editing final paper
 
 •	Paige
 
