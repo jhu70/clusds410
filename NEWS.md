@@ -1,3 +1,53 @@
+# 2019 - 4 - 22
+## What did you do this week?
+
+•	Kat
+- The final paper draft !! This was most of it.
+- Also finished the maps according to Zoe's edits last week and then got feedback from Sarah and created another map based on that.
+
+•	Paige
+
+- The final paper (4 hours)
+- Meeting with Sarah to get feedback (1 hour)
+- Cleaned up Shiny a bit (1 hour)
+
+• Jocelyn
+
+-
+
+## What is it that you're struggling with right now?
+
+•	Kat
+- We struggled a lot with rticles and getting our citations to work and getting the formatting to work. Still need a lot of work there
+
+
+•	Paige
+
+- Time management
+- Finding additional resources for shiny 
+- Getting things done in time
+
+•	Jocelyn 
+
+-
+
+## What are you planning to do next week?
+•	Kat
+- Ethical statement
+- Finalizing maps
+- Editing final paper
+
+•	Paige
+
+- Put together the shiny dashboard page for the Capacity variable (2 hours) 
+- Put together the shiny dashboard page for the Hours variable (2 hours)
+- Ethical Statement (2 hours)
+- Make edits to the Final Paper Draft (1 hour)
+
+•	Jocelyn
+
+-
+
 # 2019 - 4 - 15
 ## What did you do this week?
 •	Kat
