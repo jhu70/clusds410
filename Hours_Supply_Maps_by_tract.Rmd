@@ -126,7 +126,7 @@ Number of slots available during off hours for early ed in each tract
 ```{r}
 #making palettes
 pal2 <- colorBin("YlOrRd", domain = EEC_geometry$sumcapacity_weekdaysoff)
-infant_pal <- colorFactor(palette = c("green"),
+infant_pal <- colorFactor(palette = c("blue"),
                             levels = c(TRUE))
 #making palettes
 pal3 <- colorBin("GREY", domain = EEC_geometry_no$sumcapacity_weekdaysoff)
