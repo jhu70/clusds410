@@ -24,6 +24,9 @@ library(leaflet.extras)
 boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
 api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
 census_api_key(api_key)
+EECNEW5<-read.csv("masterdataframe_tract.csv")
+EEC_earlyed <- EECNEW5 %>%
+  filter(early_ed==TRUE, Weekdays_off_hours==TRUE)
 ```
 
 
@@ -92,7 +95,8 @@ hours_demand <- hours_demand %>%
   mutate(percent_early = (sum_earlymorning/sumtotal)*100,
          percent_evening = (sum_evening/sumtotal)*100,
          percent_overnight = (sum_overnight/sumtotal)*100,
-         aggregate= percent_early + percent_evening + percent_overnight)
+         aggregate_percent= percent_early + percent_evening + percent_overnight,
+         aggregate_raw = sum_earlymorning + sum_evening + sum_overnight)
 ```
 
 #Maps!!
@@ -170,13 +174,13 @@ leaflet(hours_demand) %>%
 
 ##Aggregate
 ```{r}
-pal <- colorBin("Reds", domain = hours_demand$aggregate)
-hours_demand <- hours_demand %>%
-  filter(aggregate!=100)
+pal <- colorBin("YlOrRd", domain = hours_demand$aggregate_raw)
+#hours_demand <- hours_demand %>%
+  #filter(aggregate!=100)
 
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal(aggregate),
+  addPolygons(fillColor = ~pal(aggregate_raw),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -186,9 +190,46 @@ leaflet(hours_demand) %>%
   setView(lng = -71.057083, 
           lat = 42.361145, 
           zoom = 11.5) %>%
+   addCircleMarkers(data = EEC_earlyed,
+                   ~lon,
+                   ~lat,
+                   radius = 2.5,
+                   opacity = .4,
+                   color = ~infant_pal(Weekdays_off_hours),
+                   group = "Show providers with after school care for early ed",
+                   label = ~as.character(Capacity)) %>%
   addLegend("topleft", 
               pal = pal, 
-              values = ~aggregate,
+              values = ~aggregate_raw,
+              opacity = 1)
+
+pal <- colorBin("YlOrRd", domain = hours_demand$aggregate_percent)
+#hours_demand <- hours_demand %>%
+  #filter(aggregate!=100)
+
+leaflet(hours_demand) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal(aggregate_percent),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5) %>%
+   addCircleMarkers(data = EEC_earlyed,
+                   ~lon,
+                   ~lat,
+                   radius = 2.5,
+                   opacity = 1,
+                   color = ~infant_pal(Weekdays_off_hours),
+                   group = "Show providers with after school care for early ed",
+                   label = ~as.character(Capacity)) %>%
+  addLegend("topleft", 
+              pal = pal, 
+              values = ~aggregate_percent,
               opacity = 1)
 ```
 
