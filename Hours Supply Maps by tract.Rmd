@@ -128,4 +128,8 @@ leaflet(EEC_geometry) %>%
               opacity = 1)
 ```
 
+```{r}
+sqrt(45)
+```
+
 

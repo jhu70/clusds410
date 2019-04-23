@@ -103,7 +103,8 @@ EECNEW5<-read.csv("masterdataframe_tract.csv")
 
 #early ed filter grouped by tract, summarized for capacity
 EECNEW5_earlyed_tract <- EECNEW5 %>%
-  filter(early_ed=="True") %>%
+  #make sure that you have TRUE or "True" depending on how it is saved in the dataset
+  filter(early_ed==TRUE) %>%
   group_by(GEOID_tract, NAMELSAD_tract) %>%
   summarise(sum_capacity = sum(Capacity))
 
