@@ -1,3 +1,56 @@
+# 2019 - 4 - 22
+## What did you do this week?
+
+•	Kat
+- The final paper draft !! This was most of it.
+- Also finished the maps according to Zoe's edits last week and then got feedback from Sarah and created another map based on that.
+
+•	Paige
+
+- The final paper (4 hours)
+- Meeting with Sarah to get feedback (1 hour)
+- Cleaned up Shiny a bit (1 hour)
+
+• Jocelyn
+- The Result, Discussion, and Reference sections of the final paper
+- Modified previous maps based on Sarah and Zoe's feedback
+- Filled the holes on the supply polygon map on hours with grey color; Add provider markers on the supply polygon map
+- Bar chart showing the ranking of neighborhoods by desert ratio
+
+## What is it that you're struggling with right now?
+
+•	Kat
+- We struggled a lot with rticles and getting our citations to work and getting the formatting to work. Still need a lot of work there
+
+
+•	Paige
+
+- Time management
+- Finding additional resources for shiny 
+- Getting things done in time
+
+•	Jocelyn 
+- Getting the citation to work: why the appendix and citation will mess up with each other
+- How to present in certain order and ways to tell a story
+
+## What are you planning to do next week?
+•	Kat
+- Ethical statement
+- Finalizing maps
+- Editing final paper
+
+•	Paige
+
+- Put together the shiny dashboard page for the Capacity variable (2 hours) 
+- Put together the shiny dashboard page for the Hours variable (2 hours)
+- Ethical Statement (2 hours)
+- Make edits to the Final Paper Draft (1 hour)
+
+•	Jocelyn
+- Bar chart on desert ratio
+- Polishing the final paper
+- Ethical statement
+
 # 2019 - 4 - 15
 ## What did you do this week?
 •	Kat

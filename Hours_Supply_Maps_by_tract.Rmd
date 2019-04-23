@@ -77,6 +77,9 @@ supply data variables
 ```{r}
 EECNEW5<-read.csv("masterdataframe_tract.csv")
 EECNEW5_others_tract <- read.csv("datatract.csv")
+EEC_earlyed <- EECNEW5 %>%
+  filter(early_ed==TRUE, Weekdays_off_hours==TRUE)
+
 ```
 
 ```{r}
@@ -98,34 +101,172 @@ EEC_geometry <- EEC_geometry %>%
 ```
 
 
+```{r}
+#early ed and weekdays off hours filter grouped by tract, summarized for capacity
+EECNEW5_hours_tract_no <- EECNEW5 %>%
+  filter(early_ed==TRUE & Weekdays_off_hours == FALSE) %>%
+  group_by(GEOID_tract, NAMELSAD_tract) %>%
+  summarise(sumcapacity_weekdaysoff = 0)
+
+
+EECNEW5_hours_tract_no$GEOID <- as.character(EECNEW5_hours_tract_no$GEOID_tract)
+
+EEC_geometry_no <- inner_join(EECNEW5_hours_tract_no %>% as.data.frame(), percentage_under_6 %>% as.data.frame(), by = "GEOID")
+
+EEC_geometry_no <- EEC_geometry_no %>%
+  select(GEOID, NAME.x,sumcapacity_weekdaysoff, geometry.x) %>%
+  st_sf(sf_column_name = 'geometry.x')
+
+```
+
+
+
 Number of slots available during off hours for early ed in each tract
 
 ```{r}
 #making palettes
 pal2 <- colorBin("YlOrRd", domain = EEC_geometry$sumcapacity_weekdaysoff)
+infant_pal <- colorFactor(palette = c("green"),
+                            levels = c(TRUE))
+#making palettes
+pal3 <- colorBin("GREY", domain = EEC_geometry_no$sumcapacity_weekdaysoff)
 
 #transform sf type to work with leaflet
 EEC_geometry <- EEC_geometry %>%
   st_transform(crs = "+init=epsg:4326")
 
 #make map
-leaflet(EEC_geometry) %>%
+map_yes <- leaflet(EEC_geometry) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal2(sumcapacity_weekdaysoff),
+  addPolygons(data = EEC_geometry_no,fillColor = ~pal3(sumcapacity_weekdaysoff),
   weight = 2,
   opacity = .8,
   color = "white",
   dashArray = "3",
   fillOpacity = 0.7) %>%
-  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  addPolygons(fillColor = ~pal2(sumcapacity_weekdaysoff),
+  weight = 1,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  #adding neighborhood data
   setView(lng = -71.057083, 
           lat = 42.361145, 
           zoom = 11) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>%
   addLegend("topleft", 
               pal = pal2, 
               values = ~sumcapacity_weekdaysoff,
               title = "Weekdays_offhours",
-              opacity = 1)
+              opacity = 1)%>%
+  addLegend("topright", 
+              pal = pal3, 
+              values = ~sumcapacity_weekdaysoff,
+              title = "Weekdays_offhours",
+              opacity = 1)%>%
+  addCircleMarkers(data = EEC_earlyed,
+                   ~lon,
+                   ~lat,
+                   radius = 0.5,
+                   opacity = .4,
+                   color = ~infant_pal(Weekdays_off_hours),
+                   group = "Show providers with after school care for early ed",
+                   label = ~as.character(Name))%>%
+  addLayersControl(overlayGroups = c("Show providers with after school care for early ed"))
+map_yes
 ```
 
+#Weekend
+```{r}
+EEC_weekend <- EECNEW5 %>%
+  filter(early_ed==TRUE, Weekend_off_hours==TRUE)
+
+```
+
+
+```{r}
+
+# #early ed and weekend off hours filter grouped by tract, summarized for capacity. No available slot during weekend
+# EECNEW5_hours_tract <- EECNEW5 %>%
+#   filter(early_ed==TRUE & Weekend_off_hours == TRUE) %>%
+#   group_by(GEOID_tract, NAMELSAD_tract) %>%
+#   summarise(sumcapacity_weekendoff = sum(Capacity))
+# 
+# 
+# EECNEW5_hours_tract$GEOID <- as.character(EECNEW5_hours_tract$GEOID_tract)
+# 
+# EEC_geometry <- inner_join(EECNEW5_hours_tract %>% as.data.frame(), percentage_under_6 %>% as.data.frame(), by = "GEOID")
+# 
+# EEC_geometry <- EEC_geometry %>%
+#   select(GEOID, NAME.x,sumcapacity_weekendoff, geometry.x) %>%
+#   st_sf(sf_column_name = 'geometry.x')
+
+```
+
+
+```{r}
+#early ed and weekdays off hours filter grouped by tract, summarized for capacity
+EECNEW5_hours_tract_no <- EECNEW5 %>%
+  filter(early_ed==TRUE & Weekend_off_hours == FALSE) %>%
+  group_by(GEOID_tract, NAMELSAD_tract) %>%
+  summarise(sumcapacity_weekendoff = sum(Capacity))
+
+
+EECNEW5_hours_tract_no$GEOID <- as.character(EECNEW5_hours_tract_no$GEOID_tract)
+
+EEC_geometry_no <- inner_join(EECNEW5_hours_tract_no %>% as.data.frame(), percentage_under_6 %>% as.data.frame(), by = "GEOID")
+
+EEC_geometry_no <- EEC_geometry_no %>%
+  select(GEOID, NAME.x,sumcapacity_weekendoff, geometry.x) %>%
+  st_sf(sf_column_name = 'geometry.x')
+
+```
+
+
+
+Number of slots unavailable during off hours for early ed in each tract
+
+```{r}
+#making palettes
+pal2 <- colorBin("YlOrRd", domain = EEC_geometry$sumcapacity_weekendoff)
+infant_pal <- colorFactor(palette = c("green"),
+                            levels = c(TRUE))
+#making palettes
+pal3 <- colorBin("YlOrRd", domain = EEC_geometry_no$sumcapacity_weekendoff, reverse = FALSE)
+
+#transform sf type to work with leaflet
+EEC_geometry_no <- EEC_geometry_no %>%
+  st_transform(crs = "+init=epsg:4326")
+
+#make map
+leaflet(EEC_geometry_no) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal3(sumcapacity_weekendoff),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>%
+  addLegend("topleft", 
+              pal = pal3, 
+              values = ~sumcapacity_weekendoff,
+              title = "Weekdays_offhours",
+              opacity = 1)%>%
+  addCircleMarkers(data = EEC_earlyed,
+                   ~lon,
+                   ~lat,
+                   radius = 0.5,
+                   opacity = .4,
+                   color = ~infant_pal(Weekend_off_hours),
+                   group = "Show providers with after school care for early ed",
+                   label = ~as.character(Name))%>%
+  addLayersControl(overlayGroups = c("Show providers with after school care for early ed"))
+
+```
 
