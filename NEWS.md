@@ -16,7 +16,7 @@
 - References
 - Modified previous maps based on Sarah and Zoe's feedback
 - Fill the holes on the supply polygon map on hours with grey color
-- Add providers markers on the supply polygon map
+- Add provider markers on the supply polygon map
 
 ## What is it that you're struggling with right now?
 
