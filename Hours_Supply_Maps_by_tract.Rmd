@@ -160,11 +160,6 @@ map_yes <- leaflet(EEC_geometry) %>%
               values = ~sumcapacity_weekdaysoff,
               title = "Weekdays_offhours",
               opacity = 1)%>%
-  addLegend("topright", 
-              pal = pal3, 
-              values = ~sumcapacity_weekdaysoff,
-              title = "Weekdays_offhours",
-              opacity = 1)%>%
   addCircleMarkers(data = EEC_earlyed,
                    ~lon,
                    ~lat,
@@ -173,7 +168,7 @@ map_yes <- leaflet(EEC_geometry) %>%
                    color = ~infant_pal(Weekdays_off_hours),
                    group = "Show providers with after school care for early ed",
                    label = ~as.character(Name))%>%
-  addLayersControl(overlayGroups = c("Show providers with after school care for early ed"))
+  addLayersControl(overlayGroups = c("Show providers with off-hour childcare for early ed during weekdays"))
 map_yes
 ```
 

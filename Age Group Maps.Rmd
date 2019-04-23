@@ -44,7 +44,7 @@ names(EEC_rates) <- gsub(" ", "_", names(EEC_rates))
 
 <<<<<<< HEAD
 ```{r Cleaned Rates Dataset}
-data_rates <- read_csv("~/Desktop/data_rates.csv")
+data_rates <- EEC_rates
 
 data_rates <- data_rates %>%
   filter(City %in% boston_neighborhood$Name | City=="Boston")
@@ -58,12 +58,12 @@ data_rates <- data_rates %>%
 ```{r Tallys for Variables}
 # using tally helps us be able to see the different levels for the categorical variables, which is helpful for map building
 # tally lives in the Stat2Data package
-
 tally(~ Infant, data = EEC_rates)
 tally(~ Toddler, data = EEC_rates)
 tally(~ Preschool, data = EEC_rates)
-tally(~ `School Age`, data = EEC_rates)
+#tally(~ School_Age, data = EEC_rates)
 ```
+
 
 ```{r Original Basic Base Map}
 original_base_map <- leaflet(data = EEC_rates, 
