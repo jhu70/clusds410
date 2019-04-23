@@ -91,7 +91,8 @@ hours_demand <- hours_demand %>%
   st_sf(sf_column_name = 'geometry') %>%
   mutate(percent_early = (sum_earlymorning/sumtotal)*100,
          percent_evening = (sum_evening/sumtotal)*100,
-         percent_overnight = (sum_overnight/sumtotal)*100)
+         percent_overnight = (sum_overnight/sumtotal)*100,
+         aggregate= percent_early + percent_evening + percent_overnight)
 ```
 
 #Maps!!
@@ -166,6 +167,30 @@ leaflet(hours_demand) %>%
               opacity = 1)
 ```
 
+
+##Aggregate
+```{r}
+pal <- colorBin("Reds", domain = hours_demand$aggregate)
+hours_demand <- hours_demand %>%
+  filter(aggregate!=100)
+
+leaflet(hours_demand) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal(aggregate),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5) %>%
+  addLegend("topleft", 
+              pal = pal, 
+              values = ~aggregate,
+              opacity = 1)
+```
 
 
 
