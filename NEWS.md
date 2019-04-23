@@ -12,8 +12,11 @@
 - Cleaned up Shiny a bit (1 hour)
 
 • Jocelyn
-
--
+- The Result and Discussion section of the final paper
+- References
+- Modified previous maps based on Sarah and Zoe's feedback
+- Fill the holes on the supply polygon map on hours with grey color
+- Add providers markers on the supply polygon map
 
 ## What is it that you're struggling with right now?
 
@@ -28,8 +31,8 @@
 - Getting things done in time
 
 •	Jocelyn 
-
--
+- Getting the citation to work: why the appendix and citation will mess up with each other
+- How to present in certain order and ways to tell a story
 
 ## What are you planning to do next week?
 •	Kat
@@ -45,8 +48,9 @@
 - Make edits to the Final Paper Draft (1 hour)
 
 •	Jocelyn
-
--
+- Bar chart on desert ratio
+- Polishing the final paper
+- Ethical statement
 
 # 2019 - 4 - 15
 ## What did you do this week?
