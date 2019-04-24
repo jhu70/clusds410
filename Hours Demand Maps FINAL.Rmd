@@ -96,7 +96,7 @@ hours_demand <- hours_demand %>%
          percent_evening = (sum_evening/sumtotal)*100,
          percent_overnight = (sum_overnight/sumtotal)*100,
          aggregate_percent= percent_early + percent_evening + percent_overnight,
-         aggregate_raw = sum_earlymorning + sum_evening + sum_overnight)
+         aggregate_raw = sum_earlymorning + sum_evening + sum_overnight,
          percent_overnight = (sum_overnight/sumtotal)*100)
 ```
 
@@ -104,7 +104,9 @@ hours_demand <- hours_demand %>%
 ```{r}
 #transform sf type to work with leaflet
 hours_demand <- hours_demand %>%
-  st_transform(crs = "+init=epsg:4326")
+  st_transform(crs = "+init=epsg:4326") %>%
+  #taking out weird tract
+  filter(NAME.x!="Census Tract 9901.01, Suffolk County, Massachusetts")
 ```
 
 #Early morning
@@ -125,7 +127,8 @@ leaflet(hours_demand) %>%
   addLegend("topleft", 
               pal = pal_early, 
               values = ~percent_early,
-              opacity = 1)
+              opacity = 1,
+              title="Early Morning Percentage")
 ```
 
 
@@ -147,7 +150,8 @@ leaflet(hours_demand) %>%
   addLegend("topleft", 
               pal = pal_evening, 
               values = ~percent_evening,
-              opacity = 1)
+              opacity = 1,
+              title="Evening Percentage")
 ```
 
 
@@ -169,7 +173,8 @@ leaflet(hours_demand) %>%
   addLegend("topleft", 
               pal = pal_overnight, 
               values = ~percent_overnight,
-              opacity = 1)
+              opacity = 1,
+              title="Late evening/overnight percentage")
 ```
 
 
@@ -178,6 +183,9 @@ leaflet(hours_demand) %>%
 pal <- colorBin("YlOrRd", domain = hours_demand$aggregate_raw)
 #hours_demand <- hours_demand %>%
   #filter(aggregate!=100)
+
+infant_pal <- colorFactor(palette = c("blue"),
+                            levels = c(TRUE))
 
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
@@ -227,11 +235,13 @@ leaflet(hours_demand) %>%
                    opacity = 1,
                    color = ~infant_pal(Weekdays_off_hours),
                    group = "Show providers with after school care for early ed",
-                   label = ~as.character(Capacity)) %>%
+                   label = ~as.character(Capacity),
+                   labelOptions = labelOptions(noHide=TRUE)) %>%
   addLegend("topleft", 
               pal = pal, 
               values = ~aggregate_percent,
-              opacity = 1)
+              opacity = 1,
+              title="Aggregate percentage")
 ```
 
 

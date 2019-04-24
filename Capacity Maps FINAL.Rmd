@@ -184,7 +184,8 @@ leaflet(neighborho_demand_tract) %>%
   addLegend("topleft", 
               pal = pal_laborforce, 
               values = ~laborforce,
-              opacity = 1)
+              opacity = 1,
+              title="# people in labor force")
 ```
 
 ```{r}
@@ -205,7 +206,8 @@ leaflet(neighborho_capacity_tract) %>%
   addLegend("topleft", 
               pal = pal_slots, 
               values = ~slots,
-              opacity = 1)
+              opacity = 1.
+              title="# slots")
 ```
 
 ```{r}
@@ -225,7 +227,8 @@ leaflet(EEC_census) %>%
   addLegend("topleft", 
               pal = pal_ratioslots, 
               values = ~ratioslots,
-              opacity = 1)
+              opacity = 1,
+              title="Ratio of Need:Slots")
 
 ```
 
