@@ -120,62 +120,51 @@ body1 <- dashboardBody(
             ),
     
     ## HOURS
-    
-    tabItem(tabName = "hours",
-            tags$h1("Percent of People who Work Early Hours, per tract"),
-            tags$br(),
-            leafletOutput("percent_early"),
-            tags$br(),
-            tags$h1("Percent of People who Work Evening Hours, per tract"),
-            leafletOutput("percent_evening"),
-            tags$br(),
-            tags$h1("Percent of People who Work Overnight Hours, per tract"),
-            leafletOutput("percent_overnight"),
-            tags$h1("Title for Weekdays Offhours Map"),
-            tags$br(),
-            leafletOutput("weekdays_offhours")
-            ),
 
-    # tabItem(tabName = "hours",
-    #         "Look at my cool dashboard",
-    #         tags$head(
-    #           tags$style(
-    #                     HTML('
-    #                         h3 {
-    #                             font-weight: bold;
-    #                         }
-    #                         ')
-    #                     )
-    #           ),
-    #         fluidRow(
-    #           box(
-    #             width = 12,
-    #             title = "Regular Box, Row 1",
-    #             "Cats, nothing but cats",
-    #             status = "danger"
-    #             )
-    #           ),
-    #         fluidRow(
-    #           column(width = 6,
-    #                  infoBox(
-    #                    width = NULL,
-    #                    title = "Regular Box, Row 2, Column 1",
-    #                    subtitle = "Gimme those cats",
-    #                    icon = icon("star")
-    #                    )
-    #                  ),
-    #           column(width = 6,
-    #                  infoBox(
-    #                    width = NULL,
-    #                    title = "Regular Box, Row 2, Column 2",
-    #                    subtitle = "Don't let them end",
-    #                    color = "green",
-    #                    icon = icon(name = "refresh",
-    #                                class = "fa-1x fa-spin")
-    #                    )
-    #                  )
-    #           )
-    #         ),
+    tabItem(tabName = "hours",
+            tags$h1("Percent of People Who Work Early, Evening, and Overnight Hours (per tract)"),
+            tags$br(),
+            tags$br(),
+            fluidRow(
+              box(
+                width = 4,
+                title = "Early Hours",
+                em("leaving home between 12:00am - 6:59am"),
+                br(),
+                leafletOutput("percent_early"),
+                status = "danger"
+                ),
+              box(
+                width = 4,
+                title = "Evening Hours",
+                em("leaving home between 11:00am - 3:59pm"),
+                br(),
+                leafletOutput("percent_evening"),
+                status = "danger"
+                ),
+              box(
+                width = 4,
+                title = "Overnight Hours",
+                em("leaving home between 4:00pm - 11:59pm"),
+                br(),
+                leafletOutput("percent_overnight"),
+                status = "danger"
+              )
+            ),
+            tags$h1("General Irregular Hours Demand"),
+            fluidRow(
+              box(
+                width = 8,
+                leafletOutput("weekdays_offhours"),
+                status = "danger"),
+              box(
+                width = 4,
+                title = "_______",
+                em("blah blah blah"),
+                status = "danger"
+              )
+              )
+    ),
     
     ## METHODOLOGY
     
@@ -249,7 +238,8 @@ body1 <- dashboardBody(
 
 ## UI 
 
-ui <- dashboardPage(skin = "purple",
+ui <- dashboardPage(dashboardHeader(title = "CLU", dropdownMenu()),
+                    skin = "purple",
                     header = header_test,
                     sidebar = sidebar1,
                     body = body1
