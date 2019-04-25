@@ -103,7 +103,7 @@ EECNEW5<-read.csv("masterdataframe_tract.csv")
 
 #early ed filter grouped by tract, summarized for capacity
 EECNEW5_earlyed_tract <- EECNEW5 %>%
-  filter(early_ed==TRUE) %>%
+  dplyr::filter(early_ed==TRUE) %>%
   group_by(GEOID_tract, NAMELSAD_tract) %>%
   summarise(sum_capacity = sum(Capacity))
 
@@ -245,8 +245,8 @@ head(EEC_census_bar)
 
 ```{r}
 library(ggplot2)
-ggplot(EEC_census_bar,aes(x =reorder(Name_neighborho,-ratioslots), y = ratioslots, fill = Name_neighborho)) +
-  geom_bar(colour="black", stat="identity") + ggtitle( "Neighbohood ranking by desert ratio")+ xlab("Neighborhoods")+  ylab("Desert Ratio (Population under 6/Capacity for early ed")
+ggplot(EEC_census_bar,aes(x =reorder(Name_neighborho,ratioslots), y = ratioslots)) +
+  geom_bar(fill="blue", stat="identity") + ggtitle( "Childcare ratio by neighborhood")+ xlab("Neighborhoods")+  ylab("Ratio of children under 6 from working families to available slots for early ed") + geom_hline(yintercept=1)+coord_flip()
 ```
 
 ```{r}

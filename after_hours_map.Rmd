@@ -29,14 +29,14 @@ library(mosaic)
 ```
 
 ```{r EEC Lon Lat and after hours Dataset}
-EEC <- read_csv("3262019_afterhours_Jhu.csv")
+EEC <- read_csv("3262019_afterhours.csv")
 
 EEC <- EEC %>% 
   replace(., is.na(.), "Unk")
 
 #Filtering
 EEC <- EEC %>%
-  filter(City %in% boston_neighborhood$Name | City=="Boston")
+  dplyr::filter(City %in% boston_neighborhood$Name | City=="Boston")
 
 #glimpse(EEC_lon_lat)
 #View(EEC_lon_lat)
@@ -85,47 +85,47 @@ boston_neighborhood_base_map
 # # not mapping weekend_yes since there is no obs
 
 weekend_no <- EEC %>%
-  filter(Weekend_off_hours == "FALSE")
+  dplyr::filter(Weekend_off_hours == "FALSE")
 
 
 weekend_yes<- EEC %>%
-  filter(Weekend_off_hours == "TRUE")
+  dplyr::filter(Weekend_off_hours == "TRUE")
 
 weekday_yes<- EEC  %>%
-  filter(Weekdays_off_hours == "TRUE")
+  dplyr::filter(Weekdays_off_hours == "TRUE")
 
 weekday_no <- EEC %>%
-  filter(Weekdays_off_hours == "FALSE")
+  dplyr::filter(Weekdays_off_hours == "FALSE")
 
 monday_yes<- EEC  %>%
-  filter(Monday_off_hours == "TRUE")
+  dplyr::filter(Monday_off_hours == "TRUE")
 
 monday_no <- EEC %>%
-  filter(Monday_off_hours == "FALSE")
+  dplyr::filter(Monday_off_hours == "FALSE")
 
 tuesday_yes<- EEC  %>%
-  filter(Tuesday_off_hours == "TRUE")
+  dplyr::filter(Tuesday_off_hours == "TRUE")
 
 tuesday_no <- EEC %>%
-  filter(Tuesday_off_hours == "FALSE")
+  dplyr::filter(Tuesday_off_hours == "FALSE")
 
 wednesday_yes<- EEC  %>%
-  filter(Wednesday_off_hours == "TRUE")
+  dplyr::filter(Wednesday_off_hours == "TRUE")
 
 wednesday_no <- EEC %>%
-  filter(Wednesday_off_hours == "FALSE")
+  dplyr::filter(Wednesday_off_hours == "FALSE")
 
 thursday_yes<- EEC  %>%
-  filter(Thursday_off_hours == "TRUE")
+  dplyr::filter(Thursday_off_hours == "TRUE")
 
 thursday_no <- EEC %>%
-  filter(Thursday_off_hours == "FALSE")
+  dplyr::filter(Thursday_off_hours == "FALSE")
 
 friday_yes <- EEC %>%
-  filter(Friday_off_hours == "TRUE")
+  dplyr::filter(Friday_off_hours == "TRUE")
 
 friday_no <- EEC %>%
-  filter(Friday_off_hours == "FALSE")
+  dplyr::filter(Friday_off_hours == "FALSE")
 
 ```
 
