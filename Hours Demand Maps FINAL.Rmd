@@ -234,9 +234,10 @@ leaflet(hours_demand) %>%
                    radius = 2.5,
                    opacity = 1,
                    color = ~infant_pal(Weekdays_off_hours),
-                   group = "Show providers with after school care for early ed",
                    label = ~as.character(Capacity),
-                   labelOptions = labelOptions(noHide=TRUE)) %>%
+                   labelOptions = labelOptions(noHide=TRUE),
+                   group= "Show childcare providers with off hours weekday care") %>%
+  addLayersControl(overlayGroups = c("Show childcare providers with off hours weekday care")) %>%
   addLegend("topleft", 
               pal = pal, 
               values = ~aggregate_percent,
