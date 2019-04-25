@@ -171,6 +171,73 @@ leaflet(hours_demand) %>%
 
 
 
+##Aggregate
+```{r}
+pal <- colorBin("YlOrRd", domain = hours_demand$aggregate_raw)
+#hours_demand <- hours_demand %>%
+  #filter(aggregate!=100)
+
+infant_pal <- colorFactor(palette = c("blue"),
+                            levels = c(TRUE))
+
+leaflet(hours_demand) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal(aggregate_raw),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5) %>%
+   addCircleMarkers(data = EEC_earlyed,
+                   ~lon,
+                   ~lat,
+                   radius = 2.5,
+                   opacity = .4,
+                   color = ~infant_pal(Weekdays_off_hours),
+                   group = "Show providers with after school care for early ed",
+                   label = ~as.character(Capacity)) %>%
+  addLegend("topleft", 
+              pal = pal, 
+              values = ~aggregate_raw,
+              opacity = 1)
+
+pal <- colorBin("YlOrRd", domain = hours_demand$aggregate_percent)
+#hours_demand <- hours_demand %>%
+  #filter(aggregate!=100)
+
+leaflet(hours_demand) %>%
+  addProviderTiles("CartoDB")  %>%
+  addPolygons(fillColor = ~pal(aggregate_percent),
+  weight = 2,
+  opacity = .8,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7) %>%
+  addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5) %>%
+   addCircleMarkers(data = EEC_earlyed,
+                   ~lon,
+                   ~lat,
+                   radius = 2.5,
+                   opacity = 1,
+                   color = ~infant_pal(Weekdays_off_hours),
+                   label = ~as.character(Capacity),
+                   labelOptions = labelOptions(noHide=TRUE),
+                   group= "Show childcare providers with off hours weekday care") %>%
+  addLayersControl(overlayGroups = c("Show childcare providers with off hours weekday care")) %>%
+  addLegend("topleft", 
+              pal = pal, 
+              values = ~aggregate_percent,
+              opacity = 1,
+              title="Aggregate percentage")
+```
+
 
 
 
