@@ -35,7 +35,8 @@ server <- function(input, output)  {}
 
 ## HEADER
 
-header_test <- dashboardHeader(
+header <- dashboardHeader(
+  title = "CLU",
   dropdownMenu(type = "messages",
                messageItem(
                  from = "Community Labor United",
@@ -55,7 +56,7 @@ header_test <- dashboardHeader(
 
 ## SIDEBAR
 
-sidebar1 <- dashboardSidebar(
+sidebar <- dashboardSidebar(
   sidebarMenu(
     
     ## INRODUCTION
@@ -84,12 +85,13 @@ sidebar1 <- dashboardSidebar(
 
 ## BODY
 
-body1 <- dashboardBody(
+body <- dashboardBody(
   tabItems(
     
     ## INTRODUCTION
     
     tabItem(tabName = "introduction",
+            title = "Introduction",
             tags$br(),
             tags$b("Hey there friend! "),
             ## Any text immediately following will NOT be on a seperate line
@@ -101,51 +103,92 @@ body1 <- dashboardBody(
     
     ## CAPACITY
     
+    # tabItem(tabName = "capacity",
+    #         tags$h1("Number of children under 6 with all parents in the labor
+    #                 force, per tract"),
+    #         tags$br(),
+    #         leafletOutput("laborforce_demand"),
+    #         tags$br(),
+    #         tags$h1("Number of slots for Early Education Providers, per tract"),
+    #         leafletOutput("slots_supply"),
+    #         tags$h1("Ratio of Number of Children to Avaliable Number of Slots, per neighborhood"),
+    #         leafletOutput("ratioslots_gap"),
+    #         tags$br(),
+    #         tags$br(),
+    #         plotOutput("all_neighborhoods_bar"),
+    #         tags$br(),
+    #         tags$br(),
+    #         plotOutput("top_5_neighborhoods_bar")
+    #         ),
+    
     tabItem(tabName = "capacity",
-            tags$h1("Number of children under 6 with all parents in the labor
-                    force, per tract"),
-            tags$br(),
-            leafletOutput("laborforce_demand"),
-            tags$br(),
-            tags$h1("Number of slots for Early Education Providers, per tract"),
-            leafletOutput("slots_supply"),
-            tags$h1("Ratio of Number of Children to Avaliable Number of Slots, per neighborhood"),
-            leafletOutput("ratioslots_gap"),
+            tags$h1("General Title for Capacity"),
             tags$br(),
             tags$br(),
-            plotOutput("all_neighborhoods_bar"),
-            tags$br(),
-            tags$br(),
-            plotOutput("top_5_neighborhoods_bar")
-            ),
+            fluidRow(
+              box(
+                width = 6,
+                title = "Children Under 6 with All Parents in the Labor Force",
+                em("(per tract)"),
+                br(),
+                leafletOutput("laborforce_demand"),
+                status = "danger"
+                ),
+              box(
+                width = 6,
+                title = "Slots for Early Eduction Providers",
+                em("(per tract)"),
+                br(),
+                leafletOutput("slots_supply"),
+                status = "danger"
+                )
+              ),
+            tags$h1("Ratio of Number of Children to Available Number of Slot"),
+            fluidRow(
+              box(
+                width = 8,
+                title = "(per tract)",
+                leafletOutput("ratioslots_gap"),
+                status = "danger"),
+              box(
+                width = 4,
+                title = "_______",
+                em("blah blah blah"),
+                status = "danger"
+              )
+              )
+    ),
     
     ## HOURS
 
     tabItem(tabName = "hours",
-            tags$h1("Percent of People Who Work Early, Evening, and Overnight Hours (per tract)"),
+            tags$h1("Percent of People Who Work Irregular Hours (per tract)"),
             tags$br(),
             tags$br(),
             fluidRow(
               box(
                 width = 4,
-                title = "Early Hours",
+                title = "Early Morning Hours",
                 em("leaving home between 12:00am - 6:59am"),
+                em(" "),
                 br(),
                 leafletOutput("percent_early"),
                 status = "danger"
                 ),
               box(
                 width = 4,
-                title = "Evening Hours",
+                title = "Early Evening Hours",
                 em("leaving home between 11:00am - 3:59pm"),
+                em(" "),
                 br(),
                 leafletOutput("percent_evening"),
                 status = "danger"
                 ),
               box(
                 width = 4,
-                title = "Overnight Hours",
+                title = "Late Evening & Overnight Hours",
                 em("leaving home between 4:00pm - 11:59pm"),
+                em(" "),
                 br(),
                 leafletOutput("percent_overnight"),
                 status = "danger"
@@ -238,11 +281,10 @@ body1 <- dashboardBody(
 
 ## UI 
 
-ui <- dashboardPage(dashboardHeader(title = "CLU", dropdownMenu()),
-                    skin = "purple",
-                    header = header_test,
-                    sidebar = sidebar1,
-                    body = body1
+ui <- dashboardPage(skin = "purple",
+                    header = header,
+                    sidebar = sidebar,
+                    body = body
                     )
 ## SERVER
 
@@ -260,18 +302,15 @@ server <- function(input, output) {
       addPolygons(data = boston_neighborhood, 
                   weight = 2, 
                   opacity = 1, 
-                  fillOpacity = 0, 
-                  stroke = TRUE, 
-                  color = "black", 
-                  label = ~Name) %>% 
-      #adding neighborhood data
-      setView(lng = -71.057083, 
-              lat = 42.361145, 
-              zoom = 11.5) %>%
-      addLegend("topleft", 
-                pal = pal_laborforce, 
-                values = ~laborforce,
-                opacity = 1)
+                  fillOpacity = 0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5) %>%
+  addLegend("topleft", 
+              pal = pal_laborforce, 
+              values = ~laborforce,
+              opacity = 1,
+              title="Number")
   })
   
   output$slots_supply <- renderLeaflet({
@@ -289,41 +328,41 @@ server <- function(input, output) {
                   fillOpacity = 0, 
                   stroke = TRUE, 
                   color = "black", 
-                  label = ~Name) %>% 
-      #adding neighborhood data
+                  label = ~Name) %>% #adding neighborhood data
       setView(lng = -71.057083, 
               lat = 42.361145, 
               zoom = 11.5) %>%
       addLegend("topleft", 
                 pal = pal_slots, 
                 values = ~slots,
-                opacity = 1)
+                opacity = 1,
+                title = "Number")
   })
   
   output$ratioslots_gap <- renderLeaflet({
     leaflet(EEC_census) %>%
-      addProviderTiles("CartoDB")  %>%
+      addProviderTiles("CartoDB")  %>% 
       addPolygons(fillColor = ~pal_ratioslots(ratioslots),
                   weight = 2,
                   opacity = .8,
                   color = "white",
                   dashArray = "3",
                   fillOpacity = 0.7) %>%
-      addPolygons(data = boston_neighborhood,
-                  weight = 2,
-                  opacity = 1,
-                  fillOpacity = 0,
-                  stroke = TRUE,
-                  color = "black",
-                  label = ~Name) %>%
-      #adding neighborhood data
-      setView(lng = -71.057083,
-              lat = 42.361145,
+      addPolygons(data = boston_neighborhood, 
+                  weight = 2, 
+                  opacity = 1, 
+                  fillOpacity = 0, 
+                  stroke = TRUE, 
+                  color = "black", 
+                  label = ~Name) %>% #adding neighborhood data
+      setView(lng = -71.057083, 
+              lat = 42.361145, 
               zoom = 11.5) %>%
-      addLegend("topleft",
-                pal = pal_ratioslots,
+      addLegend("topleft", 
+                pal = pal_ratioslots, 
                 values = ~ratioslots,
-                opacity = 1)
+                opacity = 1,
+                title = "Children:Slots")
   })
   
   output$all_neighborhoods_bar <- renderPlot({
@@ -354,21 +393,21 @@ server <- function(input, output) {
                   color = "white",
                   dashArray = "3",
                   fillOpacity = 0.7) %>%
-      addPolygons(data = boston_neighborhood,
-                  weight = 2,
-                  opacity = 1,
-                  fillOpacity = 0,
-                  stroke = TRUE,
-                  color = "black",
-                  label = ~Name) %>%
-      #adding neighborhood data
-      setView(lng = -71.057083,
-              lat = 42.361145,
+      addPolygons(data = boston_neighborhood, 
+                  weight = 2, 
+                  opacity = 1, 
+                  fillOpacity = 0, 
+                  stroke = TRUE, 
+                  color = "black", 
+                  label = ~Name) %>% #adding neighborhood data
+      setView(lng = -71.057083, 
+              lat = 42.361145, 
               zoom = 11.5) %>%
-      addLegend("topleft",
-                pal = pal_early,
+      addLegend("topleft", 
+                pal = pal_early, 
                 values = ~percent_early,
-                opacity = 1)
+                opacity = 1,
+                title = "Percentage")
   })
   
   output$percent_evening <- renderLeaflet({
@@ -380,21 +419,21 @@ server <- function(input, output) {
                   color = "white",
                   dashArray = "3",
                   fillOpacity = 0.7) %>%
-      addPolygons(data = boston_neighborhood,
-                  weight = 2,
-                  opacity = 1,
-                  fillOpacity = 0,
-                  stroke = TRUE,
-                  color = "black",
-                  label = ~Name) %>%
-      #adding neighborhood data
-      setView(lng = -71.057083,
-              lat = 42.361145,
+      addPolygons(data = boston_neighborhood, 
+                  weight = 2, 
+                  opacity = 1, 
+                  fillOpacity = 0, 
+                  stroke = TRUE, 
+                  color = "black", 
+                  label = ~Name) %>% #adding neighborhood data
+      setView(lng = -71.057083, 
+              lat = 42.361145, 
               zoom = 11.5) %>%
-      addLegend("topleft",
-                pal = pal_evening,
+      addLegend("topleft", 
+                pal = pal_evening, 
                 values = ~percent_evening,
-                opacity = 1)
+                opacity = 1,
+                title="Percentage")
   })
   
   output$percent_overnight <- renderLeaflet({
@@ -406,27 +445,27 @@ server <- function(input, output) {
                   color = "white",
                   dashArray = "3",
                   fillOpacity = 0.7) %>%
-      addPolygons(data = boston_neighborhood,
-                  weight = 2,
-                  opacity = 1,
-                  fillOpacity = 0,
-                  stroke = TRUE,
-                  color = "black",
-                  label = ~Name) %>%
-      #adding neighborhood data
-      setView(lng = -71.057083,
-              lat = 42.361145,
+      addPolygons(data = boston_neighborhood, 
+                  weight = 2, 
+                  opacity = 1, 
+                  fillOpacity = 0, 
+                  stroke = TRUE, 
+                  color = "black", 
+                  label = ~Name) %>% #adding neighborhood data
+      setView(lng = -71.057083, 
+              lat = 42.361145, 
               zoom = 11.5) %>%
-      addLegend("topleft",
-                pal = pal_overnight,
+      addLegend("topleft", 
+                pal = pal_overnight, 
                 values = ~percent_overnight,
-                opacity = 1)
+                opacity = 1,
+                title="Percentage")
   })
   
   output$weekdays_offhours <- renderLeaflet({
-    leaflet(EEC_geometry) %>%
+    leaflet(hours_demand) %>%
       addProviderTiles("CartoDB")  %>%
-      addPolygons(fillColor = ~pal_weekdays(sumcapacity_weekdaysoff),
+      addPolygons(fillColor = ~pal(aggregate_percent),
                   weight = 2,
                   opacity = .8,
                   color = "white",
@@ -438,16 +477,25 @@ server <- function(input, output) {
                   fillOpacity = 0, 
                   stroke = TRUE, 
                   color = "black", 
-                  label = ~Name) %>% 
-      #adding neighborhood data
+                  label = ~Name) %>% #adding neighborhood data
       setView(lng = -71.057083, 
               lat = 42.361145, 
-              zoom = 11) %>%
+              zoom = 11.5) %>%
+      addCircleMarkers(data = EEC_earlyed,
+                       ~lon,
+                       ~lat,
+                       radius = 2.5,
+                       opacity = 1,
+                       color = ~infant_pal(Weekdays_off_hours),
+                       label = ~as.character(Capacity),
+                       labelOptions = labelOptions(noHide = TRUE),
+                       group= "Show childcare providers with off hours weekday care") %>%
+      addLayersControl(overlayGroups = c("Show childcare providers with off hours weekday care")) %>%
       addLegend("topleft", 
-                pal = pal_weekdays, 
-                values = ~sumcapacity_weekdaysoff,
-                title = "Weekdays_offhours",
-                opacity = 1)
+                pal = pal, 
+                values = ~aggregate_percent,
+                opacity = 1,
+                title="Aggregated Percentage")
   })
 }
 

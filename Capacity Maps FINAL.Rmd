@@ -206,7 +206,7 @@ leaflet(neighborho_capacity_tract) %>%
   addLegend("topleft", 
               pal = pal_slots, 
               values = ~slots,
-              opacity = 1.
+              opacity = 1,
               title="# slots")
 ```
 
