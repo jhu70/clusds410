@@ -103,6 +103,8 @@ EECNEW5<-read.csv("masterdataframe_tract.csv")
 
 #early ed filter grouped by tract, summarized for capacity
 EECNEW5_earlyed_tract <- EECNEW5 %>%
+  mutate(early_ed=ifelse(early_ed=="True", TRUE,
+                         ifelse(early_ed=="False", FALSE, early_ed))) %>%
   dplyr::filter(early_ed==TRUE) %>%
   group_by(GEOID_tract, NAMELSAD_tract) %>%
   summarise(sum_capacity = sum(Capacity))
@@ -212,8 +214,22 @@ leaflet(neighborho_capacity_tract) %>%
 >>>>>>> 281105d582536829259a846b81343994e79bc5b5
 ```
 
+#Ratio map
 ```{r}
-pal <- colorBin("Reds", domain = EEC_census$ratioslots)
+library(RColorBrewer)
+
+
+## Make vector of colors for values smaller than 0 (20 colors)
+rc1 <- colorRampPalette(colors = c("dark green", "white"), space = "Lab")(50)
+
+
+## Make vector of colors for values larger than 0 (180 colors)
+rc2 <- colorRampPalette(colors = c("white", "red"), space = "Lab")(120)
+
+## Combine the two color palettes
+rampcols <- c(rc1, rc2)
+
+pal <- colorNumeric(palette = rampcols, domain = EEC_census$ratioslots)
 leaflet(EEC_census) %>%
   addProviderTiles("CartoDB")  %>%
   addPolygons(fillColor = ~pal(ratioslots),
@@ -241,6 +257,7 @@ leaflet(EEC_census) %>%
 ```{r}
 glimpse(EEC_census)
 ```
+
 ```{r}
 EEC_census_bar<- 
  EEC_census[order(EEC_census$ratioslots, decreasing = TRUE),]
