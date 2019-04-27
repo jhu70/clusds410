@@ -24,6 +24,15 @@ library(leaflet.extras)
 boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
 api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
 census_api_key(api_key)
+
+EECNEW5<-read.csv("masterdataframe_tract.csv")
+EEC_earlyed <- EECNEW5 %>%
+  mutate(early_ed= ifelse(early_ed=="True", TRUE,
+                          ifelse(early_ed=="False", FALSE, early_ed))) %>%
+  filter(early_ed==TRUE, Weekdays_off_hours==TRUE)
+
+hours_demand <- hours_demand %>%
+  na.omit()
 ```
 
 

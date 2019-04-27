@@ -225,8 +225,6 @@ rc2 <- colorRampPalette(colors = c("white", "red"), space = "Lab")(120)
 rampcols <- c(rc1, rc2)
 
 pal <- colorNumeric(palette = rampcols, domain = EEC_census$ratioslots)
-
-pal <- colorNumeric("green", "white", "red", domain=EEC_census$ratioslots)
 leaflet(EEC_census) %>%
   addProviderTiles("CartoDB")  %>%
   addPolygons(fillColor = ~pal(ratioslots),
