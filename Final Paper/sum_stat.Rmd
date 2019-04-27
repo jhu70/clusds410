@@ -1,0 +1,55 @@
+---
+title: "summary_stats"
+output: html_document
+---
+```{r}
+library(tidyverse)
+library(yardstick)
+library(ggplot2)
+library(mosaic)
+library(stargazer)
+require(Stat2Data)
+library(scales)
+library(readr)
+```
+
+
+```{r}
+library(readr)
+tract_neighborho <- read_csv("masterdataframe_tract_neighborhood.csv")
+glimpse(tract_neighborho)
+```
+
+```{r}
+
+tract_neighborho[["Capacity"]]<-as.numeric(tract_neighborho[["Capacity"]])
+tract_neighborho<-tract_neighborho%>%
+  filter(early_ed == TRUE)%>%
+  group_by(Neighborho_neighborho)%>%
+  mutate(Capacity_by_neighborho = sum(Capacity))%>%
+  group_by(TRACTCE_tract)%>%
+  mutate(Capacity_by_tract = sum(Capacity))
+
+tract_neighborho_off <- tract_neighborho %>%
+  filter(Weekdays_off_hours == TRUE)%>%
+  mutate(Capacity_off = sum(Capacity))%>%
+  group_by(TRACTCE_tract)%>%
+  mutate(Capacity_tract_off = sum(Capacity))%>%
+  group_by(Neighborho_neighborho)%>%
+  mutate(Capacity_neighborho_off = sum(Capacity))
+  
+
+  
+
+
+tract_neighborho<-as.data.frame(tract_neighborho)
+tract_neighborho_off<-as.data.frame(tract_neighborho_off)
+
+```
+
+```{r}
+stargazer(tract_neighborho[c("Capacity","Capacity_by_neighborho","Capacity_by_tract")], type = "html", title="Descriptive table(early ed only)", digits=0, out="des_capacity.html",summary.stat = c("mean", "sd","min","max"), covariate.labels = c("Capacity", "Capacity by neighborhood", "Capacity by tract"))
+
+stargazer(tract_neighborho_off[c("Capacity_off","Capacity_neighborho_off","Capacity_tract_off")], type = "html", title="Descriptive table(weekdays off hour services for early ed)", digits=0, out="des_capacity_off.html",summary.stat = c("mean", "sd","min","max"),covariate.labels = c("Capacity of off hour services", "Capacity of off hour services by neighborhood", "Capacity of off hour services by tract"))
+```
+
