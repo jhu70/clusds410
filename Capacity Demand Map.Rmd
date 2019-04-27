@@ -19,6 +19,7 @@ library(leaflet.extras)
 ```{r Boston Neighborhood Shapefiles}
 #boston neighborhood data!
 boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+ma_tract <- read_sf("ma_tract/tl_2018_25_tract.shp")
 ```
 
 
@@ -93,7 +94,6 @@ EEC_geometry <- EEC_geometry %>%
   select(GEOID, NAME.x,sum_capacity, geometry.x) %>%
   st_sf(sf_column_name = 'geometry.x')
 
-#View(EECNEW5_earlyed_tract)
 ```
 
 
@@ -103,7 +103,7 @@ EEC_geometry <- EEC_geometry %>%
 laborforce_under6_desert <- laborforce_under6 %>%
   mutate(atLeast50children = ifelse(laborforcechildren >= 50, "1", "0" ))
 
-## joined the dataset above with the data set that gave the early ed filter grouped by tract and summarized for early ed capacity
+## joined the dataset above with the data set that wgave the ealry ed filter grouped by tract and summarized for early ed capacity
 
 EEC_desert <- inner_join(EECNEW5_earlyed_tract %>% as.data.frame(), 
                          laborforce_under6_desert %>% as.data.frame(), by = "GEOID")
@@ -131,34 +131,22 @@ EEC_desert <- EEC_desert %>%
 ## found it difficult to create a variable that shows if there is a tract that is completely missing an early ed child care provider (which is suppose to be registered as desert area)
 ## the attempt to create this variable is below
 
-EECNEW5$GEOID <- as.character(EECNEW5$GEOID_tract)
-EECNEW5$NAMELSAD <- as.character(EECNEW5$NAMELSAD_tract)
-
 EECNEW5_desert <- EECNEW5 %>%
-  mutate(EarlyEdProvider = ifelse(early_ed == "TRUE", 1, 0)) %>%
-  group_by(GEOID, NAMELSAD) %>%
-  summarize(EarlyEdTract = sum(EarlyEdProvider)) %>%
-  mutate(EarlyEdChildCareDesert = ifelse(EarlyEdTract <= 0, "TRUE", "FALSE")) %>%
-  filter(EarlyEdChildCareDesert == "TRUE")
+  group_by(GEOID_tract) %>%
+  mutate(EarlyEdProviderDesert = ifelse(early_ed == "TRUE", "FALSE", "TRUE")) %>%
+  select(GEOID_tract, NAME_tract, NAMELSAD_tract, early_ed, totalcapacity_early_ed, EarlyEdProviderDesert)
 
-EEC_childcare_desert <- merge(data.frame(EEC_desert), data.frame(EECNEW5_desert), by = "GEOID", all = TRUE)
-
-EEC_childcare_desert2 <- merge(data.frame(EEC_childcare_desert), data.frame(EEC_geometry), by = "GEOID", all = TRUE)
-
-
-View(EEC_childcare_desert2)
+View(EEC_desert)
 ```
 
-```{r}
-glimpse(EEC_desert)
-```
+
 
 ```{r Children Under 6 Percentage Map with Providers}
 #making palettes
 pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 percent6pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 infant_pal <- colorFactor(palette = c("white"),
-                            levels = c("True"))
+                            levels = c(TRUE))
 
 #transform sf type to work with leaflet
 percentage_under_6 <- percentage_under_6 %>%

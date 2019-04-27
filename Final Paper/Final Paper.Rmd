@@ -4,11 +4,11 @@ author:
   - name: Jocelyn Hu
     email: jhu70@smith.edu
     affiliation: Smith College
-  - name: Kat Kyuchukova
-    email: kkyuchukova@smith.edu
+  - name: Kat 
+    email: bob@example.com
     affiliation: Smith COllege
-  - name: Paige Patrick
-    email: ppatrick@smith.edu
+  - name: Paige 
+    email: bob@example.com
     affiliation: Smith COllege
 address:
   - code: Smith College
@@ -167,6 +167,6 @@ In a word, our graphical analysis successfully illustrates the existence of the 
 
 
 # References {#references.unumbered}
-
+app
 
 

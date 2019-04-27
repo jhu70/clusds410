@@ -24,9 +24,6 @@ library(leaflet.extras)
 boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
 api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
 census_api_key(api_key)
-EECNEW5<-read.csv("masterdataframe_tract.csv")
-EEC_earlyed <- EECNEW5 %>%
-  filter(early_ed==TRUE, Weekdays_off_hours==TRUE)
 ```
 
 
@@ -94,9 +91,6 @@ hours_demand <- hours_demand %>%
   st_sf(sf_column_name = 'geometry') %>%
   mutate(percent_early = (sum_earlymorning/sumtotal)*100,
          percent_evening = (sum_evening/sumtotal)*100,
-         percent_overnight = (sum_overnight/sumtotal)*100,
-         aggregate_percent= percent_early + percent_evening + percent_overnight,
-         aggregate_raw = sum_earlymorning + sum_evening + sum_overnight,
          percent_overnight = (sum_overnight/sumtotal)*100)
 ```
 
@@ -104,17 +98,15 @@ hours_demand <- hours_demand %>%
 ```{r}
 #transform sf type to work with leaflet
 hours_demand <- hours_demand %>%
-  st_transform(crs = "+init=epsg:4326") %>%
-  #taking out weird tract
-  filter(NAME.x!="Census Tract 9901.01, Suffolk County, Massachusetts")
+  st_transform(crs = "+init=epsg:4326")
 ```
 
 #Early morning
 ```{r}
-pal_early <- colorBin("Reds", domain = hours_demand$percent_early)
+pal <- colorBin("Reds", domain = hours_demand$percent_early)
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal_early(percent_early),
+  addPolygons(fillColor = ~pal(percent_early),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -125,19 +117,19 @@ leaflet(hours_demand) %>%
           lat = 42.361145, 
           zoom = 11.5) %>%
   addLegend("topleft", 
-              pal = pal_early, 
+              pal = pal, 
               values = ~percent_early,
               opacity = 1,
-              title="Early Morning Percentage")
+              title = "Percentage of people that leave to work in the early morning")
 ```
 
 
 #Evening
 ```{r}
-pal_evening <- colorBin("Reds", domain = hours_demand$percent_evening)
+pal <- colorBin("Reds", domain = hours_demand$percent_evening)
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal_evening(percent_evening),
+  addPolygons(fillColor = ~pal(percent_evening),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -148,19 +140,19 @@ leaflet(hours_demand) %>%
           lat = 42.361145, 
           zoom = 11.5) %>%
   addLegend("topleft", 
-              pal = pal_evening, 
+              pal = pal, 
               values = ~percent_evening,
               opacity = 1,
-              title="Evening Percentage")
+            title = "Percentage of people that leave to work in the evening")
 ```
 
 
 #Overnight
 ```{r}
-pal_overnight <- colorBin("Reds", domain = hours_demand$percent_overnight)
+pal <- colorBin("Reds", domain = hours_demand$percent_overnight)
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal_overnight(percent_overnight),
+  addPolygons(fillColor = ~pal(percent_overnight),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -171,11 +163,12 @@ leaflet(hours_demand) %>%
           lat = 42.361145, 
           zoom = 11.5) %>%
   addLegend("topleft", 
-              pal = pal_overnight, 
+              pal = pal, 
               values = ~percent_overnight,
               opacity = 1,
-              title="Late evening/overnight percentage")
+              title = "Percentage of people that leave to work overnight")
 ```
+
 
 
 ##Aggregate

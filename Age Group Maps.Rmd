@@ -36,34 +36,33 @@ EEC_rates <- read_csv("ProvidersData_earlyed_462019.csv")
 
 #Filtering
 EEC_rates <- EEC_rates %>%
-  filter(City %in% boston_neighborhood$Name | City=="Boston")
+  subset(City %in% boston_neighborhood$Name | City=="Boston")
 names(EEC_rates) <- gsub(" ", "_", names(EEC_rates))
 #glimpse(EEC_rates)
 #View(EEC_lon_lat)
 ```
 
-<<<<<<< HEAD
 ```{r Cleaned Rates Dataset}
-data_rates <- read_csv("~/Desktop/data_rates.csv")
+data_rates <- EEC_rates
 
-data_rates <- data_rates %>%
-  filter(City %in% boston_neighborhood$Name | City=="Boston")
+# data_rates <- data_rates %>%
+#   filter(City %in% boston_neighborhood$Name | City=="Boston")
 
 #glimpse(data_rates)
 #View(data_rates)
 ```
-=======
+
 >>>>>>> 098c9a3278d7ef21a5f9c3419c98380734310ff9
 
 ```{r Tallys for Variables}
 # using tally helps us be able to see the different levels for the categorical variables, which is helpful for map building
 # tally lives in the Stat2Data package
-
 tally(~ Infant, data = EEC_rates)
 tally(~ Toddler, data = EEC_rates)
 tally(~ Preschool, data = EEC_rates)
-tally(~ `School Age`, data = EEC_rates)
+#tally(~ School_Age, data = EEC_rates)
 ```
+
 
 ```{r Original Basic Base Map}
 original_base_map <- leaflet(data = EEC_rates, 
@@ -94,10 +93,10 @@ boston_neighborhood_base_map
 # filtering for each level of infant
 
 infant_yes <- EEC_rates %>%
-  filter(Infant == "Yes")
+  subset(Infant == "Yes")
 
 infant_no <- EEC_rates %>%
-  filter(Infant == "No")
+  subset(Infant == "No")
 
 # color palette for the infant level
 
@@ -139,10 +138,10 @@ infant_group_map
 # filtering for each level of toddler
 
 toddler_yes <- EEC_rates %>%
-  filter(Toddler == "Yes")
+  subset(Toddler == "Yes")
 
 toddler_no <- EEC_rates %>%
-  filter(Toddler == "No")
+  subset(Toddler == "No")
 
 # color palette for the toddler level
 
@@ -182,10 +181,10 @@ toddler_group_map
 # filtering for each level of preschool 
 
 preschool_yes <- EEC_rates %>%
-  filter(Preschool == "Yes")
+  subset(Preschool == "Yes")
 
 preschool_no <- EEC_rates %>%
-  filter(Preschool == "No")
+  subset(Preschool == "No")
 
 # color palette for the preschool level
 
@@ -225,10 +224,10 @@ preschool_group_map
 # filtering for each level of school age
 
 schoolage_yes <- EEC_rates %>%
-  filter(School_Age == "Yes")
+  subset(School_Age == "Yes")
 
 schoolage_no <- EEC_rates %>%
-  filter(School_Age == "No")
+  subset(School_Age == "No")
 
 # color palette for the school age level
 

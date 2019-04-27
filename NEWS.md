@@ -12,10 +12,11 @@
 - Cleaned up Shiny a bit (1 hour)
 
 • Jocelyn
-- The Result, Discussion, and Reference sections of the final paper
+- The Result and Discussion section of the final paper
+- References
 - Modified previous maps based on Sarah and Zoe's feedback
-- Filled the holes on the supply polygon map on hours with grey color; Add provider markers on the supply polygon map
-- Bar chart showing the ranking of neighborhoods by desert ratio
+- Fill the holes on the supply polygon map on hours with grey color
+- Add provider markers on the supply polygon map
 
 ## What is it that you're struggling with right now?
 

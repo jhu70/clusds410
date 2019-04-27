@@ -126,7 +126,7 @@ Number of slots available during off hours for early ed in each tract
 ```{r}
 #making palettes
 pal2 <- colorBin("YlOrRd", domain = EEC_geometry$sumcapacity_weekdaysoff)
-infant_pal <- colorFactor(palette = c("blue"),
+infant_pal <- colorFactor(palette = c("green"),
                             levels = c(TRUE))
 #making palettes
 pal3 <- colorBin("GREY", domain = EEC_geometry_no$sumcapacity_weekdaysoff)
@@ -158,12 +158,7 @@ map_yes <- leaflet(EEC_geometry) %>%
   addLegend("topleft", 
               pal = pal2, 
               values = ~sumcapacity_weekdaysoff,
-              title = "Weekdays_offhours",
-              opacity = 1)%>%
-  addLegend("topright", 
-              pal = pal3, 
-              values = ~sumcapacity_weekdaysoff,
-              title = "Weekdays_offhours",
+              title = "Capcacity of weekdays off hour providers by tract",
               opacity = 1)%>%
   addCircleMarkers(data = EEC_earlyed,
                    ~lon,
@@ -173,7 +168,7 @@ map_yes <- leaflet(EEC_geometry) %>%
                    color = ~infant_pal(Weekdays_off_hours),
                    group = "Show providers with after school care for early ed",
                    label = ~as.character(Name))%>%
-  addLayersControl(overlayGroups = c("Show providers with after school care for early ed"))
+  addLayersControl(overlayGroups = c("Show providers with off-hour childcare for early ed during weekdays"))
 map_yes
 ```
 

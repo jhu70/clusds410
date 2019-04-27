@@ -103,8 +103,7 @@ EECNEW5<-read.csv("masterdataframe_tract.csv")
 
 #early ed filter grouped by tract, summarized for capacity
 EECNEW5_earlyed_tract <- EECNEW5 %>%
-  #make sure that you have TRUE or "True" depending on how it is saved in the dataset
-  filter(early_ed==TRUE) %>%
+  dplyr::filter(early_ed==TRUE) %>%
   group_by(GEOID_tract, NAMELSAD_tract) %>%
   summarise(sum_capacity = sum(Capacity))
 
@@ -168,10 +167,10 @@ neighborho_capacity_tract <- neighborho_capacity_tract %>%
 
 ```{r}
 ##DEMAND BY TRACT
-pal_laborforce <- colorBin("YlOrRd", domain = neighborho_demand_tract$laborforce)
+pal <- colorBin("YlOrRd", domain = neighborho_demand_tract$laborforce)
 leaflet(neighborho_demand_tract) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal_laborforce(laborforce),
+  addPolygons(fillColor = ~pal(laborforce),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -182,18 +181,17 @@ leaflet(neighborho_demand_tract) %>%
           lat = 42.361145, 
           zoom = 11.5) %>%
   addLegend("topleft", 
-              pal = pal_laborforce, 
+              pal = pal, 
               values = ~laborforce,
-              opacity = 1,
-              title="# people in labor force")
+              opacity = 1)
 ```
 
 ```{r}
 ##CAPACITY BY TRACT
-pal_slots <- colorBin("YlOrRd", domain = neighborho_capacity_tract$slots)
+pal <- colorBin("YlOrRd", domain = neighborho_capacity_tract$slots)
 leaflet(neighborho_capacity_tract) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal_slots(slots),
+  addPolygons(fillColor = ~pal(slots),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -204,17 +202,21 @@ leaflet(neighborho_capacity_tract) %>%
           lat = 42.361145, 
           zoom = 11.5) %>%
   addLegend("topleft", 
-              pal = pal_slots, 
+              pal = pal, 
               values = ~slots,
+<<<<<<< HEAD
               opacity = 1,
               title="# slots")
+=======
+              opacity = 1)
+>>>>>>> 281105d582536829259a846b81343994e79bc5b5
 ```
 
 ```{r}
-pal_ratioslots <- colorBin("Reds", domain = EEC_census$ratioslots)
+pal <- colorBin("Reds", domain = EEC_census$ratioslots)
 leaflet(EEC_census) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal_ratioslots(ratioslots),
+  addPolygons(fillColor = ~pal(ratioslots),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -225,10 +227,9 @@ leaflet(EEC_census) %>%
           lat = 42.361145, 
           zoom = 11.5) %>%
   addLegend("topleft", 
-              pal = pal_ratioslots, 
+              pal = pal, 
               values = ~ratioslots,
-              opacity = 1,
-              title="Ratio of Need:Slots")
+              opacity = 1)
 
 ```
 
@@ -249,13 +250,13 @@ head(EEC_census_bar)
 
 ```{r}
 library(ggplot2)
-ggplot(EEC_census_bar,aes(x =reorder(Name_neighborho,-ratioslots), y = ratioslots, fill = Name_neighborho)) +
-  geom_bar(colour="black", stat="identity") + ggtitle( "Neighborhood ranking by desert ratio")+ xlab("Neighborhoods")+  ylab("Desert Ratio (Population under 6/Capacity for early ed")
+ggplot(EEC_census_bar,aes(x =reorder(Name_neighborho,ratioslots), y = ratioslots)) +
+  geom_bar(fill="blue", stat="identity") + ggtitle( "Childcare ratio by neighborhood")+ xlab("Neighborhoods")+  ylab("Ratio of children under 6 from working families to available slots for early ed") + geom_hline(yintercept=1)+coord_flip()
 ```
 
 ```{r}
 EEC_census_bar5<-top_n(EEC_census_bar, 5, ratioslots)
 ggplot(EEC_census_bar5,aes(x =reorder(Name_neighborho,-ratioslots), y = ratioslots, fill = Name_neighborho)) +
-  geom_bar(colour="black", stat="identity") + ggtitle( "Top 5 Neighborhood ranking with the highest desert ratio")+ xlab("Neighborhoods")+  ylab("Desert Ratio (Population under 6/Capacity for early ed")
+  geom_bar(colour="black", stat="identity") + ggtitle( "Top 5 Neighbohood ranking with the highest desert ratio")+ xlab("Neighborhoods")+  ylab("Desert Ratio (Population under 6/Capacity for early ed")
 ```
 
