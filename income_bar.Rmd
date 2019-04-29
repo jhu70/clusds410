@@ -1,0 +1,94 @@
+---
+title: "Untitled"
+author: "Jocelyn Hu"
+date: "April 27, 2019"
+output: html_document
+---
+
+
+##RUN PROVIDERS_IN_POLYGONS.RMD before this!!!!
+```{r Packages}
+library(tidycensus)
+library(tidyverse)
+library(ggplot2)
+library(tigris)
+library(sf)
+library(mosaic)
+library(mapview)
+library(leaflet)
+library(leaflet.extras)
+```
+
+```{r}
+#Read in boston neighborhood data
+boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+```
+
+
+
+
+```{r API Key}
+## define census API key and set it with census_api_key function
+
+api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
+census_api_key(api_key)
+
+## check API key
+
+Sys.getenv("CENSUS_API_KEY")
+```
+
+```{r}
+med_income <- get_acs(geography = "tract",
+                    variables = "B19013_001",
+                    survey="acs5",
+                    state= "MA",
+                    county="Suffolk",
+               geometry=TRUE)
+```
+
+
+Adding geometry into tract neighborhood file
+```{r}
+#add back geometry
+masterdataframe_tract_g <- cbind(classification2, EECMaster49)
+masterdataframe_tract_neighborho_g <- cbind(classification4, masterdataframe_tract_g)
+
+tractneighborho_geo<-masterdataframe_tract_neighborho_g%>%
+  select(Name_neighborho,Neighborho_neighborho,geometry_neighborho,NAMELSAD_tract,GEOID_tract,geometry_tract)
+
+tractneighborho_geo<-tractneighborho_geo[!duplicated(tractneighborho_geo[,'GEOID_tract']),]
+```
+
+
+```{r}
+#merge this with neighborhood tract information
+colnames(tractneighborho_geo)[5] <- "GEOID"
+income_neighborhood <- inner_join(med_income, tractneighborho_geo, by ="GEOID")
+
+#turning back into an sf object
+income_neighborhood <- income_neighborhood %>%
+  select(GEOID, Name_neighborho, NAMELSAD_tract, moe, estimate, geometry_neighborho, geometry_tract) %>% 
+  st_sf(sf_column_name = 'geometry_neighborho')
+
+income_tract <- income_neighborhood %>%
+  select(GEOID, Name_neighborho, NAMELSAD_tract, moe, estimate, geometry_neighborho, geometry_tract) %>% 
+  st_sf(sf_column_name = 'geometry_tract')
+
+#getting estimates per neighborhood and tract with neighborhood geometry and tract geometry
+neighborho_demand <- income_neighborhood %>%
+  group_by(Name_neighborho) %>%
+  summarise(medincome = sum(moe))
+
+neighborho_demand_tract <- income_tract %>%
+  group_by(NAMELSAD_tract) %>%
+  summarise(medincome = sum(moe))
+
+```
+
+
+```{r}
+library(ggplot2)
+ggplot(neighborho_demand,aes(x =reorder(Name_neighborho,medincome), y = medincome)) +
+  geom_bar(fill="dark green", stat="identity") + ggtitle( "Median Income by neighborhood")+ xlab("Neighborhoods")+  ylab("Median Income($)") + geom_hline(yintercept=1)+coord_flip()
+```
