@@ -206,12 +206,9 @@ leaflet(neighborho_capacity_tract) %>%
   addLegend("topleft", 
               pal = pal, 
               values = ~slots,
-<<<<<<< HEAD
               opacity = 1,
               title="# slots")
-=======
-              opacity = 1)
->>>>>>> 281105d582536829259a846b81343994e79bc5b5
+
 ```
 
 #Ratio map
