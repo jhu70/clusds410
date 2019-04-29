@@ -5,13 +5,6 @@ date: "4/25/2019"
 output: html_document
 ---
 
----
-title: "Shiny"
-author: "Paige Patrick"
-date: "4/2/2019"
-output: html_document
----
-
 ```{r Packages}
 library(shiny)
 library(shinydashboard)
