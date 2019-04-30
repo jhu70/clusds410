@@ -11,7 +11,11 @@
 
 •	Paige
 
-
+- Put together the shiny dashboard page for the Capacity variable (2 hours) 
+- Put together the shiny dashboard page for the Hours variable (2 hours)
+- Ethical Statement (1 hour)
+- Meeting with Sarah (1 hour)
+- Preparing and practicing for in class presentation (2 hours) 
 
 • Jocelyn
 
@@ -23,7 +27,8 @@
 
 •	Paige
 
-
+- Time management
+- Getting Shiny 100% polished
 
 •	Jocelyn 
 
@@ -36,6 +41,10 @@
 
 •	Paige
 
+- Present to class (.25 hours)
+- Final Paper (4 hours)
+- Polish Shiny (2 hours)
+- Present to CLU (.75 hours)
 
 •	Jocelyn
 
