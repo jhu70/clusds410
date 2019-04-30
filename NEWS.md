@@ -18,7 +18,12 @@
 - Preparing and practicing for in class presentation (2 hours) 
 
 • Jocelyn
-
+- Created a bar chart for income level using the tidycensus package
+- Created a double-bar chart for income level and children to slots ratio
+- Assist with executive decision about the dashboard
+- Put figures created but not included in the dashboard into a folder for future references
+- Meeting with Sarah
+- Final presentation
 
 ## What is it that you're struggling with right now?
 
@@ -31,7 +36,7 @@
 - Getting Shiny 100% polished
 
 •	Jocelyn 
-
+- Put together everything and attention to details
 
 ## What are you planning to do next week?
 •	Kat
@@ -47,8 +52,9 @@
 - Present to CLU (.75 hours)
 
 •	Jocelyn
-
-
+- Getting everything ready
+- Class and CLU presentationS
+- Final paper editing
 
 
 # 2019 - 4 - 22
