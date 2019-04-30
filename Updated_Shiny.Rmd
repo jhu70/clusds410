@@ -159,7 +159,7 @@ body <- dashboardBody(
                 status = "danger"
                 )
               ),
-            tags$h1("Ratio of Number of Children to Available Number of Slot"),
+            tags$h1("Ratio of Number of Children to Available Number of Slots"),
             tags$em("(per neighborhood)"),
             fluidRow(
               box(
@@ -177,7 +177,7 @@ body <- dashboardBody(
     ## HOURS
 
     tabItem(tabName = "hours",
-            tags$h1("Percent of People Who Work Irregular Hours (per tract)"),
+            tags$h1("Percent of People Who Work Nonstandard Hours (per tract)"),
             tags$br(),
             tags$br(),
             fluidRow(
@@ -209,7 +209,7 @@ body <- dashboardBody(
                 status = "danger"
               )
             ),
-            tags$h1("General Irregular Hours Demand"),
+            tags$h1("Nonstandard Hours Demand"),
             fluidRow(
               box(
                 width = 8,
@@ -217,8 +217,9 @@ body <- dashboardBody(
                 status = "danger"),
               box(
                 width = 4,
-                title = "_______",
-                em("blah blah blah"),
+                em("The aggregated percentage is the sum of the percentage of people with all nonstandard hours (7:30am - 6:00pm)."),
+                p("------"),
+                em(" Each dot is a childcare provider. You can hover over each childcare provider to see the number of slots they have available for off-hour weekday care."),
                 status = "danger"
               )
               )
@@ -376,7 +377,8 @@ server <- function(input, output) {
       addLegend("topleft", 
                 pal = pal_ratioslots, 
                 values = ~ratioslots,
-                opacity = 1)
+                opacity = 1,
+                title = "Ratio Slots")
   })
   
   output$ratioslots_bar <- renderPlot({
