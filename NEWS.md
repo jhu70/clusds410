@@ -20,7 +20,7 @@
 • Jocelyn
 - Created a bar chart for income level using the tidycensus package
 - Created a double-bar chart for income level and children to slots ratio
-- Assist with executive decision about the dashboard
+- Assisted with executive decisions about the dashboard
 - Put figures created but not included in the dashboard into a folder for future references
 - Meeting with Sarah
 - Final presentation
