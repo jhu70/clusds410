@@ -1,3 +1,47 @@
+
+# 2019 - 4 - 29
+## What did you do this week?
+
+•	Kat
+- Making & practicing for the final presentation
+- Little bit of paper editing
+- Final executive decisions about the dashboard
+- Meeting with Sarah
+- Ethical Statement
+
+•	Paige
+
+
+
+• Jocelyn
+
+
+## What is it that you're struggling with right now?
+
+•	Kat
+- Juggling everything!! Still so much paper editing to do.
+
+•	Paige
+
+
+
+•	Jocelyn 
+
+
+## What are you planning to do next week?
+•	Kat
+- Present !!! To class & CLU
+- Finish Paper
+- Be done!! Weeeeeee
+
+•	Paige
+
+
+•	Jocelyn
+
+
+
+
 # 2019 - 4 - 22
 ## What did you do this week?
 
