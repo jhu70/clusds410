@@ -37,7 +37,7 @@ server <- function(input, output)  {}
 ## HEADER
 
 header <- dashboardHeader(
-  title = "CLU",
+  title = "CLU: Childcare",
   dropdownMenu(type = "messages",
                messageItem(
                  from = "Community Labor United",
@@ -97,6 +97,7 @@ body <- dashboardBody(
     
     tabItem(tabName = "introduction",
             title = "Introduction",
+            tags$h1("Community Labor United - Childcare"),
             tags$br(),
             tags$b("General Overview"),
             ## Any text immediately following will NOT be on a seperate line
@@ -137,7 +138,7 @@ body <- dashboardBody(
     #         ),
     
     tabItem(tabName = "capacity",
-            tags$h1("General Title for Capacity"),
+            tags$h1("Early Ed Childcare Slots to Childcare Needs Comparison"),
             tags$br(),
             tags$br(),
             fluidRow(
@@ -151,14 +152,14 @@ body <- dashboardBody(
                 ),
               box(
                 width = 6,
-                title = "Childcare Slots for Early Eduction Providers",
+                title = "Childcare Slots for Early Education Providers",
                 em("(per tract)"),
                 br(),
                 leafletOutput("slots_supply"),
                 status = "danger"
                 )
               ),
-            tags$h1("Ratio of Number of Children to Available Number of Slot"),
+            tags$h1("Ratio of Number of Children to Available Number of Slots"),
             tags$em("(per neighborhood)"),
             fluidRow(
               box(
@@ -176,7 +177,7 @@ body <- dashboardBody(
     ## HOURS
 
     tabItem(tabName = "hours",
-            tags$h1("Percent of People Who Work Irregular Hours (per tract)"),
+            tags$h1("Percent of People Who Work Nonstandard Hours (per tract)"),
             tags$br(),
             tags$br(),
             fluidRow(
@@ -208,16 +209,17 @@ body <- dashboardBody(
                 status = "danger"
               )
             ),
-            tags$h1("General Irregular Hours Demand"),
+            tags$h1("Nonstandard Hours Demand"),
             fluidRow(
               box(
                 width = 8,
-                leafletOutput("weekdays_offhours"),
+                leafletOutput("aggregate_percent"),
                 status = "danger"),
               box(
                 width = 4,
-                title = "_______",
-                em("blah blah blah"),
+                em("The aggregated percentage is the sum of the percentage of people with all nonstandard hours (7:30am - 6:00pm)."),
+                p("------"),
+                em(" Each dot is a childcare provider. You can hover over each childcare provider to see the number of slots they have available for off-hour weekday care."),
                 status = "danger"
               )
               )
@@ -324,7 +326,7 @@ server <- function(input, output) {
               pal = pal_laborforce, 
               values = ~laborforce,
               opacity = 1,
-              title="Number")
+              title="# Children")
   })
   
   output$slots_supply <- renderLeaflet({
@@ -350,19 +352,19 @@ server <- function(input, output) {
                 pal = pal_slots, 
                 values = ~slots,
                 opacity = 1,
-                title = "Number")
+                title = "# Slots")
   })
   
   output$ratioslots_gap <- renderLeaflet({
     leaflet(EEC_census) %>%
       addProviderTiles("CartoDB")  %>%
-      addPolygons(fillColor = ~pal(ratioslots),
+      addPolygons(fillColor = ~pal_ratioslots(ratioslots),
                   weight = 2,
                   opacity = .8,
                   color = "white",
                   dashArray = "3",
                   fillOpacity = 0.7) %>%
-      addPolygons(data=boston_neighborhood, 
+      addPolygons(data = boston_neighborhood, 
                   weight = 2, 
                   opacity = 1, 
                   fillOpacity = 0, 
@@ -371,23 +373,22 @@ server <- function(input, output) {
                   label = ~Name) %>% #adding neighborhood data
       setView(lng = -71.057083, 
               lat = 42.361145, 
-              zoom = 11) %>%
+              zoom = 11.5) %>%
       addLegend("topleft", 
-                pal = pal, 
+                pal = pal_ratioslots, 
                 values = ~ratioslots,
-                opacity = 1, 
-                title = "Slots Ratio")
+                opacity = 1,
+                title = "Ratio Slots")
   })
   
   output$ratioslots_bar <- renderPlot({
-    ggplot(EEC_census_bar, aes(x = reorder(Name_neighborho,ratioslots), 
-                               y = ratioslots)) +
+    ggplot(EEC_census_bar, aes(x = reorder(Name_neighborho,ratioslots), y = ratioslots)) +
       geom_bar(fill = "blue", 
                stat = "identity") + 
-      ggtitle( "Childcare ratio by neighborhood") + 
+      ggtitle( "Childcare Ratio by Neighborhood") + 
       xlab("Neighborhoods") +  
-      ylab("Ratio of children under 6 from working families to available slots for early ed") + 
-      geom_hline(yintercept = 1) + 
+      ylab("Children Under 6 to Available Early Ed Slots Ratio") +
+      geom_hline(yintercept=1) +
       coord_flip()
   })
   ## HOURS
@@ -403,18 +404,17 @@ server <- function(input, output) {
       addPolygons(data = boston_neighborhood, 
                   weight = 2, 
                   opacity = 1, 
-                  fillOpacity = 0, 
-                  stroke = TRUE, 
+                  fillOpacity = 0, stroke = TRUE, 
                   color = "black", 
                   label = ~Name) %>% #adding neighborhood data
       setView(lng = -71.057083, 
               lat = 42.361145, 
-              zoom = 11) %>%
+              zoom = 11.5) %>%
       addLegend("topleft", 
                 pal = pal_early, 
                 values = ~percent_early,
                 opacity = 1,
-                title = "Percentage")
+                title = "% Early Workers")
   })
   
   output$percent_evening <- renderLeaflet({
@@ -435,12 +435,12 @@ server <- function(input, output) {
                   label = ~Name) %>% #adding neighborhood data
       setView(lng = -71.057083, 
               lat = 42.361145, 
-              zoom = 11) %>%
+              zoom = 11.5) %>%
       addLegend("topleft", 
                 pal = pal_evening, 
                 values = ~percent_evening,
                 opacity = 1,
-                title="Percentage")
+                title = "% Evening Workers")
   })
   
   output$percent_overnight <- renderLeaflet({
@@ -461,18 +461,18 @@ server <- function(input, output) {
                   label = ~Name) %>% #adding neighborhood data
       setView(lng = -71.057083, 
               lat = 42.361145, 
-              zoom = 11) %>%
+              zoom = 11.5) %>%
       addLegend("topleft", 
                 pal = pal_overnight, 
                 values = ~percent_overnight,
                 opacity = 1,
-                title="Percentage")
+                title = "% Overnight Workers")
   })
   
-  output$weekdays_offhours <- renderLeaflet({
+  output$aggregate_percent <- renderLeaflet({
     leaflet(hours_demand) %>%
       addProviderTiles("CartoDB")  %>%
-      addPolygons(fillColor = ~pal(aggregate_percent),
+      addPolygons(fillColor = ~pal_aggregate_percent(aggregate_percent),
                   weight = 2,
                   opacity = .8,
                   color = "white",
@@ -483,11 +483,11 @@ server <- function(input, output) {
                   opacity = 1, 
                   fillOpacity = 0, 
                   stroke = TRUE, 
-                  color = "black", 
+                  color = "black",
                   label = ~Name) %>% #adding neighborhood data
       setView(lng = -71.057083, 
               lat = 42.361145, 
-              zoom = 11) %>%
+              zoom = 11.5) %>%
       addCircleMarkers(data = EEC_earlyed,
                        ~lon,
                        ~lat,
@@ -498,29 +498,12 @@ server <- function(input, output) {
                        group= "Show childcare providers with off hours weekday care") %>%
       addLayersControl(overlayGroups = c("Show childcare providers with off hours weekday care")) %>%
       addLegend("topleft", 
-                pal = pal, 
+                pal = pal_aggregate_percent, 
                 values = ~aggregate_percent,
                 opacity = 1,
-                title = "Aggregate percentage")
+                title="Aggregated Percentage")
   })
 }
-
-# server <- function(input, output, session) {
-#   reactive_data <- reactiveFileReader(
-#     intervalMillis = 1000,
-#     session = session,
-#     filePath = "file.csv",
-#     #readFunc = read.csv
-#     readFunc = function
-#     (filePath) {
-#       read.csv(url(filePath))
-#     }
-#   )
-# }
-#   output$printed_data <- renderPrint({
-#     reactive_data()
-#   })
-# }
 
 ## SHINYAPP
 

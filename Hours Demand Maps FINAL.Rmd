@@ -30,9 +30,6 @@ EEC_earlyed <- EECNEW5 %>%
   mutate(early_ed= ifelse(early_ed=="True", TRUE,
                           ifelse(early_ed=="False", FALSE, early_ed))) %>%
   filter(early_ed==TRUE, Weekdays_off_hours==TRUE)
-
-hours_demand <- hours_demand %>%
-  na.omit()
 ```
 
 
@@ -103,6 +100,10 @@ hours_demand <- hours_demand %>%
          percent_overnight = (sum_overnight/sumtotal)*100,
          aggregate_raw = sum_earlymorning + sum_evening + sum_overnight,
          aggregate_percent = (sum_earlymorning + sum_evening + sum_overnight)/sumtotal*100)
+
+
+hours_demand <- hours_demand %>%
+  na.omit()
 ```
 
 #Maps!!
@@ -114,10 +115,10 @@ hours_demand <- hours_demand %>%
 
 #Early morning
 ```{r}
-pal <- colorBin("Reds", domain = hours_demand$percent_early)
+pal_early <- colorBin("Reds", domain = hours_demand$percent_early)
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal(percent_early),
+  addPolygons(fillColor = ~pal_early(percent_early),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -128,19 +129,19 @@ leaflet(hours_demand) %>%
           lat = 42.361145, 
           zoom = 11.5) %>%
   addLegend("topleft", 
-              pal = pal, 
+              pal = pal_early, 
               values = ~percent_early,
               opacity = 1,
-              title = "Percentage of people that leave to work in the early morning")
+              title = "% Early Workers")
 ```
 
 
 #Evening
 ```{r}
-pal <- colorBin("Reds", domain = hours_demand$percent_evening)
+pal_evening <- colorBin("Reds", domain = hours_demand$percent_evening)
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal(percent_evening),
+  addPolygons(fillColor = ~pal_evening(percent_evening),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -151,19 +152,19 @@ leaflet(hours_demand) %>%
           lat = 42.361145, 
           zoom = 11.5) %>%
   addLegend("topleft", 
-              pal = pal, 
+              pal = pal_evening, 
               values = ~percent_evening,
               opacity = 1,
-            title = "Percentage of people that leave to work in the evening")
+            title = "% Evening Workers")
 ```
 
 
 #Overnight
 ```{r}
-pal <- colorBin("Reds", domain = hours_demand$percent_overnight)
+pal_overnight <- colorBin("Reds", domain = hours_demand$percent_overnight)
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal(percent_overnight),
+  addPolygons(fillColor = ~pal_overnight(percent_overnight),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -174,17 +175,17 @@ leaflet(hours_demand) %>%
           lat = 42.361145, 
           zoom = 11.5) %>%
   addLegend("topleft", 
-              pal = pal, 
+              pal = pal_overnight, 
               values = ~percent_overnight,
               opacity = 1,
-              title = "Percentage of people that leave to work overnight")
+              title = "% Overnight Workers")
 ```
 
 
 
 ##Aggregate
 ```{r}
-pal <- colorBin("YlOrRd", domain = hours_demand$aggregate_raw)
+pal_aggregate <- colorBin("YlOrRd", domain = hours_demand$aggregate_raw)
 #hours_demand <- hours_demand %>%
   #filter(aggregate!=100)
 
@@ -193,7 +194,7 @@ infant_pal <- colorFactor(palette = c("blue"),
 
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal(aggregate_raw),
+  addPolygons(fillColor = ~pal_aggregate(aggregate_raw),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -212,17 +213,17 @@ leaflet(hours_demand) %>%
                    group = "Show providers with after school care for early ed",
                    label = ~as.character(Capacity)) %>%
   addLegend("topleft", 
-              pal = pal, 
+              pal = pal_aggregate, 
               values = ~aggregate_raw,
               opacity = 1)
 
-pal <- colorBin("YlOrRd", domain = hours_demand$aggregate_percent)
+pal_aggregate_percent <- colorBin("YlOrRd", domain = hours_demand$aggregate_percent)
 #hours_demand <- hours_demand %>%
   #filter(aggregate!=100)
 
 leaflet(hours_demand) %>%
   addProviderTiles("CartoDB")  %>%
-  addPolygons(fillColor = ~pal(aggregate_percent),
+  addPolygons(fillColor = ~pal_aggregate_percent(aggregate_percent),
   weight = 2,
   opacity = .8,
   color = "white",
@@ -242,10 +243,10 @@ leaflet(hours_demand) %>%
                    group= "Show childcare providers with off hours weekday care") %>%
   addLayersControl(overlayGroups = c("Show childcare providers with off hours weekday care")) %>%
   addLegend("topleft", 
-              pal = pal, 
+              pal = pal_aggregate_percent, 
               values = ~aggregate_percent,
               opacity = 1,
-              title="Aggregate percentage")
+              title="Aggregated Percentage")
 ```
 
 

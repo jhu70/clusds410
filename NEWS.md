@@ -1,3 +1,62 @@
+
+# 2019 - 4 - 29
+## What did you do this week?
+
+•	Kat
+- Making & practicing for the final presentation
+- Little bit of paper editing
+- Final executive decisions about the dashboard
+- Meeting with Sarah
+- Ethical Statement
+
+•	Paige
+
+- Put together the shiny dashboard page for the Capacity variable (2 hours) 
+- Put together the shiny dashboard page for the Hours variable (2 hours)
+- Ethical Statement (1 hour)
+- Meeting with Sarah (1 hour)
+- Preparing and practicing for in class presentation (2 hours) 
+
+• Jocelyn
+- Created a bar chart for income level using the tidycensus package
+- Created a double-bar chart for income level and children to slots ratio
+- Assisted with executive decisions about the dashboard
+- Put figures created but not included in the dashboard into a folder for future references
+- Meeting with Sarah
+- Final presentation
+
+## What is it that you're struggling with right now?
+
+•	Kat
+- Juggling everything!! Still so much paper editing to do.
+
+•	Paige
+
+- Time management
+- Getting Shiny 100% polished
+
+•	Jocelyn 
+- Put together everything and attention to details
+
+## What are you planning to do next week?
+•	Kat
+- Present !!! To class & CLU
+- Finish Paper
+- Be done!! Weeeeeee
+
+•	Paige
+
+- Present to class (.25 hours)
+- Final Paper (4 hours)
+- Polish Shiny (2 hours)
+- Present to CLU (.75 hours)
+
+•	Jocelyn
+- Getting everything ready
+- Class and CLU presentationS
+- Final paper editing
+
+
 # 2019 - 4 - 22
 ## What did you do this week?
 
