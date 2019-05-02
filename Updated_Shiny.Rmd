@@ -217,7 +217,7 @@ body <- dashboardBody(
                 status = "danger"),
               box(
                 width = 4,
-                em("The aggregated percentage is the sum of the percentage of people with all nonstandard hours (7:30am - 6:00pm)."),
+                em("The aggregated percentage is the sum of the percentage of people with all nonstandard hours (Monday - Friday, 7:30am - 6:00pm)."),
                 p("------"),
                 em(" Each dot is a childcare provider. You can hover over each childcare provider to see the number of slots they have available for off-hour weekday care."),
                 status = "danger"
