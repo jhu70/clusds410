@@ -76,12 +76,12 @@ One large problem with census data is that in any workday related variables, it 
 
 ##Maps
 
-Five maps were made to visualize the gap in supply and demand for hours. Three of the maps were choropleth maps by tract visualizing the percentage of people who left at each of the nonstandard times: early, evening, and late evening/overnight (See Figure 1 for an example of this map). Another similar map was made by tract using the aggregate percentage of all people leaving during any of these nonstandard hours. Finally, to visualize supply, a map was made of the number of slots available for nonstandard hours of childcare by provider by tract.
+Five maps were made to visualize the gap in supply and demand for hours. Three of the maps were choropleth maps by tract visualizing the percentage of people who left for works at each of the nonstandard times: early morning, evening, and late evening/overnight.. Another similar map was made by tract using the aggregate percentage of all people leaving during any of these nonstandard hours. Finally, to visualize supply, a map was made of the number of slots available for nonstandard hours of childcare by provider by tract.
 
 
-#Results and Discussion
+#Results 
 
-This section summarizes the data utilized and how the maps we create illustrate  the gap between demand and supply of childcare services for children under 6 in the Boston area. We start by presenting the summary statistics of the data sets, analyzing each individual map, and then proceed to analyze the relationship among them.
+This section summarizes the data used and how the maps we create illustrate the gap between demand and supply of childcare services for children under 6 in the Greater Boston area. We start by presenting the summary statistics of the data sets, analyzing each individual map, and then proceed to analyze the relationship among them.
 
 ##Summary Statistics
 
@@ -119,16 +119,16 @@ tract_neighborho_off <- tract_neighborho %>%
 tract_neighborho<-as.data.frame(tract_neighborho)
 tract_neighborho_off<-as.data.frame(tract_neighborho_off)
 
-stargazer(tract_neighborho[c("Capacity","Capacity_by_neighborho","Capacity_by_tract")], type = "text", title="Descriptive table(early ed only)", digits=0,summary.stat = c("mean", "sd","min","max"), covariate.labels = c("Average number of slots by providers (slot)", "Average number of slots by neighborhood(slot)", "Average number of slots by tract(slot)"))
+stargazer(tract_neighborho[c("Capacity","Capacity_by_neighborho","Capacity_by_tract")], type = "text", title="Descriptive table of # slots for early ed (unit: slot)", digits=0,summary.stat = c("mean", "sd","min","max"), covariate.labels = c("#slots by providers", "#slots by neighborhood", "#slots by tract"))
 ```
 
-
-
-The table in Figure 1 presents the summary statistics on the distribution of the capacities of all providers and capacities available in neighborhoods and tracts. The mean capacity of providers is 24.7, of all neighborhoods in Boston is 1469, and of tracts in Boston is 169.2.
+The table in Figure 1 presents the summary statistics of the number of slots available for children under 6, which is what we use to quantify the supply of early ed childcare service in the Greater Boston area. The mean capacity of providers is 24.7 slots, of all neighborhoods in Boston is 1669 slots, and of tracts in Boston is 210 slots. 
 
 ```{r, warning = FALSE, out.width='25%', fig.align='center', fig.cap='Table2', include = FALSE,include = TRUE, echo = FALSE}
-stargazer(tract_neighborho_off[c("Capacity_off","Capacity_neighborho_off","Capacity_tract_off")], type = "text", title="Descriptive table(weekdays off hour services for early ed)", digits=0,summary.stat = c("mean", "sd","min","max"),covariate.labels = c("Average number of off-hour slots by providers", "Average number of off-hour slots by neighborhood", "Average number of off-hour slots by tract"))
+stargazer(tract_neighborho_off[c("Capacity_off","Capacity_neighborho_off","Capacity_tract_off")], type = "text", title="Descriptive table of weekdays nonstandard-hour #slots for early ed (unit: slot))", digits=0,summary.stat = c("mean", "sd","min","max"),covariate.labels = c("#off-hour slots by providers", "#off-hour slots by neighborhoods", "#off-hour slots by tracts"))
 ```
+
+The table in Figure 2 presents the summary statistics of the number of slots available for children under 6 during the irregular work shift (i.e., 6pm-7:30am) on weekdays, which is what we use to quantify the supply of off-hour early ed childcare service in the Greater Boston area. The mean off-hour capacity of providers is 26 slots, of all neighborhoods in Boston is 41 slots, and of tracts in Boston is 26 slots. 
 
 
 ##Graphs for Capacity
@@ -136,84 +136,96 @@ stargazer(tract_neighborho_off[c("Capacity_off","Capacity_neighborho_off","Capac
 In this section we conduct graphical analysis on the two variables we are interested in: capacity and hours.
 
 ```{r, out.width='25%', fig.align='center', fig.cap='Figure1: Number of children under 6 from working families', include = FALSE,include = TRUE, echo = FALSE}
-knitr::include_graphics('fig1.png')
+knitr::include_graphics('fig1_capacitytractdemand.png')
 ```
 
-Figure 1 shows the number of children under 6 whose parents are in the labor force (i.e., actively looking for jobs) on the level of neighborhoods. We are especially in them since they are target consumers of childcare services for early ed. Being in the labor force means that the parents might to too busy to pay enough attention and provide enough cares to their children, thus requiring the aids from childcare providers. According to the map, tracts that have the largest number of children under 6 who would need childcare services are mainly located in the east and west parts of Boston (i.e., upper and lower regions on the map), including East Boston, West Roxbury, Hyde Park, and Dorchester.
+Figure 3 shows the total number of children under 6 of whom at least one parent is in the labor force (i.e., actively looking for or having a job) in each tract of the Greater Boston area, which is a quantification of the demand of early ed childcare service. We are especially in this population group since they are target consumers of childcare services for early ed. Being in the labor force means that the parents might to too busy to pay enough attention and provide enough cares to their children, thus requiring the aids from childcare providers. The darker the red color on this map, the larger the number of children under 6 that have at least one parent in the labor force. According to this map, the tracts that have the largest number of children under 6 who would need childcare services are mainly located in the east and west parts of Boston, which are the upper and lower regions on the map, including East Boston, West Roxbury, Hyde Park, and Dorchester.
 
 ```{r, out.width='25%', fig.align='center', fig.cap='Figure2: Number of slots available for early ed by tracts', include = FALSE,include = TRUE, echo = FALSE}
-knitr::include_graphics('fig2.png')
+knitr::include_graphics('fig2_capacitytractsupply.png')
 ```
 
-Figures 2 shows the number of childcare slots available for children under 6 on the level of tracts. The two tracts that contain more slots than others are located in Dorchester and Downtown, but compared to Figure 2, the slots are apparently more evenly distributed across tracts. It is worth paying attention to that providers in the regions where there is a large number of children under 6, including the east and west parts of Boston, do not provide enough number of slots to feed the need of families in these areas. The difference between supply and demand explains the high desert ratio in these regions as shown in Figure 3.
+Figures 4 shows the number of childcare slots available for children under 6 on the level of tracts, which is a quantification of the supply of childcare service for children under 6. The tracts that contain more slots than others are located in East Boston, Downtown, and Dorchester, but compared to Figure 2, the slots are apparently more evenly distributed across tracts. It is worth paying attention that providers in the east and west parts of Boston where there is a large number of children under 6 with one parent in the labor force, do not offer enough number of slots to fulfill the need of working families in these areas. The difference between supply and demand explains the high ratio of the number children under 6 from working families to the number for slots for them in these neighborhoods as shown in Figure 5.
 
-```{r, out.width='100%', fig.align='center', fig.cap='Figure3: Gap between supply and demand of capacities', include = FALSE,include = TRUE, echo = FALSE}
+```{r, out.width='100%', fig.align='center', fig.cap='Ratio of #children under 6 from working families to #slots', include = FALSE,include = TRUE, echo = FALSE}
 knitr::include_graphics('fig3.png')
 ```
 
-```{r, message = FALSE, warning = FALSE, out.width='25%', fig.align='center', fig.cap='Ratio of slots to children', include = FALSE,include = TRUE, echo = FALSE}
 
-library(readr)
-EEC_census_bar <- read_csv("EEC_census_bar.csv")
-library(ggplot2)
-ggplot(EEC_census_bar,aes(x =reorder(Name_neighborho,ratioslots), y = ratioslots)) +
-  geom_bar(fill="blue", stat="identity") + ggtitle( "Childcare ratio by neighborhood")+ xlab("Neighborhoods")+  ylab("Ratio of children under 6 from working families to available slots for early ed") + geom_hline(yintercept=1)+coord_flip()
+Figure 5 shows the ratio of children under age 5 to the cumulative child care capacity in the neighborhoods of Boston. The darker the red color, the higher the ratio, the more children are competing to obtain a licensed child care slot, and therefore the harder it is for a child in the neighborhood to obtain the childcare service he/she needs. On the opposite, the darker the green color, the less children are competing to obtain a licensed child care slot, and therefore the easier it is for a child in the neighborhood to obtain the childcare service he/she needs. 
+
+<!-- ```{r, message = FALSE, warning = FALSE, out.width='25%', fig.align='center', fig.cap='Bar chart of ratio of #slots to #children', include = FALSE,include = TRUE, echo = FALSE} -->
+
+<!-- library(readr) -->
+<!-- EEC_census_bar <- read_csv("EEC_census_bar.csv") -->
+<!-- library(ggplot2) -->
+<!-- ggplot(EEC_census_bar,aes(x =reorder(Name_neighborho,ratioslots), y = ratioslots)) + -->
+<!--   geom_bar(fill="blue", stat="identity") + ggtitle( "Childcare ratio by neighborhood")+ xlab("Neighborhoods")+  ylab("Ratio of children under 6 from working families to available slots for early ed") + geom_hline(yintercept=1)+coord_flip() -->
+<!-- ``` -->
+
+```{r, out.width='100%', fig.align='center', fig.cap='Bar chart of income level and ratio of #children to #slots', include = FALSE,include = TRUE, echo = FALSE}
+knitr::include_graphics('income.png')
 ```
 
-We first visualize the gap between supply and demand for childcare services for early education through the capacity variables. Figure 1 shows the ratio of children under age 5 to the cumulative child care capacity in the neighborhoods of Boston. The darker the red color, the more children are competing to obtain a licensed child care slot, and therefore the harder it is for a child to obtain the childcare service he/she needs. According to the graph, East Boston, Charlestown, South Boston, Dorchester, Mattapan, Roslindale, Hyde Park, and West Roxbury could be classified as child care deserts. To solve this issue, more childcare providers should be established in those neighborhoods and current providers should expand their capacities.
-To get a closer look at the capacity, the two figures below show the demand and supply of capacities by tracts.
+To a closer look at the ratio map, we make bar chart and rank the neighborhoods by the childcare ratio as shown in the figure 6. First, the chart shows that no neighborhood really hit the 1:1 target ratio and all of them are facing over supply or under supply issues of early ed childcare services. Secondly, the bar chart indicates that West Roxbury, East Boston, South Boston, Roslinedale, and Dorchester have the highest ratio and therefore are facing the most insufficient supply of early ed childcare services. To solve this issue, more childcare providers should be established in those neighborhoods and current providers should expand their capacities. To figure out why these neighborhoods are in short of childcare services, we take one step further and compare the ratios with the income levels of these neighborhoods. Although not proven statistically, it seems tha the areas where income are around or below the average level are the areas where early ed childcare services are most undersupplied.  
+
  
 ##Graphs for Hours
 
-In this section, we look into the working hours of families and the operating hours of providers to examine whether there is a mismatch.
+In addition to the capacity variables, we also visualize the gap between supply and demand through the hours variable, since irregualr working hours is one of the main issues faced by low-income working parents. In this section, we look into the working hours of families and the operating hours of providers to examine whether there is a mismatch.
 
 
-```{r, out.width='25%', fig.align='center', fig.cap='Figure4: Percentage maps by tracts on people departure time for work in the morning', include = TRUE, echo = FALSE}
+```{r, out.width='25%', fig.align='center', fig.cap='Percentage of people that depart to work in the early morning by tract', include = TRUE, echo = FALSE}
 knitr::include_graphics('fig4.png')
 ```
 
- 
-Figure 4 shows the percentage of parents in tracts who depart for jobs early in the morning. On average, people who live in the East Boston and West Boston areas (north and south areas on the map) leave earlier for works than people who live in other regions. These are also the regions where there are relatively larger number of children under 6 in need of childcare services. The tracts where the largest percentages of people leave for jobs early are located at are waterfront areas of South Boston and Dorchester.
+Figure 7 shows the percentage of parents in tracts who depart for workplaces 12:00am to 6:59am in the early morning. On average, people who live in the East Boston and West Boston areas (north and south areas on the map) leave earlier for works than people who live in other regions. These are also the regions where there are relatively larger number of children under 6 in need of childcare services as showin in figure 3. Specifically, the tracts where the largest percentages of people leave for jobs early are located at are waterfront areas of South Boston and Dorchester.
 
-```{r, out.width='25%', fig.align='center', fig.cap='Figure5: Percentage maps by tracts on people departure time for home in the evening',include = TRUE, echo = FALSE}
+```{r, out.width='25%', fig.align='center', fig.cap='Percentage of people that depart to work in the early evening by tract',include = TRUE, echo = FALSE}
 knitr::include_graphics('fig5.png')
 ```
 
-Figure 5 shows the percentage of parents in tracts who leave for home in the late evening. On average, people who live in the East Boston, West Boston areas (north and south areas on the map), and waterfront tracts Brighton and Allston leave from workplaces for home later than people who live in other regions. The tracts where the largest percentages of people leave for home later than usual are located at Roxbury and the waterfront areas of Jamaica Plain.
+Figure 8 shows the percentage of people in tracts who leave for work in the early evening between 11:00am and 3:59pm. On average, the number of parents in East Boston, West Boston areas (north and south areas on the map), and waterfront tracts of Brighton and Allston that leave to work during this period of time is more than that in other areas than other leave to work people who live in other regions. The tracts where the largest percentages of people leave for workplaces during this time period are located at Roxbury and the waterfront areas of Jamaica Plain.
 
-```{r, out.width='25%', fig.align='center', fig.cap='Percentage maps by tracts of people whose departure time for home is overnight', include = TRUE, echo = FALSE}
-knitr::include_graphics('fig6.png')
+```{r, out.width='25%', fig.align='center', fig.cap='Percentage of people who depart to work overnight by tract', include = TRUE, echo = FALSE}
+knitr::include_graphics('fig6_percent_overnight.png')
 ```
 
-Figure 6 shows the percentage of parents in tracts who depart for home from the workplace overnight. On average, people who live in South Boston and West Boston areas (north and south areas on the map) leave later for home than people who live in other regions. These are also the regions where larger percentage of people leave early and where there are relatively larger number of children under 6 in need of childcare services. The tracts where the largest percentages of people leave for jobs early are located at are waterfront areas of South Boston and Dorchester.
+Figure 9 shows the percentage of people in tracts who depart for home from the workplace overnight. On average, people who live in downtown Boston, West Boston, and South Boston areas leave later for workplaces than people who live in other regions. These are also the regions where larger percentage of people leave early and where there are relatively larger number of children under 6 in need of childcare services. However, the tracts where the largest percentages of people leave for jobs overnight are located at are waterfront areas of South Boston and Dorchester.
 
 ```{r, out.width='25%', fig.align='center', fig.cap='Number of slots in certain tracts by providers who operate off hour during weekdays for early ed', include = TRUE, echo = FALSE}
-knitr::include_graphics('fig7.png')
+knitr::include_graphics('aggregatehourdemand.png')
 ```
 
-Figure 7 shows the number of slots available for early by providers that open before 7:30am and close after 6pm during weekdays. It indicates that there is a significant lack of capacities in regions where families have a difficult commute time. In general, people from working families living in East Boston, West Boston, South Boston, and the waterfront areas of Allston, Brighton, and Jamaica Plain are most in need of off hour childcare services. However, we could see that there are only a few slots offered by childcare providers that operate off hour available for children in West Boston and South Boston, and none for children in South Boston and the waterfront areas of Allston, Brighton, and Jamaica Plain. Accordingly, more off hour slots should be provided in these regions.
+Figure 10 shows the aggregated percentage map based on figure 7-9 by averaging the percentages with the blue dots representing providers that offer irregular hour services for children under 6. It indicates that, generally, East Boston, downtown Boston, Roxbury, South Boston, and waterfront areas are places where the largest amount of  people have irregulars working schedules. However, we could see that there are only a few providers that could take care of children from families in these regions and these providers are located in the areas most in need of off-hour early ed childcare services. There is no provider in Roxbury and waterfront areas at all. Accordingly, there is a significant lack of irregular hour early ed childcare services across all areas and more off-hour slots should be provided.
  
 
 #Challenges and Limitations
 
 ##Challenges
-There are two main challenges that we deal with for this project. First is data cleaning for the EEC dataset. The EEC dataset has a messy data format and a lot of columns that contain information on several different variables. To extract information that we need to create the capacity and hours variables, we utilize various functions and packages from R and Python to clean, merge, and spread variables from the original dataset, such as minimum age, rates, open and close time of providers. 
+
+There are two main challenges that we deal with for this project. First is data cleaning for the EEC dataset. The EEC dataset has a messy data format and a lot of columns that contain information on several different variables. To extract information that we need to create the capacity and hours variables, we use various functions and packages from R and Python to clean, merge, and spread variables from the original dataset, such as minimum age, rates, open and close time of providers. 
 
 Second is the geographical classification. One of the narratives of this project is to look at the supply and demand by the tract and neighborhood levels, the information of which are not provided in the original datasets we are given. We deal with this issue by geocoding the providers’ locations, deciding which polygon each provider falls within using the over function from the rgeos package.
  
 ##Limitations
-First some of the variables from census datasets are based on assumptions different from real life situations. Specifically, people’s departure time for work is created based on the assumption that people work for the same amount of hours everyday while the parents we are most interested in are those that have irregular working hours.
 
-Second, our general lack of ability to match census data variables with variables EEC provide to compare different variables for the same construct. Although we successfully create the desert ratio by using the capacity and children population from the EEC and census datasets, there are many other variables the project could look into, such as income level of citizens vs. subsidy of providers.   
+Overall, our project is not able to address the misassumptions of census datasets and we have a hard time matching variables from census dataset with those from EEC datasets.
+
+First, some of the variables from census datasets are based on assumptions different from real life situations. Specifically, people’s departure time for work is created based on the assumption that people work for the same amount of hours everyday while the parents we are most interested in are those that have irregular working hours.
+
+Second, our general lack of ability to match census data variables with variables EEC provide to compare different variables for the same construct. Although we successfully create the ratio of the number of children under 6 from working families to the number of slots by using the capacity and children population variables from the EEC and census datasets, there are many other variables that the project does not deal with perfectly or could look into, such as income level of citizens vs. subsidy of providers. In addition, the percenatge maps we create based on people's departure time for works include all population while our project actually focuses on working parents   
 
 Third, there is a lack of data in the EEC dataset about important variables, such as the capacity of each providers by age groups and subsidy amount in dollars. The absence of these variables prevents us from looking more deeply into the supply for childcare services. 
 There are many variables that we clean but do not look into due to the limited amount of time we have, such as subsidy, availability of drop-in and emergency services. 
 
 #Discussion and Conclusion
 
-To examine the inconsistencies in the EEC by highlighting childcare provision gaps in the Greater Boston Area, we utilize EEC datasets and census datasets to create maps that illustrate a disparity in operating hours and capacity for childcare providers on the neighborhood level and census tract level. In a word, East Boston and West Boston neighborhoods, including Allston, Boston, South Boston, Brighton, Charlestown, Dorchester, East Boston, Hyde Park, Jamaica Plain, Mattapan, Roslindale, Roxbury, and West Roxbury, are the regions where the gaps apparently exist. 
+To examine the inconsistencies in the EEC by highlighting childcare provision gaps in the Greater Boston Area, we use EEC datasets and census datasets to create maps that illustrate a disparity in operating hours and capacity for childcare providers on the neighborhood level and census tract level. In a word, East Boston and West Boston neighborhoods, including Allston, Boston, South Boston, Brighton, Charlestown, Dorchester, East Boston, Hyde Park, Jamaica Plain, Mattapan, Roslindale, Roxbury, and West Roxbury, are the regions where the gaps apparently exist. 
+
 According to the visualizations of the “capacity” variable, providers in East Boston and West Boston, where there is a large number of children under 6, do not offer enough number of slots to feed the need of families in these areas. Similarly, the maps on the “hours” variable indicate that there is a lack of childcare off hour services for working families living in East Boston, West Boston, South Boston, and the waterfront areas of Allston, Brighton, and Jamaica Plain are most in need of off hour childcare services. According to the median income level map of Boston, most of these neighborhoods are also regions where income levels are lower than the average income level of the Boston area (@bostonmap). The limited financial capability of citizens of these areas might force them to work during irregular hours and to send their children to the childcare providers. On the other hand, the providers in these regions could not provide enough slots for children under 6 as they could not earn as much money from these low-income families as they could from families in the central areas. To resolve the gap, the policy intervention and support from EEC could be urgent.  
-In a word, our graphical analysis successfully illustrates the existence of the gap between supply and demand for early ed childcare services in the Boston area. For researchers who are interested in digging more deeply into this topic in the future, we suggest several directions they could explore into. First, people could match more variables on the demand for childcare services with variables on the supply for childcare services to illustrate the existence of gaps. Second, people could try to obtain a more comprehensive dataset from EEC to have a closer look at the supply of childcare services for different age groups. Third, people could conduct a childcare survey by themselves to have first-hand information directly from the providers and families in need of childcare services in Boston. Fourth, people could encharge the studied area to the whole mass 
+
+In a word, our graphical analysis successfully illustrates the existence of the gap between supply and demand for early ed childcare services in the Greater Boston area. For researchers who are interested in digging more deeply into this topic in the future, we suggest several directions they could explore into. First, people could match more variables on the demand for childcare services with variables on the supply for childcare services to illustrate the existence of gaps. Second, people could try to obtain a more comprehensive dataset from EEC to have a closer look at the supply of childcare services for different age groups. Third, people could conduct a childcare survey by themselves to have first-hand information directly from the providers and families in need of childcare services in Boston. Fourth, people could encharge the studied area to the whole massachusetts. There is a lot more that could be done in terms of researching the supply of childcare services, but the current exploration could be a good starting point. 
 
 
 # References {#references.unumbered}
