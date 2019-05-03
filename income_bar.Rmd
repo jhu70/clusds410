@@ -80,11 +80,11 @@ income_tract <- income_neighborhood %>%
 #getting estimates per neighborhood and tract with neighborhood geometry and tract geometry
 neighborho_demand <- income_neighborhood %>%
   group_by(Name_neighborho) %>%
-  summarise(medincome = sum(estimate))
+  summarise(medincome = mean(estimate))
 
 neighborho_demand_tract <- income_tract %>%
   group_by(NAMELSAD_tract) %>%
-  summarise(medincome = sum(estimate))
+  summarise(medincome = mean(estimate))
 
 
 neighborho_demand%>%
@@ -108,10 +108,10 @@ tablesupply<-EEC_census_bar%>%
   select(Name_neighborho,var)%>%
   na.omit()%>%
   mutate(name = "childcare_ratio")%>%
-  mutate(var=var*500000)%>%
+  mutate(var=var*50000)%>%
   arrange(desc(var))%>%
   group_by(Name_neighborho)%>%
-  mutate(order = 44:24)
+  mutate(order = 21:1)
 
 tabledemand<-neighborho_demand%>%
   as.data.frame()%>%
@@ -128,8 +128,8 @@ plottable<-as.data.frame(rbind(tablesupply,tabledemand))
 library(ggplot2)
 library(RColorBrewer)
 cbPalette <- c( "#52854C", "#D16103")
-ggplot(plottable,aes(x=reorder(Name_neighborho,order), y = var, fill = name))+scale_y_continuous("Median Income($)",sec.axis = sec_axis(~./500000, name = "Ratio"))+coord_flip()+
-  geom_bar(stat="identity",position="dodge") + ggtitle( "Childcare ratio vs. Median Income by neighborhood")+ xlab("Neighborhoods")+  ylab("Median Income($)") + geom_hline(yintercept=1)+theme(panel.background = element_rect(fill='white', colour='white'))+scale_fill_manual(values=cbPalette)
+ggplot(plottable,aes(x=reorder(Name_neighborho,order), y = var, fill = name))+scale_y_continuous("Median Income($)",sec.axis = sec_axis(~./50000, name = "Ratio"))+coord_flip()+
+  geom_bar(stat="identity",position="dodge") + ggtitle( "Childcare ratio vs. Mean Anuual Income by neighborhood")+ xlab("Neighborhoods")+  ylab("Median Income($)") + geom_hline(yintercept=1)+theme(panel.background = element_rect(fill='white', colour='white'))+scale_fill_manual(values=cbPalette)
 ```
 
 ```{r}
