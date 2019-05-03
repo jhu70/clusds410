@@ -67,7 +67,7 @@ Demand for capacity of childcare is assessed through the use of the 2016 ACS. Th
 
 To quantify the number of children that need childcare, we use the ACS variable “B23008”, which gives estimates per tract of the number of children under 6 in two-parent households with both parents in the labor force, as well as single parent households (either mother or a father) with the parent in the labor force. We then add up these variables, with the assumption that anybody with all parents in the labor force would need childcare. See Table 1 for descriptive statistics. To get a percentage of children under 6 with all parents in the labor force, we divide this number by the total number of children under 6. All calculations are per tract. 
 
-```{r, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(yardstick)
 library(ggplot2)
@@ -105,7 +105,36 @@ sumlaborforce <- sumlaborforce %>%
   select(n, mean, sd, min, max)
 
 sumlaborforce <- round(sumlaborforce, digits=2)
+```
 
+```{r, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+kable(sumlaborforce, format="latex") %>% kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10) %>%add_header_above(c("Table 1: Working Force Children Demand Summary Statistics"=6))
+```
+
+
+```{r, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(yardstick)
+library(ggplot2)
+library(mosaic)
+library(stargazer)
+require(Stat2Data)
+library(scales)
+library(readr)
+library(tidycensus)
+library(tigris)
+library(sf)
+library(kableExtra)
+library(psych)
+laborforce_under6 <- read.csv("laborforce_under6.csv")
+laborforce_under6 <- as.data.frame(laborforce_under6)
+
+sumlaborforce <- describe(laborforce_under6$laborforcechildren)
+rownames(sumlaborforce) <- c("Count Children Under 6")
+sumlaborforce <- sumlaborforce %>%
+  select(n, mean, sd, min, max)
+
+sumlaborforce <- round(sumlaborforce, digits=2)
 kable(sumlaborforce, format="latex") %>% kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10) %>%add_header_above(c("Table 1: Working Force Children Demand Summary Statistics"=6))
 ```
 
