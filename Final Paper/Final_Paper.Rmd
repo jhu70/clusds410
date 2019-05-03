@@ -67,6 +67,47 @@ Demand for capacity of childcare is assessed through the use of the 2016 ACS. Th
 
 To quantify the number of children that need childcare, we use the ACS variable “B23008”, which gives estimates per tract of the number of children under 6 in two-parent households with both parents in the labor force, as well as single parent households (either mother or a father) with the parent in the labor force. We then add up these variables, with the assumption that anybody with all parents in the labor force would need childcare. See Table 1 for descriptive statistics. To get a percentage of children under 6 with all parents in the labor force, we divide this number by the total number of children under 6. All calculations are per tract. 
 
+```{r, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(yardstick)
+library(ggplot2)
+library(mosaic)
+library(stargazer)
+require(Stat2Data)
+library(scales)
+library(readr)
+library(tidycensus)
+library(tigris)
+library(sf)
+library(kableExtra)
+library(psych)
+
+#variables for all parents in the labor force (both double & single family households)
+laborforcevars <- c("B23008_004", "B23008_010", "B23008_013")
+
+laborforce_under6  <- get_acs(geography = "tract",
+                     variables = laborforcevars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                     geometry=TRUE)
+
+#get a sum of children with all parents in the labor force
+laborforce_under6 <- laborforce_under6 %>%
+  group_by(GEOID, NAME) %>%
+  summarise(laborforcechildren = sum(estimate))
+
+laborforce_under6 <- as.data.frame(laborforce_under6)
+
+sumlaborforce <- describe(laborforce_under6$laborforcechildren)
+rownames(sumlaborforce) <- c("Count Children Under 6")
+sumlaborforce <- sumlaborforce %>%
+  select(n, mean, sd, min, max)
+
+sumlaborforce <- round(sumlaborforce, digits=2)
+
+kable(sumlaborforce, format="latex") %>% kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10) %>%add_header_above(c("Table 1: Working Force Children Demand Summary Statistics"=6))
+```
 
 ##Maps
 
@@ -96,23 +137,97 @@ Our main focus with the question of hours was to get a sense of the providers wh
 
 One large problem with census data is that in any workday related variables, it assumes workers work 5 days a week, with the same number of hours every day. This definition contradicts the purpose of our study, which is to investigate the resources available to those who work nonstandard hours. Therefore, the only census variable that we find appropriate to use when investigating hours is the time leaving work. Using previous ACS methodology given to us by CLU, we split the nonstandard times leaving for work into three categories: early mornings if they leave for work anytime between 12am-6:29am, evenings if they leave for work anytime between 11am-3:59pm, late evening/overnight if they leave for work anytime between 4pm-11:59pm. We use the ACS variables corresponding to these responses in variable B08302, and divide the number of people in each category by the total number of people in the workforce to get a percentage of people in each category. We also summarize the number of people in the three nonstandard time chunks to get a total percentage of people leaving during any nonstandard hour. See Table 2 for descriptive statistics.
 
-# ```{r summary stats, include=TRUE, echo=FALSE}
-# 
-# library(tidyverse)
-# library(yardstick)
-# library(ggplot2)
-# library(mosaic)
-# library(stargazer)
-# require(Stat2Data)
-# library(scales)
-# library(readr)
-# 
-# hours_summary <- hours_demand %>%
-#   as.data.frame() %>%
-#   select(sum_earlymorning, sum_evening, sum_overnight, percent_early, percent_evening)
-# 
-# stargazer(hours_summary[c("sum_earlymorning","sum_evening","sum_overnight")], type = "text", title="Nonstandard Shift Workers Per Tract", digits=0,summary.stat = c("mean", "sd","min","max"), covariate.labels = c("Early Morning Shifts (count)", "Early Evening Shifts (count)", "Early Evening Shifts (count)"))
-# ```
+
+
+```{r summary stats, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+
+api_key <- "8fa9f8cc6afff6f16cfa41d92974f406a35636a6"
+census_api_key(api_key)
+
+
+earlymorning_vars <- c("B08302_002", "B08302_003", "B08302_004", "B08302_005")
+evening_vars <- c("B08302_013", "B08302_014")
+overnight_vars <- c("B08302_015")
+
+earlymorning <- get_acs(geography = "tract",
+                     variables = earlymorning_vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+earlymorning <- earlymorning %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sum_earlymorning = sum(estimate))
+
+ evening <- get_acs(geography = "tract",
+                     variables = evening_vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+ 
+evening <- evening %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sum_evening = sum(estimate))
+ 
+overnight <- get_acs(geography = "tract",
+                     variables = overnight_vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+
+overnight <- overnight %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sum_overnight = sum(estimate))
+
+total <- get_acs(geography = "tract",
+                     variables = "B08302_001",
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk")
+
+total <- total %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sumtotal=sum(estimate))
+
+hours_demand1 <- inner_join(earlymorning %>% as.data.frame(), evening %>% as.data.frame(), by = "GEOID")
+hours_demand2 <- inner_join(hours_demand1 %>% as.data.frame(), overnight %>% as.data.frame(), by="GEOID")
+hours_demand <- inner_join(hours_demand2, total, by="GEOID")
+
+hours_demand <- hours_demand %>%
+  select(GEOID, NAME.x,sum_earlymorning, sum_evening, sum_overnight, sumtotal, geometry) %>%
+  st_sf(sf_column_name = 'geometry') %>%
+  mutate(percent_early = (sum_earlymorning/sumtotal)*100,
+         percent_evening = (sum_evening/sumtotal)*100,
+         percent_overnight = (sum_overnight/sumtotal)*100,
+         aggregate_raw = sum_earlymorning + sum_evening + sum_overnight,
+         aggregate_percent = (sum_earlymorning + sum_evening + sum_overnight)/sumtotal*100)
+
+
+hours_demand <- hours_demand %>%
+  na.omit()
+```
+
+```{r, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+hours_summary <- hours_demand %>%
+  as.data.frame() %>%
+  select(sum_earlymorning, sum_evening, sum_overnight, percent_early, percent_evening)
+
+hours_final <- describe(hours_summary)
+
+hours_final <- hours_final %>%
+  select(n, mean, sd, min, max)
+#stargazer(hours_summary[c("sum_earlymorning","sum_evening","sum_overnight")], type = "text", title="Nonstandard Shift Workers Per Tract", digits=0,summary.stat = c("mean", "sd","min","max"), covariate.labels = c("Early Morning Shifts (count)", "Early Evening Shifts (count)", "Early Evening Shifts (count)"))
+
+rownames(hours_final) <- c("Count Early Morning Shifts", "Count Evening Shifts", "Count Overnight Shifts", "Percent Early Morning", "Percent Evening")
+
+hours_final <- round(hours_final, digits=2)
+
+kable(hours_final, format="latex") %>% kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10) %>%add_header_above(c("Table 2: Hours Demand Summary Statistics"=6))
+```
 
 ##Maps
 
@@ -132,9 +247,8 @@ library(yardstick)
 library(ggplot2)
 library(mosaic)
 library(stargazer)
-require(Stat2Data)
+#library(summarytools)
 library(scales)
-library(summarytools)
 library(tidyverse)
 library(kableExtra)
 library(readr)
@@ -167,10 +281,10 @@ tract_neighborho<-tract_neighborho%>%
 
 colnames(tract_neighborho) =  c("#slots by providers", "#slots by neighborhood", "#slots by tract")
 
-sum2<-as.data.frame(descr(tract_neighborho,stats = c("n.valid","mean","sd","min","max"), round.digits = 2,transpose = TRUE, style = "rmarkdown"))
-is.num <- sapply(sum2, is.numeric)
-sum2[is.num] <- lapply(sum2[is.num], round, 2)
-kable(sum2, format = "latex")%>%kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10)%>%add_header_above(c("Table3: #slots for early ed (unit: slot)"=6))
+#sum2<-as.data.frame(descr(tract_neighborho,stats = c("n.valid","mean","sd","min","max"), round.digits = 2,transpose = TRUE, style = "rmarkdown"))
+#is.num <- sapply(sum2, is.numeric)
+#sum2[is.num] <- lapply(sum2[is.num], round, 2)
+#kable(sum2, format = "latex")%>%kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10)%>%add_header_above(c("Table3: #slots for early ed (unit: slot)"=6))
  
 # stargazer(tract_neighborho[c("Capacity","Capacity_by_neighborho","Capacity_by_tract")], type = "text", title="Descriptive table 1 of #slots for early ed (unit: slot)", digits=0,summary.stat = c("mean", "sd","min","max"), covariate.labels = c("#slots by providers", "#slots by neighborhood", "#slots by tract"))
 ```
@@ -181,14 +295,14 @@ Table 3 presents the summary statistics of the number of slots available for chi
 ```{r, message = FALSE, warning = FALSE,include=TRUE, echo=FALSE}
 # sum3<-stargazer(tract_neighborho_off[c("Capacity_off","Capacity_neighborho_off","Capacity_tract_off")], title="Descriptive table 2 of weekdays nonstandard-hour #slots for early ed (unit: slot))", digits=0,summary.stat = c("mean", "sd","min","max"),covariate.labels = c("#off-hour slots by providers", "#off-hour slots by neighborhoods", "#off-hour slots by tracts"), type = "latex")
 
-tract_neighborho_off<-tract_neighborho_off%>%
-  select(Capacity_off,Capacity_neighborho_off,Capacity_tract_off)
-
-colnames(tract_neighborho_off) =  c("#off-hour slots by providers", "#off-hour slots by neighborhood", "#off-hour slots by tract")
-sum3<-as.data.frame(descr(tract_neighborho_off,stats = c("n.valid","mean","sd","min","max"), round.digits = 2,transpose = TRUE, style = "rmarkdown"))
-is.num <- sapply(sum3, is.numeric)
-sum3[is.num] <- lapply(sum3[is.num], round, 2)
-kable(sum3, format = "latex")%>%kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10)%>%add_header_above(c("Table4: Weekdays nonstandard-hour #slots for early ed (unit: slot)"=6))
+# tract_neighborho_off<-tract_neighborho_off%>%
+#   select(Capacity_off,Capacity_neighborho_off,Capacity_tract_off)
+# 
+# colnames(tract_neighborho_off) =  c("#off-hour slots by providers", "#off-hour slots by neighborhood", "#off-hour slots by tract")
+# sum3<-as.data.frame(descr(tract_neighborho_off,stats = c("n.valid","mean","sd","min","max"), round.digits = 2,transpose = TRUE, style = "rmarkdown"))
+# is.num <- sapply(sum3, is.numeric)
+# sum3[is.num] <- lapply(sum3[is.num], round, 2)
+# kable(sum3, format = "latex")%>%kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10)%>%add_header_above(c("Table4: Weekdays nonstandard-hour #slots for early ed (unit: slot)"=6))
 
 ```
 
