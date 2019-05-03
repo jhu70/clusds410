@@ -276,7 +276,7 @@ library(yardstick)
 library(ggplot2)
 library(mosaic)
 library(stargazer)
-#library(summarytools)
+library(summarytools)
 library(scales)
 library(tidyverse)
 library(kableExtra)
@@ -310,10 +310,10 @@ tract_neighborho<-tract_neighborho%>%
 
 colnames(tract_neighborho) =  c("#slots by providers", "#slots by neighborhood", "#slots by tract")
 
-#sum2<-as.data.frame(descr(tract_neighborho,stats = c("n.valid","mean","sd","min","max"), round.digits = 2,transpose = TRUE, style = "rmarkdown"))
-#is.num <- sapply(sum2, is.numeric)
-#sum2[is.num] <- lapply(sum2[is.num], round, 2)
-#kable(sum2, format = "latex")%>%kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10)%>%add_header_above(c("Table3: #slots for early ed (unit: slot)"=6))
+sum2<-as.data.frame(descr(tract_neighborho,stats = c("n.valid","mean","sd","min","max"), round.digits = 2,transpose = TRUE, style = "rmarkdown"))
+is.num <- sapply(sum2, is.numeric)
+sum2[is.num] <- lapply(sum2[is.num], round, 2)
+kable(sum2, format = "latex")%>%kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10)%>%add_header_above(c("Table3: #slots for early ed (unit: slot)"=6))
  
 # stargazer(tract_neighborho[c("Capacity","Capacity_by_neighborho","Capacity_by_tract")], type = "text", title="Descriptive table 1 of #slots for early ed (unit: slot)", digits=0,summary.stat = c("mean", "sd","min","max"), covariate.labels = c("#slots by providers", "#slots by neighborhood", "#slots by tract"))
 ```
@@ -322,16 +322,16 @@ Table 3 presents the summary statistics of the number of slots available for chi
 
 
 ```{r, message = FALSE, warning = FALSE,include=TRUE, echo=FALSE}
-# sum3<-stargazer(tract_neighborho_off[c("Capacity_off","Capacity_neighborho_off","Capacity_tract_off")], title="Descriptive table 2 of weekdays nonstandard-hour #slots for early ed (unit: slot))", digits=0,summary.stat = c("mean", "sd","min","max"),covariate.labels = c("#off-hour slots by providers", "#off-hour slots by neighborhoods", "#off-hour slots by tracts"), type = "latex")
+ # sum3<-stargazer(tract_neighborho_off[c("Capacity_off","Capacity_neighborho_off","Capacity_tract_off")], title="Descriptive table 2 of weekdays nonstandard-hour #slots for early ed (unit: slot))", digits=0,summary.stat = c("mean", "sd","min","max"),covariate.labels = c("#off-hour slots by providers", "#off-hour slots by neighborhoods", "#off-hour slots by tracts"), type = "latex")
 
-# tract_neighborho_off<-tract_neighborho_off%>%
-#   select(Capacity_off,Capacity_neighborho_off,Capacity_tract_off)
-# 
-# colnames(tract_neighborho_off) =  c("#off-hour slots by providers", "#off-hour slots by neighborhood", "#off-hour slots by tract")
-# sum3<-as.data.frame(descr(tract_neighborho_off,stats = c("n.valid","mean","sd","min","max"), round.digits = 2,transpose = TRUE, style = "rmarkdown"))
-# is.num <- sapply(sum3, is.numeric)
-# sum3[is.num] <- lapply(sum3[is.num], round, 2)
-# kable(sum3, format = "latex")%>%kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10)%>%add_header_above(c("Table4: Weekdays nonstandard-hour #slots for early ed (unit: slot)"=6))
+ tract_neighborho_off<-tract_neighborho_off%>%
+   select(Capacity_off,Capacity_neighborho_off,Capacity_tract_off)
+ 
+ colnames(tract_neighborho_off) =  c("#off-hour slots by providers", "#off-hour slots by neighborhood", "#off-hour slots by tract")
+ sum3<-as.data.frame(descr(tract_neighborho_off,stats = c("n.valid","mean","sd","min","max"), round.digits = 2,transpose = TRUE, style = "rmarkdown"))
+ is.num <- sapply(sum3, is.numeric)
+ sum3[is.num] <- lapply(sum3[is.num], round, 2)
+ kable(sum3, format = "latex")%>%kable_styling(latex_options = c("striped", "hold_position"),position = "center", full_width = F, font_size = 10)%>%add_header_above(c("Table4: Weekdays nonstandard-hour #slots for early ed (unit: slot)"=6))
 
 ```
 
@@ -349,11 +349,11 @@ Figure 2 shows a map of the number of childcare slots available for children und
 
 Figure 3 shows the ratio of children under age five to the cumulative child care capacity in the neighborhoods of Boston. The higher the ratio, the more children are competing to obtain a licensed child care slot, and therefore the harder it is for a child in the neighborhood to obtain the childcare service they need. Conversely, the less children are competing to obtain a licensed child care slot the easier it is for a child in the neighborhood to obtain the childcare service they need. 
 
-```{r, out.width='100%', fig.align='center', fig.cap='Bar chart of income level and ratio of children to slots', include = TRUE, echo = FALSE}
+```{r, out.width='80%', fig.align='center', fig.cap='Bar chart of income level and ratio of children to slots', include = TRUE, echo = FALSE}
 knitr::include_graphics('income.png')
 ```
 
-To more closely analyze the ratio map, we present a bar chart which ranks the neighborhoods by the childcare ratio as shown in the Figure 6. The chart shows that no neighborhood achieves 1:1 target ratio--mostare facing a surplus or deficit of early ed childcare services. Secondly, the bar chart indicates that West Roxbury, East Boston, South Boston, Roslindale, and Dorchester have the highest ratio and therefore are facing the most insufficient supply of early education childcare services. Although the relationship between the gap in childcare availability and income was not the focus of this project, one explanation for this could be income. For example, South Boston Waterfront has a good ratio of .3 children to every one slot, meaning there is a surplus of childcare slots, and an average annual income of approximately \$138,545. East Boston on the other hand has a ratio of 2.1 children to every 1 childcare slot, meaning there is a deficit of slots, and an average income of \$52,008. As seen in Table__, there appears to be a negative relationship between average income and ratio of children to slots. This indicates an area to be explored in the future.
+To more closely analyze the ratio map, we present a bar chart which ranks the neighborhoods by the childcare ratio as shown in the Figure 4. The chart shows that no neighborhood achieves 1:1 target ratio--mostare facing a surplus or deficit of early ed childcare services. Secondly, the bar chart indicates that West Roxbury, East Boston, South Boston, Roslindale, and Dorchester have the highest ratio and therefore are facing the most insufficient supply of early education childcare services. Although the relationship between the gap in childcare availability and income was not the focus of this project, one explanation for this could be income. For example, South Boston Waterfront has a good ratio of .3 children to every one slot, meaning there is a surplus of childcare slots, and an average annual income of approximately \$138,545. East Boston on the other hand has a ratio of 2.1 children to every 1 childcare slot, meaning there is a deficit of slots, and an average income of \$52,008. As seen in Table__, there appears to be a negative relationship between average income and ratio of children to slots. This indicates an area to be explored in the future.
 
  
 ##Graphs for Hours
@@ -365,27 +365,29 @@ In addition to the capacity variables, we also visualize the gap between supply 
 knitr::include_graphics('fig4.png')
 ```
 
-Figure 7 shows the percentage of parents in tracts who depart for workplaces 12:00am to 6:59am in the early morning. On average, people who live in the East Boston and West Boston leave earlier for work than people who live in other regions. These are also the regions where there are relatively larger number of children under six in need of childcare services as shown in in figure 3. Specifically, the tracts where the largest percentages of people leave for jobs early are located at are waterfront areas of South Boston and Dorchester.
+Figure 5 shows the percentage of parents in tracts who depart for workplaces 12:00am to 6:59am in the early morning. On average, people who live in the East Boston and West Boston leave earlier for work than people who live in other regions. These are also the regions where there are relatively larger number of children under six in need of childcare services as shown in in figure 3. Specifically, the tracts where the largest percentages of people leave for jobs early are located at are waterfront areas of South Boston and Dorchester.
 
 ```{r, out.width='100%', fig.align='center', fig.cap='Percentage of people that depart to work in the early evening by tract',include = TRUE, echo = FALSE}
 knitr::include_graphics('fig5.png')
 ```
 
-Figure 8 shows the percentage of people in tracts who leave for work in the early evening between 11:00am and 3:59pm. On average, the number of parents in East Boston, West Boston , and waterfront tracts of Brighton and Allston that leave for work during this period of time is more than in other areas. The tracts where the largest percentages of people leave for work during this time period are located at Roxbury and the waterfront areas of Jamaica Plain.
+Figure 6 shows the percentage of people in tracts who leave for work in the early evening between 11:00am and 3:59pm. On average, the number of parents in East Boston, West Boston , and waterfront tracts of Brighton and Allston that leave for work during this period of time is more than in other areas. The tracts where the largest percentages of people leave for work during this time period are located at Roxbury and the waterfront areas of Jamaica Plain.
 
-```{r, out.width='100%', fig.align='center', fig.cap='Percentage of people who depart to work overnight by tract', include = TRUE, echo = FALSE}
+```{r, out.width='80%', fig.align='center', fig.cap='Percentage of people who depart to work overnight by tract', include = TRUE, echo = FALSE}
 knitr::include_graphics('fig6_percent_overnight.png')
 ```
 
-Figure 9 shows the percentage of people in tracts who leave for work between the hours of 4:00pm-11:59pm, who we refer to as people that work late evening/overnight shifts. On average, people who live in downtown Boston, West Boston, and South Boston leave later for workplaces than people who live in other regions. These are also the regions where a larger percentage of people leave early and where there are a relatively larger number of children under 6 in need of childcare services. However, the tracts where the largest percentages of people leave for jobs overnight are located in waterfront areas of South Boston and Dorchester.
+Figure 7 shows the percentage of people in tracts who leave for work between the hours of 4:00pm-11:59pm, who we refer to as people that work late evening/overnight shifts. On average, people who live in downtown Boston, West Boston, and South Boston leave later for workplaces than people who live in other regions. These are also the regions where a larger percentage of people leave early and where there are a relatively larger number of children under 6 in need of childcare services. However, the tracts where the largest percentages of people leave for jobs overnight are located in waterfront areas of South Boston and Dorchester.
 
-```{r, out.width='100%', fig.align='center', fig.cap='Number of slots in certain tracts by providers who operate off hour during weekdays for early ed', include = TRUE, echo = FALSE}
+```{r, out.width='80%', fig.align='center', fig.cap='Number of slots in certain tracts by providers who operate off hour during weekdays for early ed', include = TRUE, echo = FALSE}
 knitr::include_graphics('aggregatehourdemand.png')
 ```
 
-Figure 10 shows the aggregated percentage map of all people that work nonstandard hours, which we create by adding the percentages found in Figures 7 through 9. The blue dots represent providers that offer nonstandard hour services for children under 6. This map indicates that, generally, East Boston, downtown Boston, Roxbury, South Boston, and waterfront areas are places where the largest amount of  people have nonstandard working schedules. However, we can see that there are only a few providers that can take care of children from families in these regions and these providers are located in the areas most in need of off-hour early ed childcare services. There is no provider in the Roxbury or waterfront areas at all. There is a significant lack of irregular hour early ed childcare services across all areas.
+Figure 8 shows the aggregated percentage map of all people that work nonstandard hours, which we create by adding the percentages found in Figures 5 through 7. The blue dots represent providers that offer nonstandard hour services for children under 6. This map indicates that, generally, East Boston, downtown Boston, Roxbury, South Boston, and waterfront areas are places where the largest amount of  people have nonstandard working schedules. However, we can see that there are only a few providers that can take care of children from families in these regions and these providers are located in the areas most in need of off-hour early ed childcare services. There is no provider in the Roxbury or waterfront areas at all. There is a significant lack of irregular hour early ed childcare services across all areas.
  
- 
+
+#Challenges and Limitations
+
 ##Challenges
 
 There are two main challenges that we faced this project. The first is data cleaning of the EEC dataset. The EEC dataset has a messy data format and a lot of columns that contain information on several different variables. For example, to extract information that we need to create the capacity and hours variables, we use various functions and packages from R and Python to clean, merge, and spread several variables from the original dataset, including minimum age, rates, open and close time of providers that are composed of strings and special characters. 
