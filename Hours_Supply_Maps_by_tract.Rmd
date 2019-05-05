@@ -259,7 +259,7 @@ leaflet(EEC_geometry_no) %>%
                    radius = 0.5,
                    opacity = .4,
                    color = ~infant_pal(Weekend_off_hours),
-                   group = "Show providers with after school care for early ed",
+                   group = "Show providers with weekend care for early ed",
                    label = ~as.character(Name))%>%
   addLayersControl(overlayGroups = c("Show providers with after school care for early ed"))
 
