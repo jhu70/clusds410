@@ -17,8 +17,7 @@ abstract: |
  Community Labor United is a non-profit organization that is currently working to investigate the negligence in childcare provision for low and middle-income families within the Greater Boston Area, in order to promote reforms within the current system provided by the Department of Early Education and Care. Using interactive maps, the research outlined in this paper highlights two gaps in the current childcare structure. The first being how the hours that early education childcare providers keep do not support families that work primarily nonstandard schedules. The second being how the number of slots for early education provision does not align with the number of children age five and under that live within each neighborhood and census tract. The interaction between these two gaps drastically impacts the livelihood of working class families and it is our hope that this research will provide evidence that the current system in place needs to be reconstructed, in order to support all households in Massachusetts.
  
 bibliography: mybibfile.bib
-output: rticles::plos_article
-csl: plos.csl
+output: rticles::elsevier_article
 nocite: '@*'
 ---
 
