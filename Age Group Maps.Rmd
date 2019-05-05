@@ -254,7 +254,8 @@ schoolage_group_map <- boston_neighborhood_base_map %>%
                                      "No")) %>%
   addLegend(position = "bottomright",
             pal = schoolage_pal,
-            value =c("Yes", "No")) %>%
+            value =c("Yes", "No"),
+            title = "School age") %>%
   addSearchOSM() %>%
   addResetMapButton()
 
