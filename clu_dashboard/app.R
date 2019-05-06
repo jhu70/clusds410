@@ -1058,7 +1058,7 @@ body <- dashboardBody(
                          tags$br(),
                          tags$br(),
                          tags$div(tags$ul(
-                           tags$li("Divide the number of children in working families by the number of slots available. These calculations were done by tract and neighborhood. We use data provided by the shapefiles of neighborhoods and tracts figure out which neighborhood each tract is located within.
+                           tags$li("Divide the number of children in working families by the number of slots available. These calculations were done by tract and neighborhood. We use variables in the shapefiles of neighborhoods and tracts to figure out which neighborhood each tract is located within.
                                    "),
                            style = "font-size: 15px"))
                          )),
