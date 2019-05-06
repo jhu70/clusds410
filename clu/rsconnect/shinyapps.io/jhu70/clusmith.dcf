@@ -5,8 +5,8 @@ account: jhu70
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 912989
-bundleId: 2064696
+bundleId: 2064746
 url: https://jhu70.shinyapps.io/clusmith/
-when: 1557172728.92905
+when: 1557174075.46999
 asMultiple: FALSE
 asStatic: FALSE

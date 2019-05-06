@@ -1,20 +1,16 @@
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+
+
+# Packages ----
+
 library(shiny)
-library(shinydashboard)
-library(leaflet) 
-library(ggplot2)
-
-##POINT IN POLYGON
-
-
-
-
-library(sf)
-
-# going ahead and using it for what we need it for, before we load the other packages, again to make things easier
-
-boston_neighborhood <- read_sf("Data/Boston_Neighborhoods/Boston_Neighborhoods.shp")
-ma_tract <- read_sf("Data/ma_tract/tl_2018_25_tract.shp")
-
 library(tidyverse)
 library(leaflet)
 library(USAboundaries)
@@ -24,6 +20,21 @@ library(fivethirtyeight)
 library(zipcode)
 library(ggmap)
 library(mosaic)
+library(knitr)
+library(rmarkdown)
+library(yaml)
+library(shiny)
+library(shinydashboard)
+library(ggplot2)
+
+##POINT IN POLYGON
+
+library(sf)
+
+boston_neighborhood <- read_sf("Data/Boston_Neighborhoods/Boston_Neighborhoods.shp")
+ma_tract <- read_sf("Data/ma_tract/tl_2018_25_tract.shp")
+
+
 
 
 
@@ -800,6 +811,26 @@ leaflet(hours_demand) %>%
             opacity = 1,
             title="Aggregated Percentage")
 
+
+
+
+## FILES YOU NEED TO RUN BEFORE HAND:
+## providers_in_polygons.Rmd
+## Capacity Map FINAL.Rmd
+## Hours_Supply_Maps_by_tract.Rmd
+## Hours Demand Maps FINAL.Rmd
+
+
+header <- dashboardHeader()
+sidebar <- dashboardSidebar()
+body <- dashboardBody()
+
+ui <- dashboardPage(header, sidebar, body)
+
+server <- function(input, output)  {}
+
+#shinyApp(ui, server)
+
 ##HEADER
 
 header <- dashboardHeader(
@@ -855,6 +886,8 @@ sidebar <- dashboardSidebar(
 
 ## BODY
 
+b64 <- base64enc::dataURI(file= "www/pic.png", mime="image/png")
+
 body <- dashboardBody(
   tabItems(
     
@@ -877,7 +910,9 @@ body <- dashboardBody(
               tags$li("The second being how the number of slots for early education provision does not align with the number of children age five and under that live within each neighborhood and census tract."),
               style = "font-size: 15px"),
               p("The interaction between these two gaps drastically impacts the livelihood of working class families and it is our hope that this research will provide evidence that the current system in place needs to be reconstructed, in order to support all households in Massachusetts."),
-              p("This research emphasizes early education childcare demands needed for low and middle-income families working nonstandard hours in the Great Boston Area. More specifically, this research focuses on illustrating a disparity in operating hours and capacity for childcare providers on the neighborhood level and census tract level.")
+              p("This research emphasizes early education childcare demands needed for low and middle-income families working nonstandard hours in the Great Boston Area. More specifically, this research focuses on illustrating a disparity in operating hours and capacity for childcare providers on the neighborhood level and census tract level."),
+              img(src=b64, height = 264, width = 345.4, 
+                  style="display: block; margin-left: auto; margin-right: auto;")
             )
     ),
     
@@ -1063,7 +1098,6 @@ body <- dashboardBody(
                        ))
               )
 ))
-
 
 
 
@@ -1280,4 +1314,6 @@ server <- function(input, output) {
 ## SHINYAPP
 
 shinyApp(ui, server)
+
+
 
