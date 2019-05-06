@@ -79,8 +79,6 @@ coordinates(dat) <- ~ lon + lat
 proj4string(dat) <- proj4string(bos.map)
 
 classification<-over(dat, bos.map)
-ma_tract$ALAND<-as.factor(ma_tract$ALAND)
-ma_tract$AWATER<-as.factor(ma_tract$AWATER)
 #add back geometry
 classification2<-left_join(classification,ma_tract, on = "GEOID")
 colnames(classification) <- paste(colnames(classification), "tract", sep = "_")
@@ -117,6 +115,7 @@ proj4string(dat) <- proj4string(bos.map)
 classification3<-over(dat, bos.map)
 
 boston_neighborhood$OBJECTID<-as.factor(boston_neighborhood$OBJECTID)
+classification3$OBJECTID<-as.factor(classification3$OBJECTID)
 #add back geometry
 classification4<-left_join(classification3,boston_neighborhood, on = "Neighborho")
 colnames(classification4) <- paste(colnames(classification4), "neighborho", sep = "_")
