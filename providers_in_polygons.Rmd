@@ -136,8 +136,6 @@ tractneighborho<-masterdataframe_tract_neighborho%>%
 
 tractneighborho<-tractneighborho[!duplicated(tractneighborho[,'GEOID_tract']),]
 
-write.csv(tractneighborho,"tractneighborho.csv")
-
 ```
 
 

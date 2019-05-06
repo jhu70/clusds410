@@ -510,3 +510,12 @@ server <- function(input, output) {
 shinyApp(ui, server)
 
 ```
+
+
+
+```{r}
+runGitHub("jhu70/clusds410", username = getOption("github.jhu70"), ref = "master",
+  subdir = NULL, port = NULL,
+  launch.browser = getOption("shiny.launch.browser", interactive()))
+```
+
