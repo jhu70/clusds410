@@ -886,7 +886,7 @@ sidebar <- dashboardSidebar(
 
 ## BODY
 
-b64 <- base64enc::dataURI(file= "www/pic.png", mime="image/png")
+b64 <- base64enc::dataURI(file= "www/all.png", mime="image/png")
 
 body <- dashboardBody(
   tabItems(
@@ -900,7 +900,6 @@ body <- dashboardBody(
             tags$em("Community Labor United is a non-profit organization that is currently working to investigate the negligence in childcare provision for low and middle-income families within the Greater Boston Area, in order to promote reforms within the current system provided by the Department of Early Education and Care. "),
             tags$br(),
             tags$br(),
-            tags$br(),
             tags$strong("Overview:"),
             tags$br(),
             tags$br(),
@@ -911,7 +910,7 @@ body <- dashboardBody(
               style = "font-size: 15px"),
               p("The interaction between these two gaps drastically impacts the livelihood of working class families and it is our hope that this research will provide evidence that the current system in place needs to be reconstructed, in order to support all households in Massachusetts."),
               p("This research emphasizes early education childcare demands needed for low and middle-income families working nonstandard hours in the Great Boston Area. More specifically, this research focuses on illustrating a disparity in operating hours and capacity for childcare providers on the neighborhood level and census tract level."),
-              img(src=b64, height = 450, width = 900, 
+              img(src=b64, height = 500, width = 900, 
                   style="display: block; margin-left: auto; margin-right: auto;")
             )
     ),
@@ -1095,6 +1094,9 @@ body <- dashboardBody(
                            style = "font-size: 15px"))
                        )
                      )
+                     ,
+                     p(a("Github repository: Jocelyn, Kat, and Paige (Smith College-SDS 410, spring 2019)",
+                         href = "https://github.com/jhu70/clusds410"), style = "font-family: 'Geneva'")
                        ))
               )
 ))
