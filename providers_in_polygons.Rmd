@@ -80,6 +80,10 @@ proj4string(dat) <- proj4string(bos.map)
 
 classification<-over(dat, bos.map)
 #add back geometry
+ma_tract$ALAND<-as.factor(ma_tract$ALAND)
+classification$ALAND<-as.factor(classification$ALAND)
+ma_tract$AWATER <- as.factor(ma_tract$AWATER)
+classification$AWATER <-as.factor(classification$AWATER)
 classification2<-left_join(classification,ma_tract, on = "GEOID")
 colnames(classification) <- paste(colnames(classification), "tract", sep = "_")
 colnames(classification2) <- paste(colnames(classification2), "tract", sep = "_")

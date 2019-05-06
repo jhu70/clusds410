@@ -77,6 +77,8 @@ supply data variables
 EECNEW5<-read.csv("masterdataframe_tract.csv")
 EECNEW5_others_tract <- read.csv("datatract.csv")
 EEC_earlyed <- EECNEW5 %>%
+   mutate(early_ed= ifelse(early_ed=="True", TRUE,
+                          ifelse(early_ed=="False", FALSE, early_ed))) %>%
   filter(early_ed==TRUE, Weekdays_off_hours==TRUE)
 
 ```
@@ -84,6 +86,8 @@ EEC_earlyed <- EECNEW5 %>%
 ```{r}
 #early ed and weekdays off hours filter grouped by tract, summarized for capacity
 EECNEW5_hours_tract <- EECNEW5 %>%
+   mutate(early_ed= ifelse(early_ed=="True", TRUE,
+                          ifelse(early_ed=="False", FALSE, early_ed))) %>%
   filter(early_ed==TRUE & Weekdays_off_hours == TRUE) %>%
   group_by(GEOID_tract, NAMELSAD_tract) %>%
   summarise(sumcapacity_weekdaysoff = sum(Capacity))
@@ -103,6 +107,8 @@ EEC_geometry <- EEC_geometry %>%
 ```{r}
 #early ed and weekdays off hours filter grouped by tract, summarized for capacity
 EECNEW5_hours_tract_no <- EECNEW5 %>%
+   mutate(early_ed= ifelse(early_ed=="True", TRUE,
+                          ifelse(early_ed=="False", FALSE, early_ed))) %>%
   filter(early_ed==TRUE & Weekdays_off_hours == FALSE) %>%
   group_by(GEOID_tract, NAMELSAD_tract) %>%
   summarise(sumcapacity_weekdaysoff = 0)

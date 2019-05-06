@@ -15,7 +15,6 @@ library(ggplot2)
 library(tigris)
 library(sf)
 library(mosaic)
-library(mapview)
 library(leaflet)
 library(leaflet.extras)
 ```
