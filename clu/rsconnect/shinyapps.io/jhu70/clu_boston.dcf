@@ -1,0 +1,12 @@
+name: clu_boston
+title: clu_boston
+username:
+account: jhu70
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 913202
+bundleId: 2064763
+url: https://jhu70.shinyapps.io/clu_boston/
+when: 1557174581.38208
+asMultiple: FALSE
+asStatic: FALSE
