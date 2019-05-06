@@ -99,23 +99,22 @@ body <- dashboardBody(
             title = "Introduction",
             tags$h1("Community Labor United - Childcare"),
             tags$br(),
-            tags$b("General Overview"),
-            ## Any text immediately following will NOT be on a seperate line
-            ## tags$b/em() = text is bold/italicized 
-            ## tags$br() = line break
-            tags$br(),
-            tags$br(),
-            tags$em("Using interactive maps, the research outlined on this platform highlights two gaps in the current childcare structure. The first being how the hours that early education childcare providers keep do not support families that work outside the typical Monday through Friday, 9:00am to 5:00pm job. The second being how the number of slots for early education provision do not align with the number of children age five and under that live within each neighborhood and census tract. The interaction between these two gaps drastically impacts the livelihood of working class families and it is our hope that this research will provide evidence that the current system in place needs to be reconstructed, in order to support all households in Massachusetts."),
+            tags$em("Community Labor United is a non-profit organization that is currently working to investigate the negligence in childcare provision for low and middle-income families within the Greater Boston Area, in order to promote reforms within the current system provided by the Department of Early Education and Care. "),
             tags$br(),
             tags$br(),
             tags$br(),
-            tags$b("Introduction"),
+            tags$strong("Overview:"),
             tags$br(),
             tags$br(),
-            p("The general goal for this research was to examine the inconsistencies in the EEC, by highlighting childcare provision gaps in the Greater Boston Area. More specifically, this research focused on illustrating a disparity in operating hours and capacity for childcare providers on the neighborhood level and census tract level. Because Community Labor United is concentrated on understanding how the low and middle-income households are impacted by the current childcare system, this research focus on emphasizing the childcare demands needed for working class families. Additionally, CLU is interested in concentrating on early education provision care, which encompasses childcare for children ages five and under. For hours, we looked at how the non-typical work week is affected by the early education provision that is currently supplied, since people with low and middle-incomes work at times that operate outside the typical 9:00am - 5:00pm job. We wanted to understand if there were a sufficient number of childcare facilities that could offer early education provision outside Monday - Friday, 7:30am - 6:00pm, for people in the Greater Boston Area. Similarly for capacity, we wanted to highlight the lack of available slots for early education provision for working households with children age five and under. This is because working-class families typically have all parents in the household in the workforce, so it is crucial that the childcare capacity supply matches the demand. "),
-            tags$br(),
-            p("Individually, the child provision gaps in hours and capacity shows how the Department of Early Education and Care has neglected low and middle-income families in specific ways. However, we also think it’s important to understand how the interaction between lack of available childcare hours and lack of early education provision spots impact these households overall. To best convey that interaction, we compiled our visualizations and supporting information on an easily accessible platform. This allows for the user to quickly navigate the various maps for hours and capacity, and also share these findings with all appropriate parties. It is our hope that Community Labor United will be able to use the visualizations we’ve created to motivate the Department of Early Education to make reforms to the current childcare system to be more accommodating for all families in Massachusetts, regardless of occupation or availability.")
-            ),
+            p("Using interactive maps, the research outlined in this paper highlights two gaps in the current childcare structure:"),
+            tags$div(tags$ul(
+              tags$li("The first being how the hours that early education childcare providers keep do not support families that work primarily nonstandard schedules."),
+              tags$li("The second being how the number of slots for early education provision does not align with the number of children age five and under that live within each neighborhood and census tract."),
+              style = "font-size: 15px"),
+            p("The interaction between these two gaps drastically impacts the livelihood of working class families and it is our hope that this research will provide evidence that the current system in place needs to be reconstructed, in order to support all households in Massachusetts."),
+            p("This research emphasizes early education childcare demands needed for low and middle-income families working nonstandard hours in the Great Boston Area. More specifically, this research focuses on illustrating a disparity in operating hours and capacity for childcare providers on the neighborhood level and census tract level.")
+    )
+    ),
     
     ## CAPACITY
     
