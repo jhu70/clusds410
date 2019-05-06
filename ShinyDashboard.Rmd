@@ -129,16 +129,12 @@ body <- dashboardBody(
     #         ),
     
     tabItem(tabName = "capacity",
-<<<<<<< HEAD
             tags$h1("General Title for Capacity"),
-=======
             tags$h1("Percent of children under 6 with all parents in the labor
                     force"),
->>>>>>> 281105d582536829259a846b81343994e79bc5b5
             tags$br(),
             leafletOutput("capacity_demand_map"),
             tags$br(),
-<<<<<<< HEAD
             fluidRow(
               box(
                 width = 6,
@@ -172,16 +168,12 @@ body <- dashboardBody(
               )
               )
     ),
-=======
             tags$h1("Capacity for Early Education Providers"),
             leafletOutput("capacity_supply_map")
             ),
->>>>>>> 281105d582536829259a846b81343994e79bc5b5
-    
     ## HOURS
     
     tabItem(tabName = "hours",
-<<<<<<< HEAD
             tags$h1("Percent of People Who Work Irregular Hours (per tract)"),
             tags$br(),
             tags$br(),
@@ -215,7 +207,6 @@ body <- dashboardBody(
               )
             ),
             tags$h1("General Irregular Hours Demand"),
-=======
             "Look at my cool dashboard",
             tags$head(
               tags$style(
@@ -234,7 +225,6 @@ body <- dashboardBody(
                 status = "danger"
                 )
               ),
->>>>>>> 281105d582536829259a846b81343994e79bc5b5
             fluidRow(
               column(width = 6,
                      infoBox(
@@ -339,7 +329,7 @@ body <- dashboardBody(
                      )
             ))
   )
-)
+
 
 ```
 
@@ -349,20 +339,16 @@ body <- dashboardBody(
 ## UI 
 
 ui <- dashboardPage(skin = "purple",
-<<<<<<< HEAD
                     header = header,
                     sidebar = sidebar,
-                    body = body
-=======
+                    body = body,
                     header = header_test,
                     sidebar = sidebar1,
                     body = body1
->>>>>>> 281105d582536829259a846b81343994e79bc5b5
                     )
 ## SERVER
 
 server <- function(input, output) {
-<<<<<<< HEAD
   ## CAPACITY
   output$laborforce_demand <- renderLeaflet({
     leaflet(neighborho_demand_tract) %>%
@@ -377,7 +363,6 @@ server <- function(input, output) {
                   weight = 2, 
                   opacity = 1, 
                   fillOpacity = 0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
-=======
   output$capacity_demand_map <- renderLeaflet({
     leaflet(percentage_under_6) %>%
   addProviderTiles("CartoDB")  %>%
@@ -388,12 +373,10 @@ server <- function(input, output) {
   dashArray = "3",
   fillOpacity = 0.7) %>%
   addPolygons(data=boston_neighborhood, weight = 2, opacity = 1, fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>% #adding neighborhood data
->>>>>>> 281105d582536829259a846b81343994e79bc5b5
   setView(lng = -71.057083, 
           lat = 42.361145, 
           zoom = 11.5) %>%
   addLegend("topleft", 
-<<<<<<< HEAD
               pal = pal_laborforce, 
               values = ~laborforce,
               opacity = 1,
@@ -401,8 +384,7 @@ server <- function(input, output) {
   })
   
   output$slots_supply <- renderLeaflet({
-    leaflet(neighborho_capacity_tract) %>%
-=======
+    leaflet(neighborho_capacity_tract %>%
               pal = pal, 
               values = ~percent_working,
               title = "Percentage of children",
@@ -419,7 +401,6 @@ server <- function(input, output) {
     })
   output$capacity_supply_map <- renderLeaflet({
     leaflet(ECC_geometry) %>%
->>>>>>> 281105d582536829259a846b81343994e79bc5b5
       addProviderTiles("CartoDB")  %>%
       addPolygons(fillColor = ~pal2(sum_capacity),
                   weight = 2,
@@ -427,7 +408,6 @@ server <- function(input, output) {
                   color = "white",
                   dashArray = "3",
                   fillOpacity = 0.7) %>%
-<<<<<<< HEAD
       addPolygons(data = boston_neighborhood, 
                   weight = 2, 
                   opacity = 1, 
@@ -435,16 +415,13 @@ server <- function(input, output) {
                   stroke = TRUE, 
                   color = "black", 
                   label = ~Name) %>% #adding neighborhood data
-=======
       addPolygons(data=boston_neighborhood, weight = 2, opacity = 1,
                   fillOpacity=0, stroke=TRUE, color="black", label=~Name) %>%
       #adding neighborhood data
->>>>>>> 281105d582536829259a846b81343994e79bc5b5
       setView(lng = -71.057083, 
               lat = 42.361145, 
               zoom = 11.5) %>%
       addLegend("topleft", 
-<<<<<<< HEAD
                 pal = pal_slots, 
                 values = ~slots,
                 opacity = 1,
@@ -609,13 +586,11 @@ server <- function(input, output) {
                 opacity = 1,
                 title="Aggregated Percentage")
   })
-=======
                 pal = pal2, 
                 values = ~sum_capacity,
                 title = "Capacity",
                 opacity = 1)
   }) 
->>>>>>> 281105d582536829259a846b81343994e79bc5b5
 }
 
 # server <- function(input, output, session) {

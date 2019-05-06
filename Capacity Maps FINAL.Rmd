@@ -15,7 +15,6 @@ library(ggplot2)
 library(tigris)
 library(sf)
 library(mosaic)
-library(mapview)
 library(leaflet)
 library(leaflet.extras)
 ```
@@ -272,5 +271,15 @@ ggplot(EEC_census_bar,aes(x =reorder(Name_neighborho,ratioslots), y = ratioslots
 EEC_census_bar5<-top_n(EEC_census_bar, 5, ratioslots)
 ggplot(EEC_census_bar5,aes(x =reorder(Name_neighborho,-ratioslots), y = ratioslots, fill = Name_neighborho)) +
   geom_bar(colour="black", stat="identity") + ggtitle( "Top 5 Neighbohood ranking with the highest desert ratio")+ xlab("Neighborhoods")+  ylab("Desert Ratio (Population under 6/Capacity for early ed")
+```
+
+#Summary stats
+```{r}
+laborforce_under6 <- laborforce_under6 %>%
+  as.data.frame() %>%
+  select(NAME, laborforcechildren)
+
+write.csv(laborforce_under6, "laborforce_under6.csv")
+
 ```
 

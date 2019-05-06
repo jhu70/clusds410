@@ -82,31 +82,56 @@ leavinghome_vars <- c("B08302_001", "B08302_002", "B08302_003", "B08302_004", "B
 leavinghome_before7am_vars <- c("B08302_002", "B08302_003", "B08302_004", "B08302_005", "B08302_006")
 leavinghome_am_vars <- c("B08302_002", "B08302_003", "B08302_004", "B08302_005", "B08302_006")
 
-leavinghome_before7 <- get_acs(geography = "tract",
-                     variables = leavinghome_before7am_vars,
+# Early mornings if they leave for work anytime between 12am-6:29am
+# Evenings if they leave for work anytime between 11am-3:59pm
+# Late Evening/Overnight if they leave for work anytime between 4pm-11:59pm
+
+earlymorning_vars <- c("B08302_002", "B08302_003", "B08302_004", "B08302_005")
+evening_vars <- c("B08302_013", "B08302_014")
+overnight_vars <- c("B08302_015")
+
+earlymorning <- get_acs(geography = "tract",
+                     variables = earlymorning_vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+
+earlymorning <- earlymorning %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sum_earlymorning = sum(estimate))
+
+ evening <- get_acs(geography = "tract",
+                     variables = evening_vars,
+                     survey="acs5",
+                     state= "MA",
+                     county="Suffolk",
+                geometry=TRUE)
+ 
+evening <- evening %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sum_evening = sum(estimate))
+ 
+overnight <- get_acs(geography = "tract",
+                     variables = overnight_vars,
                      survey="acs5",
                      state= "MA",
                      county="Suffolk",
                 geometry=TRUE)
 
 
- leavinghome_after4 <- get_acs(geography = "tract",
-                     variables = "B08302_015",
-                     survey="acs5",
-                     state= "MA",
-                     county="Suffolk",
-                geometry=TRUE)
+overnight <- overnight %>%
+  group_by(GEOID, NAME) %>%
+  summarise(sum_overnight = sum(estimate))
 
-plot(leavinghome_before7["estimate"])
+hours_demand1 <- inner_join(earlymorning %>% as.data.frame(), evening %>% as.data.frame(), by = "GEOID")
+hours_demand <- inner_join(hours_demand1 %>% as.data.frame(), overnight %>% as.data.frame(), by="GEOID")
 
-ggplot(leavinghome_before7, aes(fill=estimate)) + geom_sf()
-ggplot(leavinghome_after4, aes(fill=estimate)) + geom_sf()
+hours_demand <- hours_demand %>%
+  select(GEOID, NAME.x,sum_earlymorning, sum_evening, sum_overnight, geometry) %>%
+  st_sf(sf_column_name = 'geometry')
 
-m <- mapview(leavinghome_before7, zcol="estimate")
-m@map
 
-m2 <- mapview(leavinghome_after4, zcol="estimate")
-m2@map
 
 ```
 
@@ -174,19 +199,22 @@ travel_time_map@map
 
 ###MAPPING PARENTAL DEMAND
 ```{r}
-#Map children under 11 by census tract in Boston who are at least 200 FPL (2.00 or higher)
-childrenunder11vars <- c("B17024_011", "B17024_012", "B17024_013", "B17024_014", "B17024_024", "B17024_025", "B17024_026", "B17024_027")
+#children under 5 by census tract in Boston who are at least 200 FPL (2.00 or higher)
+childrenunder5vars <- c("B17024_011", "B17024_012", "B17024_013", "B17024_014", "B17024_024", "B17024_025", "B17024_026", "B17024_027")
 
-children_under_11 <- get_acs(geography = "tract",
-                     variables = childrenunder11vars,
-                     survey="acs5",
-                     state= "MA",
-                     county="Suffolk",
-                geometry=TRUE)
+# children_under_11 <- get_acs(geography = "tract",
+#                      variables = childrenunder11vars,
+#                      survey="acs5",
+#                      state= "MA",
+#                      county="Suffolk",
+#                 geometry=TRUE)
+# 
+# children_under_11_grouped <- children_under_11 %>%
+#   group_by(GEOID, NAME) %>%
+#   summarise(num_children = sum(estimate))
 
-children_under_11_grouped <- children_under_11 %>%
-  group_by(GEOID, NAME) %>%
-  summarise(num_children = sum(estimate))
+
+
 
 #Multiply this by the percentage of children under 6 with all parents in the labor force, 1 for single-parent household, 2 for two-parent household in each census tract in Boston.
 
@@ -217,12 +245,9 @@ percentage_under_6 <- percentage_under_6 %>%
 
 percentage_under_6 <- percentage_under_6 %>%
   mutate(percent_working = laborforcechildren/estimate*100)
+```
 
-under6_map <- mapview(percentage_under_6, zcol="percent_working")
-under6_map@map
-
-bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
-
+```{r}
 pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 percent6pal <- colorBin("YlOrRd", domain = percentage_under_6$percent_working)
 incomepal <- colorBin("YlOrRd", domain = med_income$estimate)

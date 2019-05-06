@@ -1,0 +1,154 @@
+---
+title: "providers_in_polygons"
+output: html_document
+author: "Jocelyn Jingjing Hu""
+---
+
+This rmd helps you find out which polygon each providers fall into so that we could look at data by region and combine the demand maps and the supply maps
+
+```{r Boston and Cambridge sf Files}
+# normally packages would be first, but the sf package was causing major problems with the other functions
+# it works best if you run sf seperately and before all other packages
+
+library(sf)
+
+# going ahead and using it for what we need it for, before we load the other packages, again to make things easier
+
+boston_neighborhood <- read_sf("Boston_Neighborhoods/Boston_Neighborhoods.shp")
+ma_tract <- read_sf("ma_tract/tl_2018_25_tract.shp")
+```
+
+```{r Packages}
+library(tidyverse)
+library(leaflet)
+library(USAboundaries)
+library(maps)
+library(leaflet.extras)
+library(fivethirtyeight)
+library(zipcode)
+library(ggmap)
+library(mosaic)
+```
+
+```{r EEC Lon Lat Dataset}
+
+
+#add after hours variable to ProvidersData_earlyed_462019 to get ProvidersData_earlyed_4112019
+EECMaster49 <- read_csv("ProvidersData_earlyed_4112019.csv")
+# 
+# EEC_lon_lat <- EEC_lon_lat %>% 
+#   replace(., is.na(.), "Unk")
+
+#Filtering
+EECMaster49 <- EECMaster49 %>%
+  filter(City %in% boston_neighborhood$Name | City=="Boston")
+names(EECMaster49) <- gsub(" ", "_", names(EECMaster49))
+#glimpse(EECMaster49)
+```
+
+
+#MA TRACT
+
+```{r MA tract Base Map}
+ma_tract <- ma_tract %>%
+  st_transform(crs = "+init=epsg:4326")
+
+ma_tract_base_map <- leaflet(ma_tract,
+                                        options = leafletOptions(minZoom = 11))  %>%
+  addProviderTiles("CartoDB.Positron")  %>%
+  addPolygons(weight = 2, fillOpacity = .1, fillColor = "#000000") %>%
+  setView(lng = -71.057083, 
+          lat = 42.361145, 
+          zoom = 11.5)
+
+ma_tract_base_map
+```
+
+```{r}
+library(rgeos)
+library(sp)
+library(rgdal)
+
+bos.map <- readOGR("ma_tract/tl_2018_25_tract.shp", layer="tl_2018_25_tract")
+
+# Better to set longitudes as the first column and latitudes as the second
+dat <- EECMaster49
+# Assignment modified according
+coordinates(dat) <- ~ lon + lat
+# Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
+proj4string(dat) <- proj4string(bos.map)
+
+classification<-over(dat, bos.map)
+ma_tract$ALAND<-as.factor(ma_tract$ALAND)
+ma_tract$AWATER<-as.factor(ma_tract$AWATER)
+#add back geometry
+classification2<-left_join(classification,ma_tract, on = "GEOID")
+colnames(classification) <- paste(colnames(classification), "tract", sep = "_")
+colnames(classification2) <- paste(colnames(classification2), "tract", sep = "_")
+
+#could not add geometry column since it is what makes shapefile a shapefile and will mess up the exported csv data
+masterdataframe_tract <- cbind(classification, EECMaster49)
+write.csv(masterdataframe_tract,"masterdataframe_tract.csv")
+
+```
+shapefile download from: https://www.census.gov/cgi-bin/geo/shapefiles/index.php?year=2018&layergroup=Census+Tracts
+spot check by looking at: https://www2.census.gov/geo/maps/dc10map/tract/st25_ma/c25025_suffolk/DC10CT_C25025_001.pdf
+
+
+#add Neighborhood to tract masterdataframe
+
+
+```{r providers on polygons}
+library(rgeos)
+library(sp)
+library(rgdal)
+
+
+
+bos.map <- readOGR("Boston_Neighborhoods/Boston_Neighborhoods.shp", layer="Boston_Neighborhoods")
+
+# Better to set longitudes as the first column and latitudes as the second
+dat <- masterdataframe_tract
+# Assignment modified according
+coordinates(dat) <- ~ lon + lat
+# Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
+proj4string(dat) <- proj4string(bos.map)
+
+classification3<-over(dat, bos.map)
+
+boston_neighborhood$OBJECTID<-as.factor(boston_neighborhood$OBJECTID)
+#add back geometry
+classification4<-left_join(classification3,boston_neighborhood, on = "Neighborho")
+colnames(classification4) <- paste(colnames(classification4), "neighborho", sep = "_")
+colnames(classification3) <- paste(colnames(classification3), "neighborho", sep = "_")
+
+#exclude geometry since it messes the dataset when exporting it
+masterdataframe_tract_neighborho <- cbind(classification3, masterdataframe_tract)
+
+# c2 <- over(bos.map, dat)
+write.csv(masterdataframe_tract_neighborho,"masterdataframe_tract_neighborhood.csv")
+```
+
+```{r}
+#without geometry
+tractneighborho<-masterdataframe_tract_neighborho%>%
+  select(Name_neighborho,Neighborho_neighborho,NAMELSAD_tract,GEOID_tract)
+
+tractneighborho<-tractneighborho[!duplicated(tractneighborho[,'GEOID_tract']),]
+
+```
+
+
+```{r}
+#add back geometry
+masterdataframe_tract_g <- cbind(classification2, EECMaster49)
+masterdataframe_tract_neighborho_g <- cbind(classification4, masterdataframe_tract_g)
+
+tractneighborho_geo<-masterdataframe_tract_neighborho_g%>%
+  select(Name_neighborho,Neighborho_neighborho,geometry_neighborho,NAMELSAD_tract,GEOID_tract,geometry_tract)
+
+tractneighborho_geo<-tractneighborho_geo[!duplicated(tractneighborho_geo[,'GEOID_tract']),]
+
+```
+^[This is my [source](https://gis.stackexchange.com/questions/133625/checking-if-points-fall-within-polygon-shapefile)] 
+

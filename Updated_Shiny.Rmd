@@ -523,3 +523,13 @@ runApp(app)
 ```
 
 
+<<<<<<< HEAD
+=======
+
+```{r}
+runGitHub("jhu70/clusds410", username = getOption("github.jhu70"), ref = "master",
+  subdir = NULL, port = NULL,
+  launch.browser = getOption("shiny.launch.browser", interactive()))
+```
+
+>>>>>>> ddbe8e9073e59a906b80e7e0d09f30edc3ce0115
