@@ -117,25 +117,7 @@ body <- dashboardBody(
     ),
     
     ## CAPACITY
-    
-    # tabItem(tabName = "capacity",
-    #         tags$h1("Number of children under 6 with all parents in the labor
-    #                 force, per tract"),
-    #         tags$br(),
-    #         leafletOutput("laborforce_demand"),
-    #         tags$br(),
-    #         tags$h1("Number of slots for Early Education Providers, per tract"),
-    #         leafletOutput("slots_supply"),
-    #         tags$h1("Ratio of Number of Children to Avaliable Number of Slots, per neighborhood"),
-    #         leafletOutput("ratioslots_gap"),
-    #         tags$br(),
-    #         tags$br(),
-    #         plotOutput("all_neighborhoods_bar"),
-    #         tags$br(),
-    #         tags$br(),
-    #         plotOutput("top_5_neighborhoods_bar")
-    #         ),
-    
+
     tabItem(tabName = "capacity",
             tags$h1("Early Ed Childcare Slots to Childcare Needs Comparison"),
             tags$br(),
@@ -236,30 +218,51 @@ body <- dashboardBody(
                        collapsible = TRUE,
                        collapsed = FALSE,
                        status = "info",
-                       tags$h4("Percent of Children Under 6 with all parents in
-                               the labor force"),
-                       em("This demand variable was created using information provided by 
-                         the 2016 American Community Survice data, which we accessed through tidycensus in R."),
-                       br(),
-                       br(),
-                       p("Wtihin the ACS data, there were three distinct variables that recorded number of parents
-                         in the labor force with children under 6 for each census tract in the Boston area. 
-                         One of the variables (B23008_004) gave us the parents in the labor force that came from a 
-                         2-parent household, while the other two variables (B23008_010, B23008_013) gave us the parents
-                         in the labor force that came from a 1-parent household. Using this information, we were to get
-                         the total sum of all children with all parents in the labor force. Using the ACS data, we then 
-                         extracted the total number of children under 6 per tract (B23008_002).",
-                         style = "font-family: 'times'; font-si16pt"),
-                       strong("We were able to find the percent of children under 6 with all parents in the labor 
-                              force per tract, by taking the sum of children with all parents in the labor force over 
-                              the estimated _______.",
-                         style = "font-family: 'times'; font-si16pt"),
-                       br(),
-                       tags$h4("Capacity for Early Education Providers"),
-                       em("This supply variable was created using the EEC dataset given to us by Community Labor United."),
-                       br(),
-                       br()
-                     ),
+                       tags$br(),
+                       tags$strong("Percent of Children Under 6 with All Parents in the Labor Force"),
+                       tags$br(),
+                       tags$br(),
+                       tags$em("This demand variable was created using information provided by the 2016 American Community Survey data, which we accessed through tidycensus in R. All ACS data was filtered for Suffolk County, MA"),
+                       tags$br(),
+                       tags$br(),
+                       tags$div(tags$ul(
+                         tags$li("Within the ACS data, there were three distinct variables that recorded number of parents in the labor force with children under 6 for each census tract in the Boston area."),
+                         tags$li("ACS variable B23008_004 (number of children under 6 from a 2-parent household with both parents in the labor force),  ACS variables B23008_010 (single working father household), B23008_013 (single working mother household). We then added these values to obtain the count of all children under 6 with all parents in the labor force. "),
+                         tags$li("We then extracted the total number of children under 6 per tract (ACS variable B23008_002). We divided the previous sum by this total number of children under 6 to obtain the percent of children under 6 with parents in the labor force."),
+                         style = "font-size: 15px"),
+                         tags$br(),
+                         tags$strong("Capacity for Early Education Provider"),
+                         tags$br(),
+                         tags$br(),
+                         tags$em("This supply variable was created using the EEC dataset given to us by Community Labor United. The dataset was filtered for providers that provide care for children 6 and under (early education care), as this was our focus."),
+                         tags$br(),
+                         tags$br(),
+                         p("To get a sense of the slots available for early education provision, we take the EEC dataset and use Python software to filter only for providers that provide early education childcare based three variables: rates, age, and licensed capacity."),
+                         tags$br(),
+                         tags$div(tags$ul(
+                         tags$li("First, we obtain information on service availability from the Rates variable that list the prices of childcare service for four age groups, including infants, toddlers, preschoolers, and school age. The spread the Rates variable into 4 categorical variables of all age groups to use them as filters later on. After that, we use if statements and dictionary reader in Python to take out providers from the original datasets that only offer price information of cares for school-aged children and therefore only care for school-aged children. "),
+                         tags$li("Second, for providers with no Rates data, we use Min Age and Max Age variables to take out providers with “6” as the minimum age. This procedure is based on two assumptions. We assume that providers that have no Rates or Age data and that care for all age groups, including school-age, to be providers for early ed. Accordingly, we consciously overestimated in favor of the current childcare system framework."),
+                         style = "font-size: 15px")),
+                         tags$br(),
+                         tags$br(),
+                         tags$strong("Capacity on the Tract and Neighboorhood Levels:"),
+                         tags$br(),
+                         tags$br(),
+                         tags$div(tags$ul(
+                           tags$li("First, we geocode the addresses of providers to map out all the providers. We then use the over function in R from rgeo and rgdal packages to figure out which tract or neighborhood on the polygon map each provider is located within. "),
+                           tags$li("After that, we use the tidyverse package to group the providers by census tract, and calculated the total number of slots for early education childcare in each tract. We repeat this process for neighborhood so that we also have the total number of slots for early education childcare in each neighborhood. "),
+                           tags$li("Finally, we merge these datasets with the respective geometry for each geography, to allow us to map the results."),
+                           style = "font-size: 15px")),
+                         tags$br(),
+                         tags$br(),
+                         tags$strong("Ratio of Children to Slots Available"),
+                         tags$br(),
+                         tags$br(),
+                         tags$div(tags$ul(
+                           tags$li("Divide the number of children in working families by the number of slots available. These calculations were done by tract and neighborhood. We use data provided by the shapefiles of neighborhoods and tracts figure out which neighborhood each tract is located within.
+"),
+                           style = "font-size: 15px"))
+                     )),
                      box(
                        title = "Hours",
                        width = NULL,
@@ -267,27 +270,34 @@ body <- dashboardBody(
                        collapsible = TRUE,
                        collapsed = TRUE,
                        status = "info",
-                       p("p creates a paragraph of text."),
-                       p("A new p() command starts a new paragraph. Supply a style
-                        attribute to change the format of the entire paragraph.",
-                        style = "font-family: 'times'; font-si16pt"),
-                       strong("strong() makes bold text."),
-                       em("em() creates italicized (i.e, emphasized) text."),
-                       br(),
-                       code("code displays your text similar to computer code"),
-                       div("div creates segments of text with a similar style. This
-                           division of text is all blue because I passed the argument
-                           'style = color:blue' to div", style = "color:blue"),
-                       br(),
-                       p("span does the same thing as div, but it works with",
-                         span("groups of words", 
-                              style = "color:blue"),
-                         "that appear inside a paragraph.")
+                       tags$br(),
+                       tags$strong("Quantification of Nonstandard Work Shifts"),
+                       tags$br(),
+                       tags$br(),
+                       tags$em("This demand variable was created using information provided by the 2016 American Community Survey data, which we accessed through tidycensus in R. All ACS data was filtered for Suffolk County, MA."),
+                       tags$br(),
+                       tags$br(),
+                       tags$p("Based on previous methodology, we split nonstandard hours into three categories:"),
+                       tags$div(tags$ul(
+                         tags$li("Early morning: leaving for work anytime between 12am-6:29am (corresponds to ACS variables B08302_002, B08302_003, B08302_004, and B08302_005)"),
+                         tags$li("Evenings: leaving for work anytime between 11am-3:59pm (corresponds to ACS variables B08302_013 and B08302_014)"),
+                         tags$li("Late evenings/overnight: leaving for work anytime between 4pm-11:59pm (corresponds to ACS variable B08302_015)"),
+                         style = "font-size: 15px"),
+                         tags$p("We divided each of these values by the total number of workers in Suffolk County, to obtain percentage estimates for each nonstandard shift category."),
+                         tags$br(),
+                         tags$br(),
+                         tags$strong("Aggregated Nonstandard Shift Map"),
+                         tags$br(),
+                         tags$br(),
+                         tags$div(tags$ul(
+                         tags$li("To create the aggregate map, we added the three nonstandard shift counts to obtain one general nonstandard shift count, and divided this by the total number of workers to obtain an aggregate percentage."),
+                         tags$li("We then filtered the EEC dataset to show only providers that provide care outside of nonstandard working hours, 7:30am-6pm, based on 14 variables that show the open and close time on each day of the week (note: the dataset is already filtered for early education providers only). We then showed these providers with the option to see how many off-hour slots are available at that provider."),
+                         style = "font-size: 15px"))
                      )
                      )
             ))
   )
-)
+))
 
 ```
 
@@ -506,6 +516,10 @@ server <- function(input, output) {
 
 ## SHINYAPP
 
-shinyApp(ui, server)
+app <- shinyApp(ui, server)
+
+runApp(app)
 
 ```
+
+
