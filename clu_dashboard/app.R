@@ -1033,10 +1033,10 @@ body <- dashboardBody(
                          tags$strong("Capacity for Early Education Provider"),
                          tags$br(),
                          tags$br(),
-                         tags$em("This supply variable was created using the EEC dataset given to us by Community Labor United. The dataset was filtered for providers that provide care for children 6 and under (early education care), as this was our focus."),
+                         tags$em("This supply variable is created using the EEC dataset given to us by Community Labor United. The dataset is filtered for providers that provide care for children 6 and under (early education care), as this is our focus."),
                          tags$br(),
                          tags$br(),
-                         p("To get a sense of the slots available for early education provision, we take the EEC dataset and use Python software to filter only for providers that provide early education childcare based three variables: rates, age, and licensed capacity."),
+                         p("The data filtering process is based on three variables in the EEC dataset: rates, age, and licensed capacity."),
                          tags$br(),
                          tags$div(tags$ul(
                            tags$li("First, we obtain information on service availability from the Rates variable that shows the prices of childcare services for four age groups, including infants, toddlers, preschoolers, and school-aged children. The spread the Rates variable into 4 categorical variables of all age groups to use them as filters later on. After that, we use if statements and dictionary reader in Python to take out providers from the original datasets that only offer price information of cares for school-aged children and therefore only care for school-aged children. "),
