@@ -5,8 +5,8 @@ account: jhu70
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 913202
-bundleId: 2065114
+bundleId: 2065399
 url: https://jhu70.shinyapps.io/clu_boston/
-when: 1557181647.09624
+when: 1557191545.64869
 asMultiple: FALSE
 asStatic: FALSE

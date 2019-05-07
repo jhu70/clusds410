@@ -1039,8 +1039,8 @@ body <- dashboardBody(
                          p("To get a sense of the slots available for early education provision, we take the EEC dataset and use Python software to filter only for providers that provide early education childcare based three variables: rates, age, and licensed capacity."),
                          tags$br(),
                          tags$div(tags$ul(
-                           tags$li("First, we obtain information on service availability from the Rates variable that list the prices of childcare service for four age groups, including infants, toddlers, preschoolers, and school age. The spread the Rates variable into 4 categorical variables of all age groups to use them as filters later on. After that, we use if statements and dictionary reader in Python to take out providers from the original datasets that only offer price information of cares for school-aged children and therefore only care for school-aged children. "),
-                           tags$li("Second, for providers with no Rates data, we use Min Age and Max Age variables to take out providers with “6” as the minimum age. This procedure is based on two assumptions. We assume that providers that have no Rates or Age data and that care for all age groups, including school-age, to be providers for early ed. Accordingly, we consciously overestimated in favor of the current childcare system framework."),
+                           tags$li("First, we obtain information on service availability from the Rates variable that shows the prices of childcare services for four age groups, including infants, toddlers, preschoolers, and school-aged children. The spread the Rates variable into 4 categorical variables of all age groups to use them as filters later on. After that, we use if statements and dictionary reader in Python to take out providers from the original datasets that only offer price information of cares for school-aged children and therefore only care for school-aged children. "),
+                           tags$li("Second, for providers with no Rates data, we use Min Age and Max Age variables to take out providers with “6” as the minimum age. We assume that providers that have no Rates or Age data and that care for all age groups, including school-aged children, to be providers for early ed. Accordingly, we consciously overestimated in favor of the current childcare system framework."),
                            style = "font-size: 15px")),
                          tags$br(),
                          tags$br(),
@@ -1048,7 +1048,7 @@ body <- dashboardBody(
                          tags$br(),
                          tags$br(),
                          tags$div(tags$ul(
-                           tags$li("First, we geocode the addresses of providers to map out all the providers. We then use the over function in R from rgeo and rgdal packages to figure out which tract or neighborhood on the polygon map each provider is located within. "),
+                           tags$li("We geocode the addresses of providers to map them out. We then use the over function in R from rgeo and rgdal packages to figure out which tract or neighborhood on the polygon map each provider is located within. "),
                            tags$li("After that, we use the tidyverse package to group the providers by census tract, and calculated the total number of slots for early education childcare in each tract. We repeat this process for neighborhood so that we also have the total number of slots for early education childcare in each neighborhood. "),
                            tags$li("Finally, we merge these datasets with the respective geometry for each geography, to allow us to map the results."),
                            style = "font-size: 15px")),
@@ -1058,7 +1058,7 @@ body <- dashboardBody(
                          tags$br(),
                          tags$br(),
                          tags$div(tags$ul(
-                           tags$li("Divide the number of children in working families by the number of slots available. These calculations were done by tract and neighborhood. We use variables in the shapefiles of neighborhoods and tracts to figure out which neighborhood each tract is located within.
+                           tags$li("Divide the number of children in working families by the number of slots available. These calculations are done by tract and neighborhood. We use variables in the shapefiles of neighborhoods and tracts to figure out which neighborhood each tract is located within.
                                    "),
                            style = "font-size: 15px"))
                          )),
